@@ -8,6 +8,7 @@
     <style>
         /* --- VARIABLES --- */
         :root {
+            /* Dark Theme (Default) */
             --bg-color: #050505;
             --glass-panel: rgba(20, 20, 20, 0.75);
             --glass-border: rgba(255, 255, 255, 0.1);
@@ -17,8 +18,12 @@
             --accent-primary: #0A84FF;
             --orb-opacity: 0.6;
             --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Display", Roboto, sans-serif;
+            
+            /* Фон мобильного меню (Темный) */
+            --overlay-bg: rgba(5, 5, 5, 0.95);
         }
 
+        /* Light Theme */
         [data-theme="light"] {
             --bg-color: #f2f2f7;
             --glass-panel: rgba(255, 255, 255, 0.65);
@@ -27,6 +32,9 @@
             --text-secondary: rgba(60, 60, 67, 0.6);
             --card-shadow: 0 10px 30px rgba(0,0,0,0.05);
             --orb-opacity: 0.3;
+
+            /* Фон мобильного меню (Светлый) */
+            --overlay-bg: rgba(242, 242, 247, 0.95);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-stack); transition: background-color 0.3s, color 0.3s; }
@@ -45,20 +53,26 @@
         .glass-card { background: var(--glass-panel); backdrop-filter: blur(30px) saturate(160%); -webkit-backdrop-filter: blur(30px) saturate(160%); border: 1px solid var(--glass-border); border-radius: 30px; padding: 25px; box-shadow: var(--card-shadow); margin-bottom: 24px; opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s forwards; }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-        /* --- TOP BAR & MENU --- */
+        /* --- TOP BAR --- */
         .top-bar {
             grid-column: 1 / -1;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between; /* Лого слева, всё остальное справа */
             align-items: center;
-            gap: 15px;
             position: relative;
             z-index: 100;
         }
 
         .logo-small { width: 45px; height: 45px; border-radius: 12px; border: 1px solid var(--glass-border); object-fit: cover; }
 
-        /* Desktop Menu (Скрыто на мобильных) */
+        /* Группируем Меню и Контролы справа */
+        .top-right {
+            display: flex;
+            align-items: center;
+            gap: 12px; /* Отступ между блоком меню и блоком языков */
+        }
+
+        /* --- MENU DESKTOP --- */
         .desktop-menu {
             display: none;
             background: var(--glass-panel);
@@ -82,14 +96,12 @@
             color: var(--text-primary);
         }
 
-        /* Right side controls */
-        .top-right { display: flex; gap: 10px; align-items: center; }
-
+        /* --- CONTROLS --- */
         .controls { display: flex; gap: 12px; background: var(--glass-panel); padding: 5px; border-radius: 40px; border: 1px solid var(--glass-border); }
         .icon-btn { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--text-secondary); }
         .icon-btn.active { background: rgba(128,128,128,0.3); color: var(--text-primary); }
 
-        /* Hamburger Button (Виден только на мобильных) */
+        /* Hamburger (Mobile Only) */
         .hamburger-btn {
             display: flex;
             background: var(--glass-panel);
@@ -102,11 +114,12 @@
             .hamburger-btn { display: none; }
         }
 
-        /* --- MOBILE MENU OVERLAY --- */
+        /* --- MOBILE MENU OVERLAY (UPDATED) --- */
         .mobile-menu-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 5, 5, 0.95);
+            /* Теперь цвет берется из переменной, которая меняется при смене темы */
+            background: var(--overlay-bg);
             backdrop-filter: blur(20px);
             z-index: 2000;
             display: flex;
@@ -115,7 +128,7 @@
             align-items: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease, background-color 0.3s;
         }
         .mobile-menu-overlay.active {
             opacity: 1;
@@ -136,10 +149,7 @@
             transform: translateY(20px);
             transition: 0.4s;
         }
-        .mobile-menu-overlay.active .mobile-link {
-            opacity: 1; transform: translateY(0);
-        }
-        /* Анимация появления ссылок по очереди */
+        .mobile-menu-overlay.active .mobile-link { opacity: 1; transform: translateY(0); }
         .mobile-menu-overlay.active .mobile-link:nth-child(2) { transition-delay: 0.1s; }
         .mobile-menu-overlay.active .mobile-link:nth-child(3) { transition-delay: 0.2s; }
         .mobile-menu-overlay.active .mobile-link:nth-child(4) { transition-delay: 0.3s; }
@@ -191,10 +201,8 @@
         .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 3000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
         .lightbox.active { display: flex; opacity: 1; }
         .lightbox img { max-width: 90%; max-height: 85vh; border-radius: 8px; box-shadow: 0 0 50px rgba(0,0,0,0.5); transition: transform 0.3s; }
-        
         .close-hint { position: absolute; top: 20px; right: 20px; color: white; font-size: 35px; cursor: pointer; z-index: 1002; transition: 0.2s; }
         .close-hint:hover { color: var(--accent-primary); transform: rotate(90deg); }
-
         .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.6); font-size: 40px; cursor: pointer; padding: 20px; z-index: 3001; transition: all 0.2s; }
         .lightbox-nav:hover { color: var(--accent-primary); transform: translateY(-50%) scale(1.2); }
         .btn-prev { left: 10px; }
@@ -222,19 +230,20 @@
         <div class="top-bar">
             <img src="img/logo.png" class="logo-small" alt="Logo">
             
-            <nav class="desktop-menu">
-                <a href="index.html" class="nav-link active" id="nav-home">Главная</a>
-                <a href="#" class="nav-link" id="nav-shop">Магазин</a>
-                <a href="#" class="nav-link" id="nav-blog">Блог</a>
-                <a href="#" class="nav-link" id="nav-news">Новости</a>
-            </nav>
-
             <div class="top-right">
+                <nav class="desktop-menu">
+                    <a href="index.html" class="nav-link active" id="nav-home">Главная</a>
+                    <a href="#" class="nav-link" id="nav-shop">Магазин</a>
+                    <a href="#" class="nav-link" id="nav-blog">Блог</a>
+                    <a href="#" class="nav-link" id="nav-news">Новости</a>
+                </nav>
+
                 <div class="controls">
                     <div class="icon-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon"></i></div>
                     <div class="icon-btn active" id="btn-ru" onclick="setLang('ru')">RU</div>
                     <div class="icon-btn" id="btn-en" onclick="setLang('en')">EN</div>
                 </div>
+
                 <div class="icon-btn hamburger-btn" onclick="toggleMobileMenu()">
                     <i class="fas fa-bars"></i>
                 </div>
