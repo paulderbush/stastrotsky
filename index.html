@@ -45,12 +45,108 @@
         .glass-card { background: var(--glass-panel); backdrop-filter: blur(30px) saturate(160%); -webkit-backdrop-filter: blur(30px) saturate(160%); border: 1px solid var(--glass-border); border-radius: 30px; padding: 25px; box-shadow: var(--card-shadow); margin-bottom: 24px; opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s forwards; }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-        .top-bar { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; }
+        /* --- TOP BAR & MENU --- */
+        .top-bar {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo-small { width: 45px; height: 45px; border-radius: 12px; border: 1px solid var(--glass-border); object-fit: cover; }
+
+        /* Desktop Menu (Скрыто на мобильных) */
+        .desktop-menu {
+            display: none;
+            background: var(--glass-panel);
+            backdrop-filter: blur(20px);
+            padding: 5px;
+            border-radius: 40px;
+            border: 1px solid var(--glass-border);
+            gap: 5px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 30px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(128,128,128,0.2);
+            color: var(--text-primary);
+        }
+
+        /* Right side controls */
+        .top-right { display: flex; gap: 10px; align-items: center; }
+
         .controls { display: flex; gap: 12px; background: var(--glass-panel); padding: 5px; border-radius: 40px; border: 1px solid var(--glass-border); }
         .icon-btn { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--text-secondary); }
         .icon-btn.active { background: rgba(128,128,128,0.3); color: var(--text-primary); }
-        .logo-small { width: 45px; height: 45px; border-radius: 12px; border: 1px solid var(--glass-border); object-fit: cover; }
 
+        /* Hamburger Button (Виден только на мобильных) */
+        .hamburger-btn {
+            display: flex;
+            background: var(--glass-panel);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+        }
+
+        @media (min-width: 768px) {
+            .desktop-menu { display: flex; }
+            .hamburger-btn { display: none; }
+        }
+
+        /* --- MOBILE MENU OVERLAY --- */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .close-menu-btn {
+            position: absolute; top: 30px; right: 30px;
+            font-size: 40px; color: var(--text-primary);
+            cursor: pointer;
+        }
+        .mobile-link {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            margin: 15px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 0.4s;
+        }
+        .mobile-menu-overlay.active .mobile-link {
+            opacity: 1; transform: translateY(0);
+        }
+        /* Анимация появления ссылок по очереди */
+        .mobile-menu-overlay.active .mobile-link:nth-child(2) { transition-delay: 0.1s; }
+        .mobile-menu-overlay.active .mobile-link:nth-child(3) { transition-delay: 0.2s; }
+        .mobile-menu-overlay.active .mobile-link:nth-child(4) { transition-delay: 0.3s; }
+        .mobile-menu-overlay.active .mobile-link:nth-child(5) { transition-delay: 0.4s; }
+
+
+        /* --- REST OF STYLES --- */
         .profile-card { text-align: center; }
         .avatar-img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid rgba(255,255,255,0.1); margin-bottom: 15px; }
         .social-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
@@ -92,20 +188,14 @@
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
         .gallery-item:hover img { transform: scale(1.1); }
 
-        /* --- LIGHTBOX (UPDATED) --- */
-        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 1000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 3000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
         .lightbox.active { display: flex; opacity: 1; }
         .lightbox img { max-width: 90%; max-height: 85vh; border-radius: 8px; box-shadow: 0 0 50px rgba(0,0,0,0.5); transition: transform 0.3s; }
         
         .close-hint { position: absolute; top: 20px; right: 20px; color: white; font-size: 35px; cursor: pointer; z-index: 1002; transition: 0.2s; }
         .close-hint:hover { color: var(--accent-primary); transform: rotate(90deg); }
 
-        /* Стрелки навигации */
-        .lightbox-nav {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            color: rgba(255,255,255,0.6); font-size: 40px; cursor: pointer;
-            padding: 20px; z-index: 1001; transition: all 0.2s;
-        }
+        .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.6); font-size: 40px; cursor: pointer; padding: 20px; z-index: 3001; transition: all 0.2s; }
         .lightbox-nav:hover { color: var(--accent-primary); transform: translateY(-50%) scale(1.2); }
         .btn-prev { left: 10px; }
         .btn-next { right: 10px; }
@@ -120,13 +210,34 @@
         <div class="orb orb-3"></div>
     </div>
 
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div class="close-menu-btn" onclick="toggleMobileMenu()">&times;</div>
+        <a href="index.html" class="mobile-link" id="mm-home">Главная</a>
+        <a href="#" class="mobile-link" id="mm-shop">Магазин</a>
+        <a href="#" class="mobile-link" id="mm-blog">Блог</a>
+        <a href="#" class="mobile-link" id="mm-news">Новости</a>
+    </div>
+
     <div class="container">
         <div class="top-bar">
             <img src="img/logo.png" class="logo-small" alt="Logo">
-            <div class="controls">
-                <div class="icon-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon"></i></div>
-                <div class="icon-btn active" id="btn-ru" onclick="setLang('ru')">RU</div>
-                <div class="icon-btn" id="btn-en" onclick="setLang('en')">EN</div>
+            
+            <nav class="desktop-menu">
+                <a href="index.html" class="nav-link active" id="nav-home">Главная</a>
+                <a href="#" class="nav-link" id="nav-shop">Магазин</a>
+                <a href="#" class="nav-link" id="nav-blog">Блог</a>
+                <a href="#" class="nav-link" id="nav-news">Новости</a>
+            </nav>
+
+            <div class="top-right">
+                <div class="controls">
+                    <div class="icon-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon"></i></div>
+                    <div class="icon-btn active" id="btn-ru" onclick="setLang('ru')">RU</div>
+                    <div class="icon-btn" id="btn-en" onclick="setLang('en')">EN</div>
+                </div>
+                <div class="icon-btn hamburger-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
             </div>
         </div>
 
@@ -233,6 +344,12 @@
     </div>
 
     <script>
+        // --- MOBILE MENU LOGIC ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
         // --- AUDIO ---
         let currentAudio = null;
         let currentBtn = null;
@@ -251,49 +368,21 @@
             audio.onended = function() { icon.classList.replace('fa-pause', 'fa-play'); btn.classList.remove('playing'); currentAudio = null; };
         }
 
-        // --- GALLERY SLIDER LOGIC ---
-        // Массив твоих фото. Если добавишь фото 4, впиши сюда 'img/photo4.jpg'
-        const galleryImages = [
-            'img/photo1.jpg',
-            'img/photo2.jpg',
-            'img/photo3.jpg'
-        ];
+        // --- GALLERY ---
+        const galleryImages = ['img/photo1.jpg', 'img/photo2.jpg', 'img/photo3.jpg'];
         let currentImageIndex = 0;
-
-        function openLightbox(index) {
-            currentImageIndex = index;
-            updateLightboxImage();
-            document.getElementById('lightbox').classList.add('active');
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-        }
-
-        function updateLightboxImage() {
-            document.getElementById('lightbox-img').src = galleryImages[currentImageIndex];
-        }
-
-        function changeSlide(step) {
-            // Листаем индекс (0 -> 1 -> 2 -> 0)
-            currentImageIndex += step;
-            if (currentImageIndex >= galleryImages.length) {
-                currentImageIndex = 0;
-            } else if (currentImageIndex < 0) {
-                currentImageIndex = galleryImages.length - 1;
-            }
-            updateLightboxImage();
-        }
+        function openLightbox(index) { currentImageIndex = index; updateLightboxImage(); document.getElementById('lightbox').classList.add('active'); }
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+        function updateLightboxImage() { document.getElementById('lightbox-img').src = galleryImages[currentImageIndex]; }
+        function changeSlide(step) { currentImageIndex += step; if (currentImageIndex >= galleryImages.length) currentImageIndex = 0; else if (currentImageIndex < 0) currentImageIndex = galleryImages.length - 1; updateLightboxImage(); }
 
         // --- TRANSLATIONS ---
         const translations = {
             ru: {
+                navHome: "Главная", navShop: "Магазин", navBlog: "Блог", navNews: "Новости",
                 tAbout: "Обо мне", txtAbout: "Я — актёр для взрослых, YouTube блогер и просто творческий человек. Родился и вырос в России, но столкнулся с цензурой, блокировками моих ресурсов и давлением из-за моей сексуальной ориентации. Тогда я принял непростое решение — переехать в безопасное место и начать заново. Сейчас я живу в Великобритании, продолжаю записывать видео, делиться своим опытом и своим взглядом на жизнь, свободу самовыражения, ЛГБТ+ темы, права человека. Для меня важно быть честным и открытым. Я не считаю, что сексуальность — это что-то постыдное, наоборот: я хочу разрушать стереотипы, искать понимание и свободу.",
                 tGallery: "Галерея", tMusic: "Моя Музыка", tVideo: "Эксклюзив",
-                
-                // Текст под видео
                 vidDesc: "Трейлер курса \"Оральное Искусство\"",
-
                 tr1: "Крест", tr2: "Я всем дам", tr3: "Стереотипы",
                 tShop: "Магазин",
                 p1t: "Закрытый канал", p1d: "Эксклюзив 18+",
@@ -303,12 +392,10 @@
                 tStats: "Подписчики", sYt: "YouTube", sIg: "Instagram", sTg: "Telegram", sX: "X"
             },
             en: {
+                navHome: "Home", navShop: "Store", navBlog: "Blog", navNews: "News",
                 tAbout: "About Me", txtAbout: "I am an adult industry actor, a YouTuber, and a creative soul. I was born and raised in Russia but faced censorship, bans on my content, and pressure due to my sexual orientation. That’s when I made the tough decision to move to a safe place and start fresh. I now live in the UK, where I continue to make videos, sharing my experiences and views on life, freedom of expression, LGBT+ issues, and human rights. Being honest and open is vital to me. I don’t believe sexuality is shameful; on the contrary, I aim to break stereotypes and foster understanding and freedom.",
                 tGallery: "Gallery", tMusic: "My Music", tVideo: "Exclusive",
-                
-                // Video text
                 vidDesc: "Oral Art Course Trailer",
-
                 tr1: "Krest (The Cross)", tr2: "Ya vsem dam", tr3: "Stereotypes",
                 tShop: "Store",
                 p1t: "Private Channel", p1d: "Exclusive 18+ content",
@@ -321,14 +408,21 @@
 
         function setLang(lang) {
             const t = translations[lang];
+            // Меню (Desktop + Mobile)
+            document.getElementById('nav-home').innerText = t.navHome;
+            document.getElementById('nav-shop').innerText = t.navShop;
+            document.getElementById('nav-blog').innerText = t.navBlog;
+            document.getElementById('nav-news').innerText = t.navNews;
+            document.getElementById('mm-home').innerText = t.navHome;
+            document.getElementById('mm-shop').innerText = t.navShop;
+            document.getElementById('mm-blog').innerText = t.navBlog;
+            document.getElementById('mm-news').innerText = t.navNews;
+
             document.getElementById('t-about').innerText = t.tAbout;
             document.getElementById('txt-about').innerText = t.txtAbout;
             document.getElementById('t-gallery').innerText = t.tGallery;
             document.getElementById('t-video').innerText = t.tVideo;
-            
-            // Обновляем текст под видео
             document.getElementById('vid-desc').innerText = t.vidDesc;
-
             document.getElementById('t-music').innerText = t.tMusic;
             document.getElementById('tr1').innerText = t.tr1;
             document.getElementById('tr2').innerText = t.tr2;
