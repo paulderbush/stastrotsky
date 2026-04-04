@@ -194,6 +194,41 @@
         .btn-prev { left: 10px; }
         .btn-next { right: 10px; }
 
+        /* --- MOBILE FIXES --- */
+        @media (max-width: 767px) {
+            /* Увеличиваем орбы чтобы перекрывали весь экран по высоте */
+            .orb-1 { width: 120vw; height: 120vw; }
+            .orb-2 { width: 130vw; height: 130vw; }
+            .orb-3 { width: 100vw; height: 100vw; }
+
+            /* Фиксируем хедер */
+            .top-bar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 500;
+                padding: 10px 16px;
+                background: rgba(5, 5, 5, 0.6);
+                backdrop-filter: blur(24px) saturate(180%);
+                -webkit-backdrop-filter: blur(24px) saturate(180%);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            }
+
+            /* Отступ сверху чтобы контент не прятался под хедером */
+            .container {
+                padding-top: 76px;
+            }
+        }
+
+        /* Светлая тема — фиксированный хедер */
+        @media (max-width: 767px) {
+            [data-theme="light"] .top-bar {
+                background: rgba(242, 242, 247, 0.6);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            }
+        }
+
     </style>
 </head>
 <body data-theme="dark">
