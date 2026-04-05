@@ -2,7 +2,7 @@
 <html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Stas Trotsky</title>
 
   <!-- Adaptive Favicon -->
@@ -149,7 +149,7 @@
     ============================================================ */
     .navbar {
       position: fixed;
-      top: 18px;
+      top: max(18px, env(safe-area-inset-top, 18px));
       left: 0; right: 0;
       z-index: 1000;
       display: flex;
@@ -847,11 +847,97 @@
       .navbar { gap: 6px; }
     }
 
+    /* Hamburger button */
+    .nav-hamburger {
+      display: none;
+      pointer-events: all;
+      background: var(--nav-bg);
+      backdrop-filter: blur(var(--blur)) saturate(1.8);
+      -webkit-backdrop-filter: blur(var(--blur)) saturate(1.8);
+      border: 1px solid var(--nav-border);
+      border-radius: 50px;
+      width: 44px; height: 44px;
+      cursor: pointer;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 0;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 18px; height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    /* Mobile fullscreen menu overlay */
+    .mobile-menu-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(24px) saturate(1.6);
+      -webkit-backdrop-filter: blur(24px) saturate(1.6);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: max(60px, env(safe-area-inset-top, 60px)) 32px max(32px, env(safe-area-inset-bottom, 32px));
+    }
+    .mobile-menu-overlay.open { display: flex; }
+
+    /* Blur main content when menu is open */
+    body.menu-open .page-wrapper,
+    body.menu-open .bg-canvas { filter: blur(4px); }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: max(24px, env(safe-area-inset-top, 24px));
+      right: 24px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 50%;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 20px;
+      line-height: 1;
+    }
+    .mobile-menu-close:hover { background: rgba(255,255,255,0.2); }
+
+    .mobile-menu-link {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      padding: 12px 32px;
+      border-radius: 50px;
+      transition: background 0.2s, color 0.2s;
+      width: 100%;
+      text-align: center;
+    }
+    .mobile-menu-link:hover,
+    .mobile-menu-link.active {
+      background: rgba(168, 85, 247, 0.2);
+      color: #c084fc;
+    }
+
     @media (max-width: 600px) {
       .nav-menu { display: none; }
+      .nav-hamburger { display: flex; }
       .shop-grid { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: repeat(3, 1fr); }
-      .page-wrapper { padding-top: 90px; }
+      .page-wrapper {
+        padding-top: max(90px, calc(env(safe-area-inset-top, 0px) + 70px));
+        padding-left: max(16px, env(safe-area-inset-left, 16px));
+        padding-right: max(16px, env(safe-area-inset-right, 16px));
+        padding-bottom: max(20px, env(safe-area-inset-bottom, 20px));
+      }
       .lightbox-prev { left: -44px; }
       .lightbox-next { right: -44px; }
     }
@@ -883,12 +969,17 @@
       <a href="/"><img src="img/logo.png" alt="ST" onerror="this.style.display='none';this.parentNode.innerHTML='<span style=\'font-weight:900;font-size:18px;color:var(--text-primary);letter-spacing:-0.05em\'>ST</span>'" /></a>
     </div>
 
-    <!-- Menu bubble -->
+    <!-- Menu bubble (desktop) -->
     <div class="nav-bubble nav-menu">
       <a href="/" class="active" id="nav-home"></a>
       <a href="/store" id="nav-store"></a>
       <a href="/news" id="nav-news"></a>
     </div>
+
+    <!-- Hamburger button (mobile) -->
+    <button class="nav-hamburger" onclick="openMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
 
     <!-- Controls bubble -->
     <div class="nav-bubble nav-controls">
@@ -908,6 +999,14 @@
       </button>
     </div>
   </nav>
+
+  <!-- Mobile fullscreen menu -->
+  <div class="mobile-menu-overlay" id="mobile-menu" onclick="closeMobileMenuOutside(event)">
+    <button class="mobile-menu-close" onclick="closeMobileMenu()" aria-label="Close">✕</button>
+    <a href="/" class="mobile-menu-link active" id="mob-nav-home" onclick="closeMobileMenu()"></a>
+    <a href="/store" class="mobile-menu-link" id="mob-nav-store" onclick="closeMobileMenu()"></a>
+    <a href="/news" class="mobile-menu-link" id="mob-nav-news" onclick="closeMobileMenu()"></a>
+  </div>
 
   <!-- ============================================================
        MAIN CONTENT
@@ -1165,6 +1264,22 @@
       localStorage.setItem('st-theme', t);
     }
 
+    function openMobileMenu() {
+      document.getElementById('mobile-menu').classList.add('open');
+      document.body.classList.add('menu-open');
+    }
+    function closeMobileMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.body.classList.remove('menu-open');
+    }
+    function closeMobileMenuOutside(e) {
+      if (e.target === document.getElementById('mobile-menu')) closeMobileMenu();
+    }
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeMobileMenu();
+    });
+
     function toggleTheme() {
       setTheme(html.dataset.theme === 'dark' ? 'light' : 'dark');
     }
@@ -1244,6 +1359,9 @@
       document.getElementById('nav-home').textContent = s.navHome;
       document.getElementById('nav-store').textContent = s.navStore;
       document.getElementById('nav-news').textContent = s.navNews;
+      document.getElementById('mob-nav-home').textContent = s.navHome;
+      document.getElementById('mob-nav-store').textContent = s.navStore;
+      document.getElementById('mob-nav-news').textContent = s.navNews;
       document.getElementById('nav-account-label').textContent = s.navAccount;
       document.getElementById('followers-title').textContent = s.followersTitle;
       document.getElementById('label-about').textContent = s.labelAbout;
