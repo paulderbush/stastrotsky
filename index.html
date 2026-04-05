@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0e1a" media="(prefers-color-scheme: dark)" />
   <meta name="theme-color" content="#e8eaf5" media="(prefers-color-scheme: light)" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Stas Trotsky</title>
 
   <!-- Adaptive Favicon -->
@@ -170,7 +172,6 @@
       transition: opacity 0.4s ease;
       opacity: 0.75;
     }
-    .navbar.scrolled { opacity: 0.45; }
 
     .nav-bubble {
       background: var(--nav-bg);
@@ -1374,10 +1375,6 @@
       localStorage.setItem('st-theme', t);
     }
 
-    /* Navbar scroll transparency */
-    window.addEventListener('scroll', () => {
-      document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 40);
-    }, { passive: true });
 
     function openMobileMenu() {
       document.getElementById('mobile-menu').classList.add('open');
