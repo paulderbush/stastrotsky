@@ -1386,7 +1386,10 @@
 
 
     function openMobileMenu() {
-      document.getElementById('mobile-menu').classList.add('open');
+      const menu = document.getElementById('mobile-menu');
+      // iOS 26: use window.outerHeight for correct full-screen coverage
+      menu.style.height = window.outerHeight + 'px';
+      menu.classList.add('open');
       document.body.classList.add('menu-open');
     }
     function closeMobileMenu() {
