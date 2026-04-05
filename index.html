@@ -395,7 +395,9 @@
       padding: 9px 10px;
       border-radius: var(--radius-sm);
       transition: background 0.2s;
-      cursor: default;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
     }
     .follower-row:hover { background: var(--glass-hover); }
 
@@ -411,7 +413,16 @@
       font-size: 14px;
       font-weight: 500;
       color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
+    .follower-name svg {
+      opacity: 0.4;
+      flex-shrink: 0;
+      transition: opacity 0.2s;
+    }
+    .follower-row:hover .follower-name svg { opacity: 0.7; }
 
     .follower-count {
       font-size: 14px;
@@ -928,8 +939,41 @@
     }
 
     @media (max-width: 600px) {
+      /* Single-bar navbar on mobile */
+      .navbar {
+        left: 14px; right: 14px;
+        top: max(14px, env(safe-area-inset-top, 14px));
+        gap: 0;
+        background: var(--nav-bg);
+        backdrop-filter: blur(var(--blur)) saturate(1.8);
+        -webkit-backdrop-filter: blur(var(--blur)) saturate(1.8);
+        border: 1px solid var(--nav-border);
+        border-radius: 50px;
+        padding: 5px 8px;
+        box-shadow: var(--shadow-sm);
+        justify-content: space-between;
+      }
+      .nav-bubble {
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        padding: 4px 6px;
+      }
+      .nav-hamburger {
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
       .nav-menu { display: none; }
       .nav-hamburger { display: flex; }
+      /* Hide "Кабинет" text label on mobile */
+      #nav-account-label { display: none; }
+      .nav-login-btn { gap: 0; }
+
       .shop-grid { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: repeat(3, 1fr); }
       .page-wrapper {
@@ -1026,54 +1070,37 @@
             <div class="profile-name">Stas Trotsky</div>
             <div class="profile-subtitle" id="profile-subtitle">Blogger · Artist · Creator</div>
           </div>
-          <div class="social-icons">
-            <a href="https://www.youtube.com/@stastrotskymedia?si=hgcKdqImzOkYCMuT" target="_blank" rel="noopener" title="YouTube">
-              <img src="img/youtube.png" alt="YouTube" />
-            </a>
-            <a href="https://www.instagram.com/stastrotsky/" target="_blank" rel="noopener" title="Instagram">
-              <img src="img/instagram.png" alt="Instagram" />
-            </a>
-            <a href="https://t.me/stastrotskynews" target="_blank" rel="noopener" title="Telegram">
-              <img src="img/telegram.png" alt="Telegram" />
-            </a>
-            <a href="https://x.com/stastrotsky" target="_blank" rel="noopener" title="X">
-              <img src="img/icon-x.png" alt="X" />
-            </a>
-            <a href="https://justfor.fans/stastrotsky" target="_blank" rel="noopener" title="JustForFans">
-              <img src="img/icon-fans.png" alt="JFF" />
-            </a>
-          </div>
         </div>
 
         <!-- Followers Card -->
         <div class="glass followers-card">
           <div class="followers-title" id="followers-title">Подписчики</div>
           <div class="followers-list">
-            <div class="follower-row">
+            <a class="follower-row" href="https://www.youtube.com/@stastrotskymedia?si=hgcKdqImzOkYCMuT" target="_blank" rel="noopener">
               <img class="follower-icon" src="img/youtube.png" alt="YouTube" />
-              <span class="follower-name">YouTube</span>
+              <span class="follower-name">YouTube<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
               <span class="follower-count">17,3K</span>
-            </div>
-            <div class="follower-row">
+            </a>
+            <a class="follower-row" href="https://www.instagram.com/stastrotsky/" target="_blank" rel="noopener">
               <img class="follower-icon" src="img/instagram.png" alt="Instagram" />
-              <span class="follower-name">Instagram</span>
+              <span class="follower-name">Instagram<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
               <span class="follower-count">72,4K</span>
-            </div>
-            <div class="follower-row">
+            </a>
+            <a class="follower-row" href="https://t.me/stastrotskynews" target="_blank" rel="noopener">
               <img class="follower-icon" src="img/telegram.png" alt="Telegram" />
-              <span class="follower-name">Telegram</span>
+              <span class="follower-name">Telegram<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
               <span class="follower-count">3,6K</span>
-            </div>
-            <div class="follower-row">
+            </a>
+            <a class="follower-row" href="https://x.com/stastrotsky" target="_blank" rel="noopener">
               <img class="follower-icon" src="img/icon-x.png" alt="X" />
-              <span class="follower-name">X</span>
+              <span class="follower-name">X<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
               <span class="follower-count">7,9K</span>
-            </div>
-            <div class="follower-row">
+            </a>
+            <a class="follower-row" href="https://justfor.fans/stastrotsky" target="_blank" rel="noopener">
               <img class="follower-icon" src="img/icon-fans.png" alt="JFF" />
-              <span class="follower-name">JustForFans</span>
+              <span class="follower-name">JustForFans<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
               <span class="follower-count exclusive" id="jff-exclusive">Exclusive</span>
-            </div>
+            </a>
           </div>
         </div>
 
