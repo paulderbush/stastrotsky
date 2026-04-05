@@ -3,8 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#0a0e1a" media="(prefers-color-scheme: dark)" />
-  <meta name="theme-color" content="#e8eaf5" media="(prefers-color-scheme: light)" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Stas Trotsky</title>
@@ -81,41 +79,19 @@
 
     html {
       scroll-behavior: smooth;
-      background: var(--bg-1);
+      background: transparent;
       height: 100%;
       min-height: 100dvh;
     }
 
     body {
       font-family: var(--font);
-      background: var(--bg-1);
+      background: transparent;
       color: var(--text-primary);
       min-height: 100dvh;
       overflow-x: hidden;
-      transition: background var(--transition), color var(--transition);
+      transition: color var(--transition);
       color-scheme: dark light;
-    }
-
-    /* ============================================================
-       iOS SAFARI TOOLBAR TINT FIX (msdrigg method)
-       A fixed element < 50vh tall with a 100vh child forces Safari's
-       compositor to sample the background color for both top and
-       bottom toolbar tinting (workaround for iOS Safari bug).
-    ============================================================ */
-    #safari-tint {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      width: 100vw;
-      height: 48px;
-      z-index: -1;
-      pointer-events: none;
-    }
-    #safari-tint-inner {
-      height: 100vh;
-      background-color: var(--bg-1);
-      transition: background-color var(--transition);
     }
 
     /* ============================================================
@@ -1106,11 +1082,6 @@
 
 <body>
 
-  <!-- iOS Safari toolbar tint fix (msdrigg method) -->
-  <div id="safari-tint" aria-hidden="true">
-    <div id="safari-tint-inner"></div>
-  </div>
-
   <!-- ============================================================
        ANIMATED BACKGROUND
   ============================================================ -->
@@ -1411,24 +1382,10 @@
     const themeBtn = document.getElementById('theme-toggle');
 
     function setTheme(t) {
-      const bgColor = t === 'dark' ? '#0a0e1a' : '#e8eaf5';
       html.dataset.theme = t;
       themeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
       const mobThemeBtn = document.getElementById('mob-theme-toggle');
       if (mobThemeBtn) mobThemeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
-      // DNA-dev method: set explicit background on html/body so Safari's
-      // toolbar tinting algorithm can read a real computed color (not a CSS var).
-      document.documentElement.style.background = bgColor;
-      document.body.style.background = bgColor;
-      // msdrigg inner element: also set explicit inline color for same reason.
-      const tintInner = document.getElementById('safari-tint-inner');
-      if (tintInner) tintInner.style.backgroundColor = bgColor;
-      // Update theme-color meta for older Safari / other browsers
-      document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.remove());
-      const tc = document.createElement('meta');
-      tc.name = 'theme-color';
-      tc.content = bgColor;
-      document.head.appendChild(tc);
       localStorage.setItem('st-theme', t);
     }
 
