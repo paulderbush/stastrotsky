@@ -86,9 +86,10 @@
       font-family: var(--font);
       background: var(--bg-1);
       color: var(--text-primary);
-      min-height: 100vh;
+      min-height: 100dvh;
       overflow-x: hidden;
       transition: background var(--transition), color var(--transition);
+      color-scheme: dark light;
     }
 
     /* ============================================================
@@ -163,7 +164,9 @@
       gap: 10px;
       padding: 0 20px;
       pointer-events: none;
+      transition: opacity 0.4s ease;
     }
+    .navbar.scrolled { opacity: 0.7; }
 
     .nav-bubble {
       background: var(--nav-bg);
@@ -195,6 +198,7 @@
       width: auto;
       display: block;
     }
+    [data-theme="light"] .nav-logo-bubble img { content: url('img/logo-black.png'); }
 
     /* Menu bubble */
     .nav-menu {
@@ -433,7 +437,7 @@
     .follower-count {
       font-size: 14px;
       font-weight: 700;
-      color: var(--accent-blue);
+      color: var(--accent);
     }
     .follower-count.exclusive {
       color: var(--accent);
@@ -896,7 +900,8 @@
     .mobile-menu-overlay {
       display: none;
       position: fixed;
-      inset: 0;
+      top: 0; left: 0; right: 0;
+      height: 100dvh;
       z-index: 2000;
       background: rgba(0, 0, 0, 0.55);
       backdrop-filter: blur(24px) saturate(1.6);
@@ -904,7 +909,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: max(70px, env(safe-area-inset-top, 70px)) 32px 24px;
+      padding: max(70px, env(safe-area-inset-top, 70px)) 32px max(24px, env(safe-area-inset-bottom, 24px));
     }
     .mobile-menu-overlay.open { display: flex; }
 
@@ -1025,7 +1030,10 @@
       }
       .nav-menu { display: none; }
       .nav-controls { display: none; }
-      .nav-hamburger { display: flex; }
+      .nav-hamburger { display: flex; order: 3; }
+      /* Logo stays left, person then hamburger on right */
+      .nav-logo-bubble { order: 1; }
+      .nav-login-bubble { order: 2; }
       /* Hide "Кабинет" text label on mobile */
       #nav-account-label { display: none; }
       .nav-login-btn { gap: 0; }
@@ -1353,8 +1361,19 @@
       themeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
       const mobThemeBtn = document.getElementById('mob-theme-toggle');
       if (mobThemeBtn) mobThemeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
+      // Update theme-color meta for iOS Safari toolbar tinting
+      document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.remove());
+      const tc = document.createElement('meta');
+      tc.name = 'theme-color';
+      tc.content = t === 'dark' ? '#0a0e1a' : '#e8eaf5';
+      document.head.appendChild(tc);
       localStorage.setItem('st-theme', t);
     }
+
+    /* Navbar scroll transparency */
+    window.addEventListener('scroll', () => {
+      document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
 
     function openMobileMenu() {
       document.getElementById('mobile-menu').classList.add('open');
