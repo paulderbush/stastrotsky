@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta id="meta-theme-color" name="theme-color" content="#0a0e1a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Stas Trotsky</title>
@@ -79,16 +80,16 @@
 
     html {
       scroll-behavior: smooth;
-      background: transparent;
+      background-color: var(--bg-1);
       min-height: 100dvh;
     }
 
     body {
       font-family: var(--font);
-      background: transparent;
+      background-color: var(--bg-1);
       color: var(--text-primary);
       min-height: 100dvh;
-      transition: color var(--transition);
+      transition: background-color var(--transition), color var(--transition);
       color-scheme: dark light;
     }
 
@@ -114,7 +115,7 @@
     .orb-1 {
       width: 600px; height: 600px;
       background: var(--bg-orb-1);
-      top: -150px; left: -100px;
+      top: 10px; left: -50px;
       animation-duration: 20s;
     }
     .orb-2 {
@@ -1380,10 +1381,13 @@
     const themeBtn = document.getElementById('theme-toggle');
 
     function setTheme(t) {
+      const bgColor = t === 'dark' ? '#0a0e1a' : '#e8eaf5';
       html.dataset.theme = t;
       themeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
       const mobThemeBtn = document.getElementById('mob-theme-toggle');
       if (mobThemeBtn) mobThemeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
+      const metaThemeColor = document.getElementById('meta-theme-color');
+      if (metaThemeColor) metaThemeColor.content = bgColor;
       localStorage.setItem('st-theme', t);
     }
 
