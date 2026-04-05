@@ -37,7 +37,7 @@
       --bg-2: #0f1525;
       --bg-orb-1: rgba(90, 40, 160, 0.45);
       --bg-orb-2: rgba(20, 80, 180, 0.35);
-      --bg-orb-3: rgba(160, 30, 80, 0.3);
+      --bg-orb-3: rgba(160, 30, 80, 0.55);
       --glass-bg: rgba(255, 255, 255, 0.06);
       --glass-border: rgba(255, 255, 255, 0.12);
       --glass-hover: rgba(255, 255, 255, 0.10);
@@ -47,7 +47,7 @@
       --accent: #a855f7;
       --accent-2: #ec4899;
       --accent-blue: #3b82f6;
-      --nav-bg: rgba(15, 20, 40, 0.55);
+      --nav-bg: rgba(15, 20, 40, 0.82);
       --nav-border: rgba(255, 255, 255, 0.1);
       --shadow: 0 8px 40px rgba(0,0,0,0.4);
       --shadow-sm: 0 2px 16px rgba(0,0,0,0.3);
@@ -58,7 +58,7 @@
       --bg-2: #f0e8f5;
       --bg-orb-1: rgba(168, 85, 247, 0.2);
       --bg-orb-2: rgba(59, 130, 246, 0.15);
-      --bg-orb-3: rgba(236, 72, 153, 0.15);
+      --bg-orb-3: rgba(236, 72, 153, 0.35);
       --glass-bg: rgba(255, 255, 255, 0.55);
       --glass-border: rgba(255, 255, 255, 0.8);
       --glass-hover: rgba(255, 255, 255, 0.75);
@@ -68,7 +68,7 @@
       --accent: #7c3aed;
       --accent-2: #db2777;
       --accent-blue: #2563eb;
-      --nav-bg: rgba(230, 230, 245, 0.65);
+      --nav-bg: rgba(230, 230, 245, 0.88);
       --nav-border: rgba(255, 255, 255, 0.9);
       --shadow: 0 8px 40px rgba(0,0,0,0.12);
       --shadow-sm: 0 2px 16px rgba(0,0,0,0.08);
@@ -129,17 +129,17 @@
       animation-delay: -5s;
     }
     .orb-3 {
-      width: 500px; height: 500px;
+      width: 600px; height: 600px;
       background: var(--bg-orb-3);
-      bottom: -120px; left: 20%;
+      bottom: -180px; left: 10%;
       animation-duration: 22s;
       animation-delay: -10s;
     }
 
     .orb-4 {
-      width: 380px; height: 380px;
+      width: 500px; height: 500px;
       background: var(--bg-orb-1);
-      bottom: -80px; right: -60px;
+      bottom: -150px; right: -80px;
       animation-duration: 28s;
       animation-delay: -8s;
     }
@@ -177,8 +177,6 @@
       gap: 10px;
       padding: 0 20px;
       pointer-events: none;
-      transition: opacity 0.4s ease;
-      opacity: 0.75;
     }
 
     .nav-bubble {
@@ -1386,10 +1384,7 @@
 
 
     function openMobileMenu() {
-      const menu = document.getElementById('mobile-menu');
-      // iOS 26: use window.outerHeight for correct full-screen coverage
-      menu.style.height = window.outerHeight + 'px';
-      menu.classList.add('open');
+      document.getElementById('mobile-menu').classList.add('open');
       document.body.classList.add('menu-open');
     }
     function closeMobileMenu() {
