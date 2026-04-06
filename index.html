@@ -4,9 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="dark light" />
-  <meta id="meta-theme-color" name="theme-color" content="#0a0e1a" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="ST" />
   <link rel="apple-touch-icon" href="images/web-icon.png" />
   <title>Stas Trotsky</title>
@@ -83,14 +80,17 @@
 
     html {
       scroll-behavior: smooth;
+      background-color: var(--bg-1);
+      min-height: 100dvh;
     }
 
     body {
       font-family: var(--font);
-      background: var(--bg-1);
+      background-color: var(--bg-1);
       color: var(--text-primary);
+      min-height: 100dvh;
       overflow-x: hidden;
-      transition: background var(--transition), color var(--transition);
+      transition: background-color var(--transition), color var(--transition);
       color-scheme: dark light;
     }
 
@@ -165,7 +165,7 @@
     ============================================================ */
     .navbar {
       position: fixed;
-      top: max(18px, env(safe-area-inset-top, 18px));
+      top: 18px;
       left: 0; right: 0;
       z-index: 1000;
       display: flex;
@@ -723,7 +723,7 @@
     }
     .lightbox-close {
       position: absolute;
-      top: max(20px, env(safe-area-inset-top, 20px));
+      top: 20px;
       right: 20px;
       width: 40px; height: 40px;
       border-radius: 50%;
@@ -917,7 +917,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: max(70px, env(safe-area-inset-top, 70px)) 32px max(24px, env(safe-area-inset-bottom, 24px));
+      padding: 70px 32px 24px;
     }
     .mobile-menu-overlay.open { display: flex; }
 
@@ -927,7 +927,7 @@
 
     .mobile-menu-close {
       position: absolute;
-      top: max(24px, env(safe-area-inset-top, 24px));
+      top: 24px;
       right: 24px;
       background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.18);
@@ -978,7 +978,7 @@
       border: 1px solid rgba(255,255,255,0.15);
       border-radius: 50px;
       padding: 6px 12px;
-      margin-bottom: max(16px, env(safe-area-inset-bottom, 16px));
+      margin-bottom: 16px;
     }
 
     .mob-settings-btn {
@@ -1010,7 +1010,7 @@
       /* Single-bar navbar on mobile */
       .navbar {
         left: 14px; right: 14px;
-        top: max(14px, env(safe-area-inset-top, 14px));
+        top: 14px;
         gap: 0;
         background: var(--nav-bg);
         backdrop-filter: blur(var(--blur)) saturate(1.8);
@@ -1049,27 +1049,9 @@
       .shop-grid { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: repeat(3, 1fr); }
       .page-wrapper {
-        padding-top: max(90px, calc(env(safe-area-inset-top) + 70px));
-        padding-left: max(16px, env(safe-area-inset-left));
-        padding-right: max(16px, env(safe-area-inset-right));
-        padding-bottom: 0;
+        padding: 90px 16px 40px;
       }
       .lightbox-img { max-width: 88vw; max-height: 62vh; }
-    }
-
-    @supports (padding: max(0px)) {
-      .navbar {
-        top: max(18px, env(safe-area-inset-top));
-      }
-      @media (max-width: 600px) {
-        .navbar { top: max(14px, env(safe-area-inset-top)); }
-        .page-wrapper {
-          padding-top: max(90px, calc(env(safe-area-inset-top) + 70px));
-          padding-left: max(16px, env(safe-area-inset-left));
-          padding-right: max(16px, env(safe-area-inset-right));
-          padding-bottom: 0;
-        }
-      }
     }
 
     /* Scrollbar */
@@ -1381,14 +1363,10 @@
     const themeBtn = document.getElementById('theme-toggle');
 
     function setTheme(t) {
-      const bgColor = t === 'dark' ? '#0a0e1a' : '#e8eaf5';
       html.dataset.theme = t;
       themeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
       const mobThemeBtn = document.getElementById('mob-theme-toggle');
       if (mobThemeBtn) mobThemeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
-      document.documentElement.style.colorScheme = t;
-      const metaThemeColor = document.getElementById('meta-theme-color');
-      if (metaThemeColor) metaThemeColor.content = bgColor;
       localStorage.setItem('st-theme', t);
     }
 
