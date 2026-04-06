@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="robots" content="noindex" />
+  <title>Курс 3 — Stas Trotsky</title>
+  <link rel="icon" href="../img/favicon-light.png" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" href="../img/favicon-dark.png" media="(prefers-color-scheme: light)" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root { --radius-xl:28px;--radius-lg:22px;--radius-md:16px;--font:'Montserrat',sans-serif;--blur:24px;--transition:0.35s cubic-bezier(0.4,0,0.2,1); }
+    [data-theme="dark"] { --bg-1:#0a0e1a;--bg-orb-1:rgba(90,40,160,0.45);--bg-orb-2:rgba(20,80,180,0.35);--bg-orb-3:rgba(160,30,80,0.55);--glass-bg:rgba(255,255,255,0.06);--glass-border:rgba(255,255,255,0.12);--glass-hover:rgba(255,255,255,0.10);--text-primary:#fff;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--accent:#a855f7;--accent-2:#ec4899;--nav-bg:rgba(15,20,40,0.82);--nav-border:rgba(255,255,255,0.1);--shadow:0 8px 40px rgba(0,0,0,0.4);--shadow-sm:0 2px 16px rgba(0,0,0,0.3); }
+    [data-theme="light"] { --bg-1:#e8eaf5;--bg-orb-1:rgba(168,85,247,0.2);--bg-orb-2:rgba(59,130,246,0.15);--bg-orb-3:rgba(236,72,153,0.35);--glass-bg:rgba(255,255,255,0.55);--glass-border:rgba(255,255,255,0.8);--glass-hover:rgba(255,255,255,0.75);--text-primary:#111827;--text-secondary:rgba(17,24,39,0.7);--text-muted:rgba(17,24,39,0.45);--accent:#7c3aed;--accent-2:#db2777;--nav-bg:rgba(230,230,245,0.88);--nav-border:rgba(255,255,255,0.9);--shadow:0 8px 40px rgba(0,0,0,0.12);--shadow-sm:0 2px 16px rgba(0,0,0,0.08); }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;background-color:var(--bg-1);min-height:100dvh}
+    body{font-family:var(--font);background-color:var(--bg-1);color:var(--text-primary);min-height:100dvh;overflow-x:hidden;transition:background-color var(--transition),color var(--transition);color-scheme:dark light}
+    .bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;background-color:var(--bg-1)}
+    .orb{position:absolute;border-radius:50%;filter:blur(80px);animation:drift 18s ease-in-out infinite alternate}
+    .orb-1{width:600px;height:600px;background:var(--bg-orb-1);top:50px;left:-50px;animation-duration:20s}
+    .orb-2{width:500px;height:500px;background:var(--bg-orb-2);top:30%;right:-80px;animation-duration:25s;animation-delay:-5s}
+    .orb-3{width:600px;height:600px;background:var(--bg-orb-3);bottom:-50px;left:10%;animation-duration:22s;animation-delay:-10s}
+    @keyframes drift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.05)}66%{transform:translate(-20px,40px) scale(0.97)}100%{transform:translate(20px,10px) scale(1.02)}}
+    .navbar{position:fixed;top:18px;left:0;right:0;z-index:1000;display:flex;justify-content:center;align-items:center;gap:8px;pointer-events:none}
+    .nav-bubble{pointer-events:all;height:46px;padding:0 18px;border-radius:50px;background:var(--glass-bg);border:1px solid var(--glass-border);backdrop-filter:blur(var(--blur)) saturate(1.8);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.8);display:flex;align-items:center;gap:8px;font-family:var(--font);font-size:14px;font-weight:600;color:var(--text-primary);cursor:pointer;text-decoration:none;transition:background 0.2s;box-shadow:var(--shadow-sm)}
+    .nav-bubble:hover{background:var(--glass-hover)}
+    .nav-logo-bubble img{height:28px;display:block}
+    [data-theme="light"] .nav-logo-bubble img{content:url('../img/logo-black.png')}
+    .nav-btn{background:none;border:none;padding:0 8px;font:inherit;color:inherit;cursor:pointer;display:flex;align-items:center;gap:6px}
+    .page-wrapper{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:100px 20px 60px}
+    .card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-xl);backdrop-filter:blur(var(--blur)) saturate(1.6);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.6);padding:28px;margin-bottom:16px;box-shadow:var(--shadow)}
+    .course-badge{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 12px;border-radius:50px;margin-bottom:14px}
+    .course-title{font-size:28px;font-weight:800;margin-bottom:8px;line-height:1.2}
+    .course-desc{font-size:15px;color:var(--text-secondary);line-height:1.7;margin-bottom:0}
+    .section-title{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px}
+    /* Video placeholder */
+    .video-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:var(--radius-lg);overflow:hidden;background:#000;margin-bottom:12px}
+    .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .video-title{font-size:14px;font-weight:600;margin-bottom:20px;color:var(--text-secondary)}
+    /* Access denied */
+    .denied{text-align:center;padding:60px 20px;color:var(--text-muted)}
+    .denied-icon{font-size:48px;margin-bottom:16px}
+    .denied h2{font-size:22px;font-weight:800;color:var(--text-primary);margin-bottom:10px}
+    .denied p{font-size:14px;line-height:1.7;margin-bottom:24px}
+    .btn-primary{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-radius:50px;padding:12px 28px;font-family:var(--font);font-size:14px;font-weight:700;text-decoration:none;transition:opacity 0.2s;border:none;cursor:pointer}
+    .btn-primary:hover{opacity:0.85}
+    @media(max-width:600px){.page-wrapper{padding:90px 14px 40px}.course-title{font-size:22px}}
+  </style>
+</head>
+<body>
+  <div class="bg-canvas">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <nav class="navbar">
+    <a href="/" class="nav-bubble nav-logo-bubble"><img src="../img/logo.png" alt="ST" /></a>
+    <a href="/account.html" class="nav-bubble" style="font-size:13px">← Мои курсы</a>
+    <div class="nav-bubble">
+      <button class="nav-btn" id="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </div>
+  </nav>
+
+  <main class="page-wrapper" id="page-content" style="display:none"></main>
+
+  <script>
+    const html = document.documentElement;
+    function setTheme(t){html.dataset.theme=t;const b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'🌙':'☀️';localStorage.setItem('st-theme',t)}
+    function toggleTheme(){setTheme(html.dataset.theme==='dark'?'light':'dark')}
+    setTheme(localStorage.getItem('st-theme')||'dark');
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+    const COURSE_ID = 'course-3'; // ← ID этого курса в Firestore
+
+    const app = initializeApp({
+      apiKey: "AIzaSyCOkfOnGEm7D1Dic0hUnZBNkvMAKi_sGHM",
+      authDomain: "stas-trotsky.firebaseapp.com",
+      projectId: "stas-trotsky",
+      storageBucket: "stas-trotsky.firebasestorage.app",
+      messagingSenderId: "299023334744",
+      appId: "1:299023334744:web:6e762caf8838d31d61792d"
+    });
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    const page = document.getElementById('page-content');
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        renderDenied('not-logged-in');
+        return;
+      }
+      const snap = await getDoc(doc(db, 'users', user.uid));
+      const purchases = snap.exists() ? (snap.data().purchases || []) : [];
+
+      if (!purchases.includes(COURSE_ID)) {
+        renderDenied('not-purchased');
+        return;
+      }
+
+      // ✅ User has access — show full course content
+      page.style.display = '';
+      page.innerHTML = `
+        <div class="card">
+          <div class="course-badge">Эксклюзив</div>
+          <h1 class="course-title">Курс 3</h1>
+          <p class="course-desc">
+            Полный авторский курс. Только для тех, кто приобрёл доступ.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Урок 1 — Введение</div>
+          <!-- Замените src на вашу ссылку из Kinescope -->
+          <div class="video-wrap">
+            <iframe src="https://kinescope.io/embed/ВАША_ССЫЛКА_1_КУРС3" allowfullscreen></iframe>
+          </div>
+          <div class="video-title">Введение в курс</div>
+
+          <div class="section-title">Урок 2</div>
+          <div class="video-wrap">
+            <iframe src="https://kinescope.io/embed/ВАША_ССЫЛКА_2_КУРС3" allowfullscreen></iframe>
+          </div>
+          <div class="video-title">Урок 2 — название</div>
+        </div>
+      `;
+    });
+
+    function renderDenied(reason) {
+      page.style.display = '';
+      const isGuest = reason === 'not-logged-in';
+      page.innerHTML = `
+        <div class="card">
+          <div class="denied">
+            <div class="denied-icon">🔒</div>
+            <h2>${isGuest ? 'Войдите в аккаунт' : 'Курс не приобретён'}</h2>
+            <p>${isGuest
+              ? 'Для просмотра курса необходимо войти в личный кабинет.'
+              : 'У вас нет доступа к этому курсу. Приобретите его в магазине.'
+            }</p>
+            <a class="btn-primary" href="${isGuest ? '/?login=1' : '/'}">
+              ${isGuest ? 'Войти' : 'Перейти в магазин'}
+            </a>
+          </div>
+        </div>`;
+    }
+  </script>
+</body>
+</html>

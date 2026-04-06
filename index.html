@@ -1643,42 +1643,88 @@
       el.textContent = '';
     }
 
-    // --- Minimal local auth (demo). Replace with backend calls. ---
-    function handleLogin() {
-      const email = document.getElementById('login-email').value.trim();
-      const pass  = document.getElementById('login-password').value;
-      if (!email || !pass) { showModalMessage(currentLang === 'ru' ? 'Заполните все поля' : 'Fill all fields', '#ef4444'); return; }
+    // Real implementations are in the Firebase module below (overwrite window.handleLogin/Register)
+    function handleLogin() {}
+    function handleRegister() {}
 
-      // Simulate API call
-      showModalMessage(currentLang === 'ru' ? 'Выполняется вход...' : 'Signing in...', 'var(--text-muted)');
-      setTimeout(() => {
-        // Replace this block with real authentication
-        showModalMessage(
-          currentLang === 'ru'
-            ? '⚠️ Бэкенд не подключён. Интегрируйте Firebase Auth или другой провайдер.'
-            : '⚠️ Backend not connected. Integrate Firebase Auth or another provider.',
-          '#f59e0b'
-        );
-      }, 800);
+  </script>
+
+  <!-- ============================================================
+       FIREBASE AUTH + FIRESTORE
+  ============================================================ -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+    const app = initializeApp({
+      apiKey: "AIzaSyCOkfOnGEm7D1Dic0hUnZBNkvMAKi_sGHM",
+      authDomain: "stas-trotsky.firebaseapp.com",
+      projectId: "stas-trotsky",
+      storageBucket: "stas-trotsky.firebasestorage.app",
+      messagingSenderId: "299023334744",
+      appId: "1:299023334744:web:6e762caf8838d31d61792d"
+    });
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    // Update navbar based on login state
+    onAuthStateChanged(auth, (user) => {
+      const btn   = document.getElementById('nav-account');
+      const label = document.getElementById('nav-account-label');
+      if (user) {
+        label.textContent = user.displayName || user.email.split('@')[0];
+        btn.onclick = () => location.href = '/account.html';
+        btn.title = 'Личный кабинет';
+      } else {
+        label.textContent = '';
+        btn.onclick = window.openModal;
+      }
+    });
+
+    function authError(code) {
+      return ({
+        'auth/email-already-in-use': 'Email уже используется',
+        'auth/invalid-email': 'Неверный формат email',
+        'auth/weak-password': 'Пароль — минимум 6 символов',
+        'auth/user-not-found': 'Аккаунт не найден',
+        'auth/wrong-password': 'Неверный пароль',
+        'auth/invalid-credential': 'Неверный email или пароль',
+        'auth/too-many-requests': 'Слишком много попыток. Попробуйте позже',
+      })[code] || 'Ошибка. Попробуйте ещё раз.';
     }
 
-    function handleRegister() {
+    window.handleLogin = async function() {
+      const email = document.getElementById('login-email').value.trim();
+      const pass  = document.getElementById('login-password').value;
+      if (!email || !pass) { showModalMessage('Заполните все поля', '#ef4444'); return; }
+      showModalMessage('Выполняется вход…', 'var(--text-muted)');
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        closeModal();
+        location.href = '/account.html';
+      } catch (e) { showModalMessage(authError(e.code), '#ef4444'); }
+    };
+
+    window.handleRegister = async function() {
       const name  = document.getElementById('reg-name').value.trim();
       const email = document.getElementById('reg-email').value.trim();
       const pass  = document.getElementById('reg-password').value;
-      if (!name || !email || !pass) { showModalMessage(currentLang === 'ru' ? 'Заполните все поля' : 'Fill all fields', '#ef4444'); return; }
-
-      showModalMessage(currentLang === 'ru' ? 'Создание аккаунта...' : 'Creating account...', 'var(--text-muted)');
-      setTimeout(() => {
-        showModalMessage(
-          currentLang === 'ru'
-            ? '⚠️ Бэкенд не подключён. Интегрируйте Firebase Auth или другой провайдер.'
-            : '⚠️ Backend not connected. Integrate Firebase Auth or another provider.',
-          '#f59e0b'
-        );
-      }, 800);
-    }
-
+      if (!name || !email || !pass) { showModalMessage('Заполните все поля', '#ef4444'); return; }
+      showModalMessage('Создание аккаунта…', 'var(--text-muted)');
+      try {
+        const { user } = await createUserWithEmailAndPassword(auth, email, pass);
+        // Create user document in Firestore with empty purchases array
+        await setDoc(doc(db, 'users', user.uid), {
+          email: user.email,
+          displayName: name,
+          createdAt: new Date().toISOString(),
+          purchases: []
+        });
+        closeModal();
+        location.href = '/account.html';
+      } catch (e) { showModalMessage(authError(e.code), '#ef4444'); }
+    };
   </script>
 </body>
 </html>
