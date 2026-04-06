@@ -853,6 +853,8 @@
       margin-top: 4px;
     }
     .modal-submit:hover { opacity: 0.9; transform: scale(1.01); }
+    .modal-forgot { background: none; border: none; color: var(--text-muted); font-family: var(--font); font-size: 12px; cursor: pointer; margin-top: 10px; width: 100%; text-align: center; padding: 4px; transition: color 0.2s; }
+    .modal-forgot:hover { color: var(--accent); }
 
     .modal-close-btn {
       position: absolute;
@@ -1340,6 +1342,7 @@
         <input class="modal-input" type="email" placeholder="Email" id="login-email" />
         <input class="modal-input" type="password" placeholder="Пароль" id="login-password" />
         <button class="modal-submit" onclick="handleLogin()" id="btn-login-submit">Войти</button>
+        <button class="modal-forgot" onclick="handleForgotPassword()">Забыли пароль?</button>
       </div>
       <div id="form-register" style="display:none">
         <input class="modal-input" type="text" placeholder="Имя" id="reg-name" />
@@ -1654,7 +1657,7 @@
   ============================================================ -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
     const app = initializeApp({
@@ -1723,6 +1726,16 @@
         });
         closeModal();
         location.href = '/account.html';
+      } catch (e) { showModalMessage(authError(e.code), '#ef4444'); }
+    };
+
+    window.handleForgotPassword = async function() {
+      const email = document.getElementById('login-email').value.trim();
+      if (!email) { showModalMessage('Введите email в поле выше', '#ef4444'); return; }
+      showModalMessage('Отправляем письмо…', 'var(--text-muted)');
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showModalMessage('Письмо отправлено! Проверьте почту.', 'var(--accent)');
       } catch (e) { showModalMessage(authError(e.code), '#ef4444'); }
     };
   </script>

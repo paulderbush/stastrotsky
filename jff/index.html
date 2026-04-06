@@ -12,9 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    :root { --radius-xl:28px;--radius-lg:22px;--radius-md:16px;--font:'Montserrat',sans-serif;--blur:24px;--transition:0.35s cubic-bezier(0.4,0,0.2,1); }
-    [data-theme="dark"] { --bg-1:#0a0e1a;--bg-orb-1:rgba(90,40,160,0.45);--bg-orb-2:rgba(20,80,180,0.35);--bg-orb-3:rgba(160,30,80,0.55);--glass-bg:rgba(255,255,255,0.06);--glass-border:rgba(255,255,255,0.12);--glass-hover:rgba(255,255,255,0.10);--text-primary:#fff;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--accent:#a855f7;--accent-2:#ec4899;--nav-bg:rgba(15,20,40,0.82);--nav-border:rgba(255,255,255,0.1);--shadow:0 8px 40px rgba(0,0,0,0.4);--shadow-sm:0 2px 16px rgba(0,0,0,0.3); }
-    [data-theme="light"] { --bg-1:#e8eaf5;--bg-orb-1:rgba(168,85,247,0.2);--bg-orb-2:rgba(59,130,246,0.15);--bg-orb-3:rgba(236,72,153,0.35);--glass-bg:rgba(255,255,255,0.55);--glass-border:rgba(255,255,255,0.8);--glass-hover:rgba(255,255,255,0.75);--text-primary:#111827;--text-secondary:rgba(17,24,39,0.7);--text-muted:rgba(17,24,39,0.45);--accent:#7c3aed;--accent-2:#db2777;--nav-bg:rgba(230,230,245,0.88);--nav-border:rgba(255,255,255,0.9);--shadow:0 8px 40px rgba(0,0,0,0.12);--shadow-sm:0 2px 16px rgba(0,0,0,0.08); }
+    :root { --radius-xl:28px;--radius-lg:22px;--font:'Montserrat',sans-serif;--blur:24px;--transition:0.35s cubic-bezier(0.4,0,0.2,1); }
+    [data-theme="dark"] { --bg-1:#0a0e1a;--bg-orb-1:rgba(90,40,160,0.45);--bg-orb-2:rgba(20,80,180,0.35);--bg-orb-3:rgba(160,30,80,0.55);--glass-bg:rgba(255,255,255,0.06);--glass-border:rgba(255,255,255,0.12);--glass-hover:rgba(255,255,255,0.10);--text-primary:#fff;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--accent:#a855f7;--accent-2:#ec4899;--shadow:0 8px 40px rgba(0,0,0,0.4);--shadow-sm:0 2px 16px rgba(0,0,0,0.3); }
+    [data-theme="light"] { --bg-1:#e8eaf5;--bg-orb-1:rgba(168,85,247,0.2);--bg-orb-2:rgba(59,130,246,0.15);--bg-orb-3:rgba(236,72,153,0.35);--glass-bg:rgba(255,255,255,0.55);--glass-border:rgba(255,255,255,0.8);--glass-hover:rgba(255,255,255,0.75);--text-primary:#111827;--text-secondary:rgba(17,24,39,0.7);--text-muted:rgba(17,24,39,0.45);--accent:#7c3aed;--accent-2:#db2777;--shadow:0 8px 40px rgba(0,0,0,0.12);--shadow-sm:0 2px 16px rgba(0,0,0,0.08); }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;background-color:var(--bg-1);min-height:100dvh}
     body{font-family:var(--font);background-color:var(--bg-1);color:var(--text-primary);min-height:100dvh;overflow-x:hidden;transition:background-color var(--transition),color var(--transition);color-scheme:dark light}
@@ -57,13 +57,19 @@
 
   <nav class="navbar">
     <a href="/" class="nav-bubble nav-logo-bubble"><img src="../img/logo.png" alt="ST" /></a>
-    <a href="/account.html" class="nav-bubble" style="font-size:13px">← Мои курсы</a>
+    <a href="/account.html" class="nav-bubble" style="font-size:13px">Кабинет</a>
     <div class="nav-bubble">
       <button class="nav-btn" id="theme-toggle" onclick="toggleTheme()">🌙</button>
     </div>
   </nav>
 
-  <main class="page-wrapper" id="page-content" style="display:none"></main>
+  <main class="page-wrapper" id="page-content">
+    <div class="card">
+      <div class="course-badge">Эксклюзив</div>
+      <h1 class="course-title">Курс «JustForFans»</h1>
+      <p class="course-desc" style="color:var(--text-muted)">Проверяем доступ…</p>
+    </div>
+  </main>
 
   <script>
     const html = document.documentElement;
@@ -98,7 +104,6 @@
       const purchases = snap.exists() ? (snap.data().purchases || []) : [];
       if (!purchases.includes(COURSE_ID)) { renderDenied('not-purchased'); return; }
 
-      page.style.display = '';
       page.innerHTML = `
         <div class="card">
           <div class="course-badge">Эксклюзив</div>
@@ -123,7 +128,6 @@
     });
 
     function renderDenied(reason) {
-      page.style.display = '';
       const isGuest = reason === 'not-logged-in';
       page.innerHTML = `
         <div class="card">
