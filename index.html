@@ -2,7 +2,7 @@
 <html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="dark light" />
   <meta id="meta-theme-color" name="theme-color" content="#0a0e1a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -83,16 +83,14 @@
 
     html {
       scroll-behavior: smooth;
-      background-color: var(--bg-1) !important;
-      min-height: 100dvh;
     }
 
     body {
       font-family: var(--font);
-      background-color: var(--bg-1) !important;
+      background: var(--bg-1);
       color: var(--text-primary);
-      min-height: 100dvh;
-      transition: background-color var(--transition), color var(--transition);
+      overflow-x: hidden;
+      transition: background var(--transition), color var(--transition);
       color-scheme: dark light;
     }
 
