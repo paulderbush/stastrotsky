@@ -853,6 +853,8 @@
       margin-top: 4px;
     }
     .modal-submit:hover { opacity: 0.9; transform: scale(1.01); }
+    .modal-forgot { background: none; border: none; color: var(--text-muted); font-family: var(--font); font-size: 12px; cursor: pointer; margin-top: 10px; width: 100%; text-align: center; padding: 4px; transition: color 0.2s; }
+    .modal-forgot:hover { color: var(--accent); }
 
     .modal-close-btn {
       position: absolute;
@@ -1277,9 +1279,9 @@
           <div class="shop-grid">
 
             <div class="shop-card">
-              <div class="shop-card-icon">💬</div>
-              <div class="shop-card-title" id="shop-1-title">Закрытый канал 18+ в Telegram</div>
-              <a href="/private" class="shop-btn" id="shop-btn-label">Подробнее</a>
+              <div class="shop-card-icon">🔞</div>
+              <div class="shop-card-title" id="shop-1-title">Видео XXX</div>
+              <a href="/hot" class="shop-btn" id="shop-btn-label">Подробнее</a>
             </div>
 
             <div class="shop-card">
@@ -1340,6 +1342,7 @@
         <input class="modal-input" type="email" placeholder="Email" id="login-email" />
         <input class="modal-input" type="password" placeholder="Пароль" id="login-password" />
         <button class="modal-submit" onclick="handleLogin()" id="btn-login-submit">Войти</button>
+        <button class="modal-forgot" onclick="handleForgotPassword()">Забыли пароль?</button>
       </div>
       <div id="form-register" style="display:none">
         <input class="modal-input" type="text" placeholder="Имя" id="reg-name" />
@@ -1412,7 +1415,7 @@
         videoCaption: 'Курс «Оральное Искусство»',
         labelMusic: 'Моя Музыка',
         labelShop: 'Магазин',
-        shop1: 'Закрытый канал 18+ в Telegram',
+        shop1: 'Видео XXX',
         shop2: 'Курс «Оральное Искусство»',
         shop3: 'Курс «Анальное Искусство»',
         shop4: 'Курс «JustForFans»',
@@ -1439,7 +1442,7 @@
         videoCaption: 'Course "Oral Art"',
         labelMusic: 'My Music',
         labelShop: 'Store',
-        shop1: 'Private 18+ Telegram Channel',
+        shop1: 'Video XXX',
         shop2: 'Course "Oral Art"',
         shop3: 'Course "Anal Art"',
         shop4: 'Course "JustForFans"',
@@ -1654,7 +1657,7 @@
   ============================================================ -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
     const app = initializeApp({
@@ -1723,6 +1726,16 @@
         });
         closeModal();
         location.href = '/account.html';
+      } catch (e) { showModalMessage(authError(e.code), '#ef4444'); }
+    };
+
+    window.handleForgotPassword = async function() {
+      const email = document.getElementById('login-email').value.trim();
+      if (!email) { showModalMessage('Введите email в поле выше', '#ef4444'); return; }
+      showModalMessage('Отправляем письмо…', 'var(--text-muted)');
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showModalMessage('Письмо отправлено! Проверьте почту.', 'var(--accent)');
       } catch (e) { showModalMessage(authError(e.code), '#ef4444'); }
     };
   </script>

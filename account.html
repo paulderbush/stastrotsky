@@ -25,7 +25,6 @@
       --glass-bg: rgba(255,255,255,0.06); --glass-border: rgba(255,255,255,0.12); --glass-hover: rgba(255,255,255,0.10);
       --text-primary: #fff; --text-secondary: rgba(255,255,255,0.65); --text-muted: rgba(255,255,255,0.4);
       --accent: #a855f7; --accent-2: #ec4899;
-      --nav-bg: rgba(15,20,40,0.82); --nav-border: rgba(255,255,255,0.1);
       --shadow: 0 8px 40px rgba(0,0,0,0.4); --shadow-sm: 0 2px 16px rgba(0,0,0,0.3);
     }
     [data-theme="light"] {
@@ -33,7 +32,6 @@
       --glass-bg: rgba(255,255,255,0.55); --glass-border: rgba(255,255,255,0.8); --glass-hover: rgba(255,255,255,0.75);
       --text-primary: #111827; --text-secondary: rgba(17,24,39,0.7); --text-muted: rgba(17,24,39,0.45);
       --accent: #7c3aed; --accent-2: #db2777;
-      --nav-bg: rgba(230,230,245,0.88); --nav-border: rgba(255,255,255,0.9);
       --shadow: 0 8px 40px rgba(0,0,0,0.12); --shadow-sm: 0 2px 16px rgba(0,0,0,0.08);
     }
 
@@ -42,13 +40,11 @@
     body { font-family: var(--font); background-color: var(--bg-1); color: var(--text-primary);
            min-height: 100dvh; overflow-x: hidden; transition: background-color var(--transition), color var(--transition); color-scheme: dark light; }
 
-    /* Orbs */
     .bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; background-color: var(--bg-1); }
     .orb { position: absolute; border-radius: 50%; filter: blur(80px); animation: drift 18s ease-in-out infinite alternate; }
     .orb-1 { width:600px;height:600px;background:var(--bg-orb-1);top:50px;left:-50px;animation-duration:20s; }
     .orb-2 { width:500px;height:500px;background:var(--bg-orb-2);top:30%;right:-80px;animation-duration:25s;animation-delay:-5s; }
     .orb-3 { width:600px;height:600px;background:var(--bg-orb-3);bottom:-50px;left:10%;animation-duration:22s;animation-delay:-10s; }
-    .orb-4 { width:500px;height:500px;background:var(--bg-orb-1);bottom:-30px;right:-80px;animation-duration:28s;animation-delay:-8s; }
     @keyframes drift {
       0%   { transform: translate(0,0) scale(1); }
       33%  { transform: translate(40px,-30px) scale(1.05); }
@@ -69,107 +65,79 @@
     .nav-logo-bubble img { height: 28px; display: block; }
     [data-theme="light"] .nav-logo-bubble img { content: url('img/logo-black.png'); }
     .nav-btn { background: none; border: none; padding: 0 8px; font: inherit; color: inherit; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-    .nav-btn svg { width: 16px; height: 16px; }
+    .nav-user-bubble { font-size: 13px; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
     /* Page */
-    .page-wrapper { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 100px 20px 60px; }
+    .page-wrapper { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 100px 20px 60px; }
 
-    /* Cards */
+    /* Page heading */
+    .page-heading { font-size: 22px; font-weight: 800; margin-bottom: 16px; text-align: center; }
+
+    /* Glass card */
     .card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-xl);
             backdrop-filter: blur(var(--blur)) saturate(1.6); -webkit-backdrop-filter: blur(var(--blur)) saturate(1.6);
-            padding: 28px; margin-bottom: 16px; box-shadow: var(--shadow); }
+            overflow: hidden; box-shadow: var(--shadow); }
 
-    /* Account header */
-    .account-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-    .account-info { display: flex; flex-direction: column; gap: 4px; }
-    .account-name { font-size: 20px; font-weight: 700; }
-    .account-email { font-size: 13px; color: var(--text-muted); }
-    .btn-logout { background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.3); border-radius: 50px;
-                  padding: 8px 18px; font-family: var(--font); font-size: 13px; font-weight: 600;
-                  color: var(--accent); cursor: pointer; transition: background 0.2s; }
-    .btn-logout:hover { background: rgba(168,85,247,0.28); }
-
-    /* Section title */
-    .section-title { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-                     color: var(--text-muted); margin-bottom: 16px; }
-
-    /* Purchase item */
-    .purchase-item { display: flex; align-items: center; gap: 16px; padding: 16px;
-                     background: var(--glass-bg); border: 1px solid var(--glass-border);
-                     border-radius: var(--radius-lg); text-decoration: none; color: var(--text-primary);
-                     transition: background 0.2s, transform 0.2s; margin-bottom: 10px; }
-    .purchase-item:last-child { margin-bottom: 0; }
-    .purchase-item:hover { background: var(--glass-hover); transform: translateX(4px); }
-    .purchase-thumb { width: 56px; height: 56px; border-radius: var(--radius-sm); object-fit: cover;
-                      background: linear-gradient(135deg, var(--accent), var(--accent-2)); flex-shrink: 0;
-                      display: flex; align-items: center; justify-content: center; font-size: 22px; }
-    .purchase-info { flex: 1; min-width: 0; }
-    .purchase-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-    .purchase-meta { font-size: 12px; color: var(--text-muted); }
-    .purchase-arrow { color: var(--accent); flex-shrink: 0; }
+    /* Purchase list items */
+    .purchase-item { display: flex; align-items: center; gap: 14px; padding: 16px 20px;
+                     border-bottom: 1px solid var(--glass-border); transition: background 0.2s; }
+    .purchase-item:last-child { border-bottom: none; }
+    .purchase-item:hover { background: var(--glass-hover); }
+    .purchase-icon { font-size: 22px; flex-shrink: 0; width: 40px; text-align: center; }
+    .purchase-title { flex: 1; font-size: 14px; font-weight: 700; min-width: 0; }
+    .purchase-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .btn-go { display: inline-flex; align-items: center; gap: 6px; background: rgba(168,85,247,0.18);
+              border: 1px solid rgba(168,85,247,0.35); border-radius: 50px; padding: 7px 16px;
+              font-family: var(--font); font-size: 12px; font-weight: 700; color: var(--accent);
+              text-decoration: none; transition: background 0.2s; flex-shrink: 0; }
+    .btn-go:hover { background: rgba(168,85,247,0.32); }
 
     /* Empty state */
-    .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
-    .empty-state-icon { font-size: 40px; margin-bottom: 12px; }
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--text-muted); }
+    .empty-state-icon { font-size: 36px; margin-bottom: 12px; }
     .empty-state p { font-size: 14px; line-height: 1.6; }
-    .btn-shop { display: inline-block; margin-top: 16px; background: linear-gradient(135deg,var(--accent),var(--accent-2));
-                color: #fff; border-radius: 50px; padding: 10px 24px; font-family: var(--font);
-                font-size: 14px; font-weight: 700; text-decoration: none; transition: opacity 0.2s; }
-    .btn-shop:hover { opacity: 0.85; }
 
-    /* Loading */
-    .loading { text-align: center; padding: 40px; color: var(--text-muted); font-size: 14px; }
+    /* Footer row */
+    .footer-row { display: flex; justify-content: flex-end; margin-top: 20px; }
+    .btn-logout { background: rgba(168,85,247,0.18); border: 1px solid rgba(168,85,247,0.35); border-radius: 50px;
+                  padding: 10px 22px; font-family: var(--font); font-size: 13px; font-weight: 700;
+                  color: var(--accent); cursor: pointer; transition: background 0.2s; }
+    .btn-logout:hover { background: rgba(168,85,247,0.32); }
 
-    @media (max-width: 600px) {
-      .page-wrapper { padding: 90px 14px 40px; }
-    }
+    @media (max-width: 600px) { .page-wrapper { padding: 90px 14px 40px; } }
   </style>
 </head>
 <body>
-  <!-- Background -->
   <div class="bg-canvas">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
-    <div class="orb orb-4"></div>
   </div>
 
-  <!-- Navbar -->
   <nav class="navbar">
     <a href="/" class="nav-bubble nav-logo-bubble">
       <img src="img/logo.png" alt="ST" />
     </a>
+    <div class="nav-bubble nav-user-bubble" id="nav-user">—</div>
     <div class="nav-bubble">
       <button class="nav-btn" id="theme-toggle" onclick="toggleTheme()">🌙</button>
     </div>
   </nav>
 
-  <!-- Page content (shown after auth check) -->
   <main class="page-wrapper" id="page-content" style="display:none">
-
-    <!-- User info card -->
-    <div class="card">
-      <div class="account-header">
-        <div class="account-info">
-          <div class="account-name" id="user-display-name">—</div>
-          <div class="account-email" id="user-email">—</div>
-        </div>
-        <button class="btn-logout" onclick="handleLogout()">Выйти</button>
+    <div class="page-heading">Мои покупки</div>
+    <div class="card" id="purchases-card">
+      <div class="empty-state">
+        <div class="empty-state-icon">🛍️</div>
+        <p>Загрузка…</p>
       </div>
     </div>
-
-    <!-- Purchases card -->
-    <div class="card">
-      <div class="section-title">Мои покупки</div>
-      <div id="purchases-container">
-        <div class="loading">Загрузка…</div>
-      </div>
+    <div class="footer-row">
+      <button class="btn-logout" onclick="handleLogout()">Выйти</button>
     </div>
-
   </main>
 
   <script>
-    // Theme
     const html = document.documentElement;
     function setTheme(t) {
       html.dataset.theme = t;
@@ -197,76 +165,68 @@
     const auth = getAuth(app);
     const db   = getFirestore(app);
 
-    // Product catalog — add/edit products here
     const PRODUCTS = {
+      'video-xxx': {
+        title: 'Видео XXX',
+        icon: '🔞',
+        url: '/hot',
+      },
       'course-oral-art': {
         title: 'Курс «Оральное Искусство»',
-        icon: '🔥',
-        url: '/courses/oral-art.html',
-      },
-      'course-2': {
-        title: 'Курс 2',
         icon: '🎬',
-        url: '/courses/course-2.html',
+        url: '/oral',
       },
-      'course-3': {
-        title: 'Курс 3',
-        icon: '🎵',
-        url: '/courses/course-3.html',
+      'course-anal-art': {
+        title: 'Курс «Анальное Искусство»',
+        icon: '🔥',
+        url: '/anal',
       },
-      'course-4': {
-        title: 'Курс 4',
+      'course-jff': {
+        title: 'Курс «JustForFans»',
         icon: '⭐',
-        url: '/courses/course-4.html',
+        url: '/jff',
       },
     };
 
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        // Not logged in — redirect to home with modal
         location.href = '/?login=1';
         return;
       }
 
-      // Show page
       document.getElementById('page-content').style.display = '';
 
-      // Fill user info
       const snap = await getDoc(doc(db, 'users', user.uid));
       const data = snap.exists() ? snap.data() : {};
       const name = data.displayName || user.displayName || user.email.split('@')[0];
-      document.getElementById('user-display-name').textContent = name;
-      document.getElementById('user-email').textContent = user.email;
+      document.getElementById('nav-user').textContent = name;
 
-      // Render purchases
       const purchases = data.purchases || [];
-      const container = document.getElementById('purchases-container');
+      const card = document.getElementById('purchases-card');
 
       if (purchases.length === 0) {
-        container.innerHTML = `
+        card.innerHTML = `
           <div class="empty-state">
-            <div class="empty-state-icon">🛒</div>
-            <p>У вас пока нет купленных курсов.</p>
-            <a class="btn-shop" href="/">Перейти в магазин</a>
+            <div class="empty-state-icon">🛍️</div>
+            <p>Здесь будут ваши покупки</p>
           </div>`;
         return;
       }
 
-      container.innerHTML = '';
+      card.innerHTML = '';
       purchases.forEach(id => {
         const p = PRODUCTS[id];
         if (!p) return;
-        const a = document.createElement('a');
-        a.className = 'purchase-item';
-        a.href = p.url;
-        a.innerHTML = `
-          <div class="purchase-thumb">${p.icon}</div>
-          <div class="purchase-info">
+        const item = document.createElement('div');
+        item.className = 'purchase-item';
+        item.innerHTML = `
+          <div class="purchase-icon">${p.icon}</div>
+          <div style="flex:1;min-width:0">
             <div class="purchase-title">${p.title}</div>
-            <div class="purchase-meta">Полный доступ · Нажмите, чтобы открыть</div>
+            <div class="purchase-meta">Полный доступ</div>
           </div>
-          <svg class="purchase-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-        container.appendChild(a);
+          <a class="btn-go" href="${p.url}">Перейти →</a>`;
+        card.appendChild(item);
       });
     });
 
