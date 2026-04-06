@@ -7,6 +7,8 @@
   <meta id="meta-theme-color" name="theme-color" content="#0a0e1a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="ST" />
+  <link rel="apple-touch-icon" href="images/web-icon.png" />
   <title>Stas Trotsky</title>
 
   <!-- Adaptive Favicon -->
@@ -1052,7 +1054,7 @@
         padding-top: max(90px, calc(env(safe-area-inset-top) + 70px));
         padding-left: max(16px, env(safe-area-inset-left));
         padding-right: max(16px, env(safe-area-inset-right));
-        padding-bottom: 20px;
+        padding-bottom: 0;
       }
       .lightbox-img { max-width: 88vw; max-height: 62vh; }
     }
@@ -1067,7 +1069,7 @@
           padding-top: max(90px, calc(env(safe-area-inset-top) + 70px));
           padding-left: max(16px, env(safe-area-inset-left));
           padding-right: max(16px, env(safe-area-inset-right));
-          padding-bottom: 20px;
+          padding-bottom: 0;
         }
       }
     }
@@ -1413,13 +1415,9 @@
       setTheme(html.dataset.theme === 'dark' ? 'light' : 'dark');
     }
 
-    // Detect system preference on first load
+    // First load: default dark + ru. User's saved choice is restored on repeat visits.
     const savedTheme = localStorage.getItem('st-theme');
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else {
-      setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    }
+    setTheme(savedTheme || 'dark');
 
     /* ==============================
        LANGUAGE
