@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta id="meta-theme-color" name="theme-color" content="#0a0e1a" />
+  <meta name="color-scheme" content="dark light" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Stas Trotsky</title>
@@ -1381,13 +1381,11 @@
     const themeBtn = document.getElementById('theme-toggle');
 
     function setTheme(t) {
-      const bgColor = t === 'dark' ? '#0a0e1a' : '#e8eaf5';
       html.dataset.theme = t;
       themeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
       const mobThemeBtn = document.getElementById('mob-theme-toggle');
       if (mobThemeBtn) mobThemeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
-      const metaThemeColor = document.getElementById('meta-theme-color');
-      if (metaThemeColor) metaThemeColor.content = bgColor;
+      document.documentElement.style.colorScheme = t;
       localStorage.setItem('st-theme', t);
     }
 
