@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="color-scheme" content="dark light" />
+  <meta id="meta-theme-color" name="theme-color" content="#0a0e1a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Stas Trotsky</title>
@@ -80,16 +81,16 @@
 
     html {
       scroll-behavior: smooth;
-      background-color: transparent !important;
+      background-color: var(--bg-1) !important;
       min-height: 100dvh;
     }
 
     body {
       font-family: var(--font);
-      background-color: transparent !important;
+      background-color: var(--bg-1) !important;
       color: var(--text-primary);
       min-height: 100dvh;
-      transition: color var(--transition);
+      transition: background-color var(--transition), color var(--transition);
       color-scheme: dark light;
     }
 
@@ -115,7 +116,7 @@
     .orb-1 {
       width: 600px; height: 600px;
       background: var(--bg-orb-1);
-      top: 10px; left: -50px;
+      top: 50px; left: -50px;
       animation-duration: 20s;
     }
     .orb-2 {
@@ -1052,7 +1053,7 @@
         padding-top: max(90px, calc(env(safe-area-inset-top) + 70px));
         padding-left: max(16px, env(safe-area-inset-left));
         padding-right: max(16px, env(safe-area-inset-right));
-        padding-bottom: max(40px, calc(env(safe-area-inset-bottom) + 20px));
+        padding-bottom: 20px;
       }
       .lightbox-img { max-width: 88vw; max-height: 62vh; }
     }
@@ -1067,7 +1068,7 @@
           padding-top: max(90px, calc(env(safe-area-inset-top) + 70px));
           padding-left: max(16px, env(safe-area-inset-left));
           padding-right: max(16px, env(safe-area-inset-right));
-          padding-bottom: max(40px, calc(env(safe-area-inset-bottom) + 20px));
+          padding-bottom: 20px;
         }
       }
     }
@@ -1381,11 +1382,14 @@
     const themeBtn = document.getElementById('theme-toggle');
 
     function setTheme(t) {
+      const bgColor = t === 'dark' ? '#0a0e1a' : '#e8eaf5';
       html.dataset.theme = t;
       themeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
       const mobThemeBtn = document.getElementById('mob-theme-toggle');
       if (mobThemeBtn) mobThemeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
       document.documentElement.style.colorScheme = t;
+      const metaThemeColor = document.getElementById('meta-theme-color');
+      if (metaThemeColor) metaThemeColor.content = bgColor;
       localStorage.setItem('st-theme', t);
     }
 
