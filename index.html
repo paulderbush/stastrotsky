@@ -1060,6 +1060,71 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 3px; }
+
+    /* ============================================================
+       LANGUAGE PICKER OVERLAY
+    ============================================================ */
+    .lang-picker-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 4000;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
+      align-items: center;
+      justify-content: center;
+    }
+    .lang-picker-overlay.open { display: flex; animation: lp-fade-in 0.45s ease both; }
+    .lang-picker-overlay.closing { animation: lp-fade-out 0.35s ease both; }
+    @keyframes lp-fade-in  { from { opacity:0; } to { opacity:1; } }
+    @keyframes lp-fade-out { from { opacity:1; } to { opacity:0; } }
+    .lang-picker-box {
+      background: var(--nav-bg);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      padding: 52px 44px 44px;
+      text-align: center;
+      box-shadow: 0 32px 100px rgba(0,0,0,0.55);
+      max-width: 420px;
+      width: 90%;
+      animation: lp-slide-up 0.45s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    @keyframes lp-slide-up { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    .lang-picker-logo { height: 44px; width: auto; margin-bottom: 28px; display: block; margin-left: auto; margin-right: auto; }
+    [data-theme="light"] .lang-picker-logo { content: url('img/logo-black.png'); }
+    .lang-picker-hint {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+    .lang-picker-btns { display: flex; gap: 14px; }
+    .lang-pick-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 26px 12px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      font-family: var(--font);
+    }
+    .lang-pick-btn:hover {
+      background: rgba(168,85,247,0.18);
+      border-color: rgba(168,85,247,0.45);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(168,85,247,0.25);
+    }
+    .lang-pick-btn .lp-flag { font-size: 38px; line-height: 1; }
+    .lang-pick-btn .lp-label { font-size: 15px; font-weight: 700; color: var(--text-primary); }
   </style>
 </head>
 
@@ -1259,6 +1324,26 @@
   <footer class="site-footer">
     © 2018 – 2026 Stas Trotsky Media
   </footer>
+
+  <!-- ============================================================
+       LANGUAGE PICKER (first visit)
+  ============================================================ -->
+  <div class="lang-picker-overlay" id="lang-picker">
+    <div class="lang-picker-box">
+      <img src="img/logo.png" class="lang-picker-logo" alt="ST" />
+      <div class="lang-picker-hint">Выберите язык / Choose language</div>
+      <div class="lang-picker-btns">
+        <button class="lang-pick-btn" onclick="pickLang('ru')">
+          <span class="lp-flag">🇷🇺</span>
+          <span class="lp-label">Русский</span>
+        </button>
+        <button class="lang-pick-btn" onclick="pickLang('en')">
+          <span class="lp-flag">🇬🇧</span>
+          <span class="lp-label">English</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- ============================================================
        LIGHTBOX
@@ -1571,6 +1656,20 @@
     // Real implementations are in the Firebase module below (overwrite window.handleLogin/Register)
     function handleLogin() {}
     function handleRegister() {}
+
+    /* ==============================
+       LANGUAGE PICKER (first visit)
+    ============================== */
+    function pickLang(lang) {
+      const overlay = document.getElementById('lang-picker');
+      overlay.classList.add('closing');
+      overlay.addEventListener('animationend', () => overlay.classList.remove('open', 'closing'), { once: true });
+      applyLang(lang);
+    }
+
+    if (!localStorage.getItem('st-lang')) {
+      document.getElementById('lang-picker').classList.add('open');
+    }
 
   </script>
 
