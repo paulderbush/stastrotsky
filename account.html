@@ -12,9 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    :root { --radius-xl:28px;--radius-lg:22px;--font:'Montserrat',sans-serif;--blur:24px;--transition:0.35s cubic-bezier(0.4,0,0.2,1); }
-    [data-theme="dark"] { --bg-1:#0a0e1a;--bg-orb-1:rgba(90,40,160,0.45);--bg-orb-2:rgba(20,80,180,0.35);--bg-orb-3:rgba(160,30,80,0.55);--glass-bg:rgba(255,255,255,0.06);--glass-border:rgba(255,255,255,0.12);--glass-hover:rgba(255,255,255,0.10);--text-primary:#fff;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--accent:#a855f7;--accent-2:#ec4899;--shadow:0 8px 40px rgba(0,0,0,0.4);--shadow-sm:0 2px 16px rgba(0,0,0,0.3);--nav-bg:rgba(15,20,40,0.82);--nav-border:rgba(255,255,255,0.1); }
-    [data-theme="light"] { --bg-1:#e8eaf5;--bg-orb-1:rgba(168,85,247,0.2);--bg-orb-2:rgba(59,130,246,0.15);--bg-orb-3:rgba(236,72,153,0.35);--glass-bg:rgba(255,255,255,0.55);--glass-border:rgba(255,255,255,0.8);--glass-hover:rgba(255,255,255,0.75);--text-primary:#111827;--text-secondary:rgba(17,24,39,0.7);--text-muted:rgba(17,24,39,0.45);--accent:#7c3aed;--accent-2:#db2777;--shadow:0 8px 40px rgba(0,0,0,0.12);--shadow-sm:0 2px 16px rgba(0,0,0,0.08);--nav-bg:rgba(230,230,245,0.88);--nav-border:rgba(255,255,255,0.9); }
+    :root{--radius-xl:28px;--radius-lg:22px;--font:'Montserrat',sans-serif;--blur:24px;--transition:0.35s cubic-bezier(0.4,0,0.2,1)}
+    [data-theme="dark"]{--bg-1:#0a0e1a;--bg-orb-1:rgba(90,40,160,0.45);--bg-orb-2:rgba(20,80,180,0.35);--bg-orb-3:rgba(160,30,80,0.55);--glass-bg:rgba(255,255,255,0.06);--glass-border:rgba(255,255,255,0.12);--glass-hover:rgba(255,255,255,0.10);--text-primary:#fff;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--accent:#a855f7;--accent-2:#ec4899;--shadow:0 8px 40px rgba(0,0,0,0.4);--shadow-sm:0 2px 16px rgba(0,0,0,0.3);--nav-bg:rgba(15,20,40,0.82);--nav-border:rgba(255,255,255,0.1)}
+    [data-theme="light"]{--bg-1:#e8eaf5;--bg-orb-1:rgba(168,85,247,0.2);--bg-orb-2:rgba(59,130,246,0.15);--bg-orb-3:rgba(236,72,153,0.35);--glass-bg:rgba(255,255,255,0.55);--glass-border:rgba(255,255,255,0.8);--glass-hover:rgba(255,255,255,0.75);--text-primary:#111827;--text-secondary:rgba(17,24,39,0.7);--text-muted:rgba(17,24,39,0.45);--accent:#7c3aed;--accent-2:#db2777;--shadow:0 8px 40px rgba(0,0,0,0.12);--shadow-sm:0 2px 16px rgba(0,0,0,0.08);--nav-bg:rgba(230,230,245,0.88);--nav-border:rgba(255,255,255,0.9)}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;background-color:var(--bg-1);min-height:100dvh}
     body{font-family:var(--font);background-color:var(--bg-1);color:var(--text-primary);min-height:100dvh;overflow-x:hidden;transition:background-color var(--transition),color var(--transition);color-scheme:dark light}
@@ -43,7 +43,7 @@
     .nav-login-btn:hover{color:var(--accent)}
     .nav-login-btn svg{width:16px;height:16px}
     .nav-hamburger{display:none;pointer-events:all;background:var(--nav-bg);backdrop-filter:blur(var(--blur)) saturate(1.8);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.8);border:1px solid var(--nav-border);border-radius:50px;width:44px;height:44px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0}
-    .nav-hamburger span{display:block;width:18px;height:2px;background:var(--text-primary);border-radius:2px;transition:transform 0.3s,opacity 0.3s}
+    .nav-hamburger span{display:block;width:18px;height:2px;background:var(--text-primary);border-radius:2px}
     .mobile-menu-overlay{display:none;position:fixed;top:0;left:0;right:0;height:100dvh;z-index:2000;background:rgba(0,0,0,0.55);backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);flex-direction:column;align-items:center;justify-content:space-between;padding:70px 32px 24px}
     .mobile-menu-overlay.open{display:flex}
     body.menu-open .page-wrapper,body.menu-open .bg-canvas{filter:blur(4px)}
@@ -140,7 +140,7 @@
     <div class="card" id="purchases-card">
       <div class="empty-state">
         <div class="empty-state-icon">🛍️</div>
-        <p id="loading-text">Загрузка…</p>
+        <p>Загрузка…</p>
       </div>
     </div>
     <div class="footer-row">
@@ -152,92 +152,6 @@
 
   <script>
     const html = document.documentElement;
-    window.loggedInUserName = null;
-    window.currentPurchasesData = null;
-
-    window.PRODUCTS_DATA = {
-      'video-xxx':       { title: { ru: 'Видео XXX',                  en: 'Video XXX'              }, icon: '🔞', url: '/hot'  },
-      'course-oral-art': { title: { ru: 'Курс «Оральное Искусство»',  en: 'Course "Oral Art"'      }, icon: '🎬', url: '/oral' },
-      'course-anal-art': { title: { ru: 'Курс «Анальное Искусство»',  en: 'Course "Anal Art"'      }, icon: '🔥', url: '/anal' },
-      'course-jff':      { title: { ru: 'Курс «JustForFans»',         en: 'Course "JustForFans"'   }, icon: '⭐', url: '/jff'  },
-    };
-
-    const strings = {
-      ru: {
-        navHome: 'Главная', navStore: 'Магазин', navNews: 'Новости', navAccount: 'Кабинет',
-        pageTitle: 'Мои покупки', loading: 'Загрузка…',
-        empty: 'Здесь будут ваши покупки',
-        fullAccess: 'Полный доступ', btnGo: 'Перейти →', btnLogout: 'Выйти',
-      },
-      en: {
-        navHome: 'Home', navStore: 'Store', navNews: 'News', navAccount: 'Account',
-        pageTitle: 'My Purchases', loading: 'Loading…',
-        empty: 'Your purchases will appear here',
-        fullAccess: 'Full Access', btnGo: 'Open →', btnLogout: 'Sign Out',
-      }
-    };
-
-    let currentLang = localStorage.getItem('st-lang') || 'ru';
-
-    function renderPurchasesUI(purchases, lang) {
-      const s = strings[lang] || strings.ru;
-      const card = document.getElementById('purchases-card');
-      if (!card) return;
-
-      if (!purchases || purchases.length === 0) {
-        card.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🛍️</div><p>${s.empty}</p></div>`;
-        return;
-      }
-
-      card.innerHTML = '';
-      purchases.forEach(id => {
-        const p = window.PRODUCTS_DATA[id];
-        if (!p) return;
-        const title = p.title[lang] || p.title.ru;
-        const item = document.createElement('div');
-        item.className = 'purchase-item';
-        item.innerHTML = `
-          <div class="purchase-icon">${p.icon}</div>
-          <div style="flex:1;min-width:0">
-            <div class="purchase-title">${title}</div>
-            <div class="purchase-meta">${s.fullAccess}</div>
-          </div>
-          <a class="btn-go" href="${p.url}">${s.btnGo}</a>`;
-        card.appendChild(item);
-      });
-    }
-
-    function applyLang(lang) {
-      const s = strings[lang] || strings.ru;
-      // Nav
-      document.getElementById('nav-home').textContent = s.navHome;
-      document.getElementById('nav-store').textContent = s.navStore;
-      document.getElementById('nav-news').textContent = s.navNews;
-      document.getElementById('mob-nav-home').textContent = s.navHome;
-      document.getElementById('mob-nav-store').textContent = s.navStore;
-      document.getElementById('mob-nav-news').textContent = s.navNews;
-      if (!window.loggedInUserName) document.getElementById('nav-account-label').textContent = s.navAccount;
-      document.getElementById('btn-ru').classList.toggle('lang-active', lang === 'ru');
-      document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
-      document.getElementById('mob-btn-ru').classList.toggle('mob-lang-active', lang === 'ru');
-      document.getElementById('mob-btn-en').classList.toggle('mob-lang-active', lang === 'en');
-      // Page content
-      const heading = document.getElementById('page-heading');
-      if (heading) heading.textContent = s.pageTitle;
-      const logout = document.getElementById('btn-logout');
-      if (logout) logout.textContent = s.btnLogout;
-      const loadingText = document.getElementById('loading-text');
-      if (loadingText) loadingText.textContent = s.loading;
-      // Re-render purchases if already loaded
-      if (window.currentPurchasesData !== null) {
-        renderPurchasesUI(window.currentPurchasesData, lang);
-      }
-      document.documentElement.lang = lang;
-      localStorage.setItem('st-lang', lang);
-      currentLang = lang;
-    }
-
-    function setLang(lang) { applyLang(lang); }
 
     function setTheme(t) {
       html.dataset.theme = t;
@@ -251,15 +165,49 @@
     setTheme(localStorage.getItem('st-theme') || 'dark');
 
     window.loggedInUserName = null;
+
     const navStrings = {
       ru: { home:'Главная', store:'Магазин', news:'Новости', account:'Кабинет' },
       en: { home:'Home', store:'Store', news:'News', account:'Account' }
     };
     const pageStrings = {
-      ru: { pageTitle:'Мои покупки', loading:'Загрузка…', empty:'Здесь будут ваши покупки', fullAccess:'Полный доступ', btnGo:'Перейти →', btnLogout:'Выйти' },
-      en: { pageTitle:'My Purchases', loading:'Loading…', empty:'Your purchases will appear here', fullAccess:'Full Access', btnGo:'Open →', btnLogout:'Sign Out' }
+      ru: { pageTitle:'Мои покупки', empty:'Здесь будут ваши покупки', fullAccess:'Полный доступ', btnGo:'Перейти →', btnLogout:'Выйти' },
+      en: { pageTitle:'My Purchases', empty:'Your purchases will appear here', fullAccess:'Full Access', btnGo:'Open →', btnLogout:'Sign Out' }
     };
+    const PRODUCTS = {
+      'video-xxx':       { title: { ru:'Видео XXX', en:'Video XXX' }, icon:'🔞', url:'/hot' },
+      'course-oral-art': { title: { ru:'Курс «Оральное Искусство»', en:'Course "Oral Art"' }, icon:'🎬', url:'/oral' },
+      'course-anal-art': { title: { ru:'Курс «Анальное Искусство»', en:'Course "Anal Art"' }, icon:'🔥', url:'/anal' },
+      'course-jff':      { title: { ru:'Курс «JustForFans»', en:'Course «JustForFans»' }, icon:'⭐', url:'/jff' },
+    };
+
     let currentLang = localStorage.getItem('st-lang') || 'ru';
+    window.currentPurchases = [];
+
+    window.renderPurchasesUI = function(lang) {
+      const card = document.getElementById('purchases-card');
+      if (!card) return;
+      const p = pageStrings[lang] || pageStrings.ru;
+      if (window.currentPurchases.length === 0) {
+        card.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🛍️</div><p>${p.empty}</p></div>`;
+        return;
+      }
+      card.innerHTML = '';
+      window.currentPurchases.forEach(id => {
+        const prod = PRODUCTS[id];
+        if (!prod) return;
+        const item = document.createElement('div');
+        item.className = 'purchase-item';
+        item.innerHTML = `
+          <div class="purchase-icon">${prod.icon}</div>
+          <div style="flex:1;min-width:0">
+            <div class="purchase-title">${prod.title[lang] || prod.title.ru}</div>
+            <div class="purchase-meta">${p.fullAccess}</div>
+          </div>
+          <a class="btn-go" href="${prod.url}">${p.btnGo}</a>`;
+        card.appendChild(item);
+      });
+    };
 
     function applyLang(lang) {
       currentLang = lang;
@@ -281,7 +229,7 @@
       if (titleEl) titleEl.textContent = p.pageTitle;
       const logoutEl = document.getElementById('btn-logout');
       if (logoutEl) logoutEl.textContent = p.btnLogout;
-      if (window.renderPurchasesUI) window.renderPurchasesUI(lang);
+      window.renderPurchasesUI(lang);
     }
     function setLang(lang) { applyLang(lang); }
     applyLang(currentLang);
@@ -315,45 +263,6 @@
     const auth = getAuth(app);
     const db   = getFirestore(app);
 
-    const PRODUCTS = {
-      'video-xxx':       { title: { ru: 'Видео XXX', en: 'Video XXX' }, icon: '🔞', url: '/hot' },
-      'course-oral-art': { title: { ru: 'Курс «Оральное Искусство»', en: 'Course "Oral Art"' }, icon: '🎬', url: '/oral' },
-      'course-anal-art': { title: { ru: 'Курс «Анальное Искусство»', en: 'Course "Anal Art"' }, icon: '🔥', url: '/anal' },
-      'course-jff':      { title: { ru: 'Курс «JustForFans»', en: 'Course «JustForFans»' }, icon: '⭐', url: '/jff' },
-    };
-
-    const pageStrings = {
-      ru: { empty:'Здесь будут ваши покупки', fullAccess:'Полный доступ', btnGo:'Перейти →' },
-      en: { empty:'Your purchases will appear here', fullAccess:'Full Access', btnGo:'Open →' }
-    };
-
-    let currentPurchases = [];
-
-    window.renderPurchasesUI = function(lang) {
-      const card = document.getElementById('purchases-card');
-      if (!card) return;
-      const p = pageStrings[lang] || pageStrings['ru'];
-      if (currentPurchases.length === 0) {
-        card.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🛍️</div><p>${p.empty}</p></div>`;
-        return;
-      }
-      card.innerHTML = '';
-      currentPurchases.forEach(id => {
-        const prod = PRODUCTS[id];
-        if (!prod) return;
-        const item = document.createElement('div');
-        item.className = 'purchase-item';
-        item.innerHTML = `
-          <div class="purchase-icon">${prod.icon}</div>
-          <div style="flex:1;min-width:0">
-            <div class="purchase-title">${prod.title[lang] || prod.title['ru']}</div>
-            <div class="purchase-meta">${p.fullAccess}</div>
-          </div>
-          <a class="btn-go" href="${prod.url}">${p.btnGo}</a>`;
-        card.appendChild(item);
-      });
-    };
-
     onAuthStateChanged(auth, async (user) => {
       if (!user) { location.href = '/?login=1'; return; }
 
@@ -363,7 +272,7 @@
 
       const snap = await getDoc(doc(db, 'users', user.uid));
       const data = snap.exists() ? snap.data() : {};
-      currentPurchases = data.purchases || [];
+      window.currentPurchases = data.purchases || [];
       window.renderPurchasesUI(localStorage.getItem('st-lang') || 'ru');
     });
 
