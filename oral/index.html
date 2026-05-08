@@ -85,9 +85,7 @@
 </head>
 <body>
   <div class="bg-canvas">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+    <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
   </div>
 
   <nav class="navbar">
@@ -201,18 +199,9 @@
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
     const COURSE_ID = 'course-oral-art';
-
-    const app = initializeApp({
-      apiKey: "AIzaSyCOkfOnGEm7D1Dic0hUnZBNkvMAKi_sGHM",
-      authDomain: "stas-trotsky.firebaseapp.com",
-      projectId: "stas-trotsky",
-      storageBucket: "stas-trotsky.firebasestorage.app",
-      messagingSenderId: "299023334744",
-      appId: "1:299023334744:web:6e762caf8838d31d61792d"
-    });
+    const app = initializeApp({apiKey:"AIzaSyCOkfOnGEm7D1Dic0hUnZBNkvMAKi_sGHM",authDomain:"stas-trotsky.firebaseapp.com",projectId:"stas-trotsky",storageBucket:"stas-trotsky.firebasestorage.app",messagingSenderId:"299023334744",appId:"1:299023334744:web:6e762caf8838d31d61792d"});
     const auth = getAuth(app);
     const db   = getFirestore(app);
-
     const page = document.getElementById('page-content');
 
     onAuthStateChanged(auth, async (user) => {
@@ -237,14 +226,10 @@
         </div>
         <div class="card">
           <div class="section-title">Урок 1 — Введение</div>
-          <div class="video-wrap">
-            <iframe src="https://kinescope.io/embed/ВАША_ССЫЛКА_1" allowfullscreen></iframe>
-          </div>
+          <div class="video-wrap"><iframe src="https://kinescope.io/embed/ВАША_ССЫЛКА_1" allowfullscreen></iframe></div>
           <div class="video-title">Введение в курс</div>
           <div class="section-title">Урок 2</div>
-          <div class="video-wrap">
-            <iframe src="https://kinescope.io/embed/ВАША_ССЫЛКА_2" allowfullscreen></iframe>
-          </div>
+          <div class="video-wrap"><iframe src="https://kinescope.io/embed/ВАША_ССЫЛКА_2" allowfullscreen></iframe></div>
           <div class="video-title">Урок 2 — название</div>
         </div>`;
     });
@@ -252,19 +237,14 @@
     function renderDenied(reason) {
       const isGuest = reason === 'not-logged-in';
       page.innerHTML = `
-        <div class="card">
-          <div class="denied">
-            <div class="denied-icon">🔒</div>
-            <h2>${isGuest ? 'Войдите в аккаунт' : 'Курс не приобретён'}</h2>
-            <p>${isGuest
-              ? 'Для просмотра курса необходимо войти в личный кабинет.'
-              : 'У вас нет доступа к этому курсу. Приобретите его в магазине.'
-            }</p>
-            <a class="btn-primary" href="${isGuest ? '/?login=1' : '/'}">
-              ${isGuest ? 'Войти' : 'Перейти в магазин'}
-            </a>
-          </div>
-        </div>`;
+        <div class="card"><div class="denied">
+          <div class="denied-icon">🔒</div>
+          <h2>${isGuest ? 'Войдите в аккаунт' : 'Курс не приобретён'}</h2>
+          <p>${isGuest ? 'Для просмотра необходимо войти в личный кабинет.' : 'У вас нет доступа к этому курсу. Приобретите его в магазине.'}</p>
+          <a class="btn-primary" href="${isGuest ? '/?login=1' : '/'}">
+            ${isGuest ? 'Войти' : 'Перейти в магазин'}
+          </a>
+        </div></div>`;
     }
   </script>
 </body>

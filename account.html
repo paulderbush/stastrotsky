@@ -152,6 +152,93 @@
 
   <script>
     const html = document.documentElement;
+    window.loggedInUserName = null;
+    window.currentPurchasesData = null;
+
+    window.PRODUCTS_DATA = {
+      'video-xxx':       { title: { ru: 'Видео XXX',                  en: 'Video XXX'              }, icon: '🔞', url: '/hot'  },
+      'course-oral-art': { title: { ru: 'Курс «Оральное Искусство»',  en: 'Course "Oral Art"'      }, icon: '🎬', url: '/oral' },
+      'course-anal-art': { title: { ru: 'Курс «Анальное Искусство»',  en: 'Course "Anal Art"'      }, icon: '🔥', url: '/anal' },
+      'course-jff':      { title: { ru: 'Курс «JustForFans»',         en: 'Course "JustForFans"'   }, icon: '⭐', url: '/jff'  },
+    };
+
+    const strings = {
+      ru: {
+        navHome: 'Главная', navStore: 'Магазин', navNews: 'Новости', navAccount: 'Кабинет',
+        pageTitle: 'Мои покупки', loading: 'Загрузка…',
+        empty: 'Здесь будут ваши покупки',
+        fullAccess: 'Полный доступ', btnGo: 'Перейти →', btnLogout: 'Выйти',
+      },
+      en: {
+        navHome: 'Home', navStore: 'Store', navNews: 'News', navAccount: 'Account',
+        pageTitle: 'My Purchases', loading: 'Loading…',
+        empty: 'Your purchases will appear here',
+        fullAccess: 'Full Access', btnGo: 'Open →', btnLogout: 'Sign Out',
+      }
+    };
+
+    let currentLang = localStorage.getItem('st-lang') || 'ru';
+
+    function renderPurchasesUI(purchases, lang) {
+      const s = strings[lang] || strings.ru;
+      const card = document.getElementById('purchases-card');
+      if (!card) return;
+
+      if (!purchases || purchases.length === 0) {
+        card.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🛍️</div><p>${s.empty}</p></div>`;
+        return;
+      }
+
+      card.innerHTML = '';
+      purchases.forEach(id => {
+        const p = window.PRODUCTS_DATA[id];
+        if (!p) return;
+        const title = p.title[lang] || p.title.ru;
+        const item = document.createElement('div');
+        item.className = 'purchase-item';
+        item.innerHTML = `
+          <div class="purchase-icon">${p.icon}</div>
+          <div style="flex:1;min-width:0">
+            <div class="purchase-title">${title}</div>
+            <div class="purchase-meta">${s.fullAccess}</div>
+          </div>
+          <a class="btn-go" href="${p.url}">${s.btnGo}</a>`;
+        card.appendChild(item);
+      });
+    }
+
+    function applyLang(lang) {
+      const s = strings[lang] || strings.ru;
+      // Nav
+      document.getElementById('nav-home').textContent = s.navHome;
+      document.getElementById('nav-store').textContent = s.navStore;
+      document.getElementById('nav-news').textContent = s.navNews;
+      document.getElementById('mob-nav-home').textContent = s.navHome;
+      document.getElementById('mob-nav-store').textContent = s.navStore;
+      document.getElementById('mob-nav-news').textContent = s.navNews;
+      if (!window.loggedInUserName) document.getElementById('nav-account-label').textContent = s.navAccount;
+      document.getElementById('btn-ru').classList.toggle('lang-active', lang === 'ru');
+      document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
+      document.getElementById('mob-btn-ru').classList.toggle('mob-lang-active', lang === 'ru');
+      document.getElementById('mob-btn-en').classList.toggle('mob-lang-active', lang === 'en');
+      // Page content
+      const heading = document.getElementById('page-heading');
+      if (heading) heading.textContent = s.pageTitle;
+      const logout = document.getElementById('btn-logout');
+      if (logout) logout.textContent = s.btnLogout;
+      const loadingText = document.getElementById('loading-text');
+      if (loadingText) loadingText.textContent = s.loading;
+      // Re-render purchases if already loaded
+      if (window.currentPurchasesData !== null) {
+        renderPurchasesUI(window.currentPurchasesData, lang);
+      }
+      document.documentElement.lang = lang;
+      localStorage.setItem('st-lang', lang);
+      currentLang = lang;
+    }
+
+    function setLang(lang) { applyLang(lang); }
+
     function setTheme(t) {
       html.dataset.theme = t;
       const btn = document.getElementById('theme-toggle');
