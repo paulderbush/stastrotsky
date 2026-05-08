@@ -12,9 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    :root { --radius-xl:28px;--radius-lg:22px;--font:'Montserrat',sans-serif;--blur:24px;--transition:0.35s cubic-bezier(0.4,0,0.2,1); }
-    [data-theme="dark"] { --bg-1:#0a0e1a;--bg-orb-1:rgba(90,40,160,0.45);--bg-orb-2:rgba(20,80,180,0.35);--bg-orb-3:rgba(160,30,80,0.55);--glass-bg:rgba(255,255,255,0.06);--glass-border:rgba(255,255,255,0.12);--glass-hover:rgba(255,255,255,0.10);--text-primary:#fff;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--accent:#a855f7;--accent-2:#ec4899;--nav-bg:rgba(15,20,40,0.82);--nav-border:rgba(255,255,255,0.1);--shadow:0 8px 40px rgba(0,0,0,0.4);--shadow-sm:0 2px 16px rgba(0,0,0,0.3); }
-    [data-theme="light"] { --bg-1:#e8eaf5;--bg-orb-1:rgba(168,85,247,0.2);--bg-orb-2:rgba(59,130,246,0.15);--bg-orb-3:rgba(236,72,153,0.35);--glass-bg:rgba(255,255,255,0.55);--glass-border:rgba(255,255,255,0.8);--glass-hover:rgba(255,255,255,0.75);--text-primary:#111827;--text-secondary:rgba(17,24,39,0.7);--text-muted:rgba(17,24,39,0.45);--accent:#7c3aed;--accent-2:#db2777;--nav-bg:rgba(230,230,245,0.88);--nav-border:rgba(255,255,255,0.9);--shadow:0 8px 40px rgba(0,0,0,0.12);--shadow-sm:0 2px 16px rgba(0,0,0,0.08); }
+    :root{--radius-xl:28px;--radius-lg:22px;--font:'Montserrat',sans-serif;--blur:24px;--transition:0.35s cubic-bezier(0.4,0,0.2,1)}
+    [data-theme="dark"]{--bg-1:#0a0e1a;--bg-orb-1:rgba(90,40,160,0.45);--bg-orb-2:rgba(20,80,180,0.35);--bg-orb-3:rgba(160,30,80,0.55);--glass-bg:rgba(255,255,255,0.06);--glass-border:rgba(255,255,255,0.12);--glass-hover:rgba(255,255,255,0.10);--text-primary:#fff;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--accent:#a855f7;--accent-2:#ec4899;--shadow:0 8px 40px rgba(0,0,0,0.4);--shadow-sm:0 2px 16px rgba(0,0,0,0.3);--nav-bg:rgba(15,20,40,0.82);--nav-border:rgba(255,255,255,0.1)}
+    [data-theme="light"]{--bg-1:#e8eaf5;--bg-orb-1:rgba(168,85,247,0.2);--bg-orb-2:rgba(59,130,246,0.15);--bg-orb-3:rgba(236,72,153,0.35);--glass-bg:rgba(255,255,255,0.55);--glass-border:rgba(255,255,255,0.8);--glass-hover:rgba(255,255,255,0.75);--text-primary:#111827;--text-secondary:rgba(17,24,39,0.7);--text-muted:rgba(17,24,39,0.45);--accent:#7c3aed;--accent-2:#db2777;--shadow:0 8px 40px rgba(0,0,0,0.12);--shadow-sm:0 2px 16px rgba(0,0,0,0.08);--nav-bg:rgba(230,230,245,0.88);--nav-border:rgba(255,255,255,0.9)}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;background-color:var(--bg-1);min-height:100dvh}
     body{font-family:var(--font);background-color:var(--bg-1);color:var(--text-primary);min-height:100dvh;overflow-x:hidden;transition:background-color var(--transition),color var(--transition);color-scheme:dark light}
@@ -31,7 +31,7 @@
     .nav-logo-bubble img{height:32px;width:auto;display:block}
     [data-theme="light"] .nav-logo-bubble img{content:url('../img/logo-black.png')}
     .nav-menu{gap:4px}
-    .nav-menu a{font-size:14px;font-weight:500;color:var(--text-secondary);text-decoration:none;padding:6px 14px;border-radius:50px;transition:background 0.2s,color 0.2s;letter-spacing:0.01em}
+    .nav-menu a{font-size:14px;font-weight:500;color:var(--text-secondary);text-decoration:none;padding:6px 14px;border-radius:50px;transition:background 0.2s,color 0.2s}
     .nav-menu a:hover{background:rgba(168,85,247,0.18);color:var(--text-primary)}
     .nav-controls{gap:6px}
     .nav-btn{background:none;border:none;cursor:pointer;color:var(--text-secondary);padding:6px 10px;border-radius:50px;font-size:15px;font-family:var(--font);font-weight:600;transition:background 0.2s,color 0.2s;display:flex;align-items:center;justify-content:center;line-height:1}
@@ -39,7 +39,7 @@
     .nav-btn.lang-active{color:var(--text-primary)}
     .nav-divider{width:1px;height:18px;background:var(--nav-border);flex-shrink:0}
     .nav-login-bubble{padding:8px 16px}
-    .nav-login-btn{background:none;border:none;cursor:pointer;color:var(--text-secondary);font-size:13px;font-family:var(--font);font-weight:600;padding:0;letter-spacing:0.03em;transition:color 0.2s;display:flex;align-items:center;gap:6px}
+    .nav-login-btn{background:none;border:none;cursor:pointer;color:var(--text-secondary);font-size:13px;font-family:var(--font);font-weight:600;padding:0;letter-spacing:0.03em;transition:color 0.2s;display:flex;align-items:center;gap:6px;text-decoration:none}
     .nav-login-btn:hover{color:var(--accent)}
     .nav-login-btn svg{width:16px;height:16px}
     .nav-hamburger{display:none;pointer-events:all;background:var(--nav-bg);backdrop-filter:blur(var(--blur)) saturate(1.8);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.8);border:1px solid var(--nav-border);border-radius:50px;width:44px;height:44px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0}
@@ -48,23 +48,21 @@
     .mobile-menu-overlay.open{display:flex}
     body.menu-open .page-wrapper,body.menu-open .bg-canvas{filter:blur(4px)}
     .mobile-menu-close{position:absolute;top:24px;right:24px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-primary);font-size:20px;line-height:1}
+    .mobile-menu-close:hover{background:rgba(255,255,255,0.2)}
     .mobile-menu-link{font-size:28px;font-weight:700;color:rgba(255,255,255,0.75);text-decoration:none;letter-spacing:-0.02em;padding:12px 32px;border-radius:50px;transition:background 0.2s,color 0.2s;width:100%;text-align:center}
-    .mobile-menu-link:hover,.mobile-menu-link.active{background:rgba(168,85,247,0.2);color:#fff}
+    .mobile-menu-link:hover{background:rgba(168,85,247,0.2);color:#fff}
     .mob-menu-nav{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%}
     .mob-menu-settings{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:50px;padding:6px 12px;margin-bottom:16px}
-    .mob-settings-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.7);padding:6px 12px;border-radius:50px;font-size:15px;font-family:var(--font);font-weight:600}
+    .mob-settings-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.7);padding:6px 12px;border-radius:50px;font-size:15px;font-family:var(--font);font-weight:600;transition:background 0.2s,color 0.2s}
     .mob-settings-btn:hover,.mob-settings-btn.mob-lang-active{background:rgba(168,85,247,0.25);color:#fff}
     .mob-settings-divider{width:1px;height:18px;background:rgba(255,255,255,0.2);flex-shrink:0;margin:0 4px}
-    @media(max-width:900px){.navbar{gap:6px}}
     @media(max-width:600px){
       .navbar{left:14px;right:14px;top:14px;gap:0;background:var(--nav-bg);backdrop-filter:blur(var(--blur)) saturate(1.8);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.8);border:1px solid var(--nav-border);border-radius:50px;padding:5px 8px;box-shadow:var(--shadow-sm);justify-content:flex-start}
       .nav-bubble{background:none!important;border:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;padding:4px 6px}
       .nav-hamburger{background:none!important;border:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
       .nav-menu{display:none}.nav-controls{display:none}
-      .nav-logo-bubble{order:1}.nav-login-bubble{order:2;margin-left:auto}
-      .nav-hamburger{display:flex;order:3;margin-left:4px}
+      .nav-logo-bubble{order:1}.nav-login-bubble{order:2;margin-left:auto}.nav-hamburger{display:flex;order:3;margin-left:4px}
       #nav-account-label{display:none}.nav-login-btn{gap:0}
-      .page-wrapper{padding:90px 14px 40px}
     }
     .page-wrapper{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:100px 20px 60px}
     .card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-xl);backdrop-filter:blur(var(--blur)) saturate(1.6);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.6);padding:28px;margin-bottom:16px;box-shadow:var(--shadow)}
@@ -81,6 +79,8 @@
     .denied p{font-size:14px;line-height:1.7;margin-bottom:24px}
     .btn-primary{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-radius:50px;padding:12px 28px;font-family:var(--font);font-size:14px;font-weight:700;text-decoration:none;transition:opacity 0.2s;border:none;cursor:pointer}
     .btn-primary:hover{opacity:0.85}
+    .site-footer{text-align:center;padding:32px 24px 24px;position:relative;z-index:1;font-size:13px;color:var(--text-muted);font-weight:500}
+    @media(max-width:600px){.page-wrapper{padding:90px 14px 40px}.course-title{font-size:22px}}
   </style>
 </head>
 <body>
@@ -93,9 +93,9 @@
       <a href="/"><img src="../img/logo.png" alt="ST" /></a>
     </div>
     <div class="nav-bubble nav-menu">
-      <a href="/" id="nav-home">Главная</a>
-      <a href="/store" id="nav-store">Магазин</a>
-      <a href="/news" id="nav-news">Новости</a>
+      <a href="/" id="nav-home"></a>
+      <a href="/store" id="nav-store"></a>
+      <a href="/news" id="nav-news"></a>
     </div>
     <button class="nav-hamburger" onclick="openMobileMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -107,21 +107,21 @@
       <button class="nav-btn" onclick="setLang('en')" id="btn-en">EN</button>
     </div>
     <div class="nav-bubble nav-login-bubble">
-      <button class="nav-login-btn" id="nav-account" onclick="location.href='/account.html'">
+      <a class="nav-login-btn" href="/account.html" id="nav-account">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
         </svg>
-        <span id="nav-account-label">Кабинет</span>
-      </button>
+        <span id="nav-account-label"></span>
+      </a>
     </div>
   </nav>
 
   <div class="mobile-menu-overlay" id="mobile-menu" onclick="closeMobileMenuOutside(event)">
-    <button class="mobile-menu-close" onclick="closeMobileMenu()">✕</button>
+    <button class="mobile-menu-close" onclick="closeMobileMenu()" aria-label="Close">✕</button>
     <div class="mob-menu-nav">
-      <a href="/" class="mobile-menu-link" id="mob-nav-home" onclick="closeMobileMenu()">Главная</a>
-      <a href="/store" class="mobile-menu-link" id="mob-nav-store" onclick="closeMobileMenu()">Магазин</a>
-      <a href="/news" class="mobile-menu-link" id="mob-nav-news" onclick="closeMobileMenu()">Новости</a>
+      <a href="/" class="mobile-menu-link" id="mob-nav-home" onclick="closeMobileMenu()"></a>
+      <a href="/store" class="mobile-menu-link" id="mob-nav-store" onclick="closeMobileMenu()"></a>
+      <a href="/news" class="mobile-menu-link" id="mob-nav-news" onclick="closeMobileMenu()"></a>
     </div>
     <div class="mob-menu-settings">
       <button class="mob-settings-btn" id="mob-theme-toggle" onclick="toggleTheme()">🌙</button>
@@ -139,21 +139,58 @@
     </div>
   </main>
 
+  <footer class="site-footer">© 2018 – 2026 Stas Trotsky Media</footer>
+
   <script>
     const html = document.documentElement;
+    function setTheme(t) {
+      html.dataset.theme = t;
+      const btn = document.getElementById('theme-toggle');
+      const mob = document.getElementById('mob-theme-toggle');
+      if (btn) btn.textContent = t === 'dark' ? '🌙' : '☀️';
+      if (mob) mob.textContent = t === 'dark' ? '🌙' : '☀️';
+      localStorage.setItem('st-theme', t);
+    }
+    function toggleTheme() { setTheme(html.dataset.theme === 'dark' ? 'light' : 'dark'); }
+    setTheme(localStorage.getItem('st-theme') || 'dark');
+
     window.loggedInUserName = null;
-    function setTheme(t){html.dataset.theme=t;const b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'🌙':'☀️';const mb=document.getElementById('mob-theme-toggle');if(mb)mb.textContent=t==='dark'?'🌙':'☀️';localStorage.setItem('st-theme',t)}
-    function toggleTheme(){setTheme(html.dataset.theme==='dark'?'light':'dark')}
-    setTheme(localStorage.getItem('st-theme')||'dark');
-    function openMobileMenu(){document.getElementById('mobile-menu').classList.add('open');document.body.classList.add('menu-open')}
-    function closeMobileMenu(){document.getElementById('mobile-menu').classList.remove('open');document.body.classList.remove('menu-open')}
-    function closeMobileMenuOutside(e){if(e.target===document.getElementById('mobile-menu'))closeMobileMenu()}
-    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileMenu()});
-    const navStrings={ru:{home:'Главная',store:'Магазин',news:'Новости',account:'Кабинет'},en:{home:'Home',store:'Store',news:'News',account:'Account'}};
-    let currentLang=localStorage.getItem('st-lang')||'ru';
-    function applyLang(lang){const t=navStrings[lang];document.getElementById('nav-home').textContent=t.home;document.getElementById('nav-store').textContent=t.store;document.getElementById('nav-news').textContent=t.news;document.getElementById('mob-nav-home').textContent=t.home;document.getElementById('mob-nav-store').textContent=t.store;document.getElementById('mob-nav-news').textContent=t.news;if(!window.loggedInUserName)document.getElementById('nav-account-label').textContent=t.account;document.getElementById('btn-ru').classList.toggle('lang-active',lang==='ru');document.getElementById('btn-en').classList.toggle('lang-active',lang==='en');document.getElementById('mob-btn-ru').classList.toggle('mob-lang-active',lang==='ru');document.getElementById('mob-btn-en').classList.toggle('mob-lang-active',lang==='en');document.documentElement.lang=lang;localStorage.setItem('st-lang',lang);currentLang=lang}
-    function setLang(lang){applyLang(lang)}
+    const navStrings = {
+      ru: { home:'Главная', store:'Магазин', news:'Новости', account:'Кабинет' },
+      en: { home:'Home', store:'Store', news:'News', account:'Account' }
+    };
+    let currentLang = localStorage.getItem('st-lang') || 'ru';
+
+    function applyLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('st-lang', lang);
+      const t = navStrings[lang];
+      document.getElementById('nav-home').textContent = t.home;
+      document.getElementById('nav-store').textContent = t.store;
+      document.getElementById('nav-news').textContent = t.news;
+      document.getElementById('mob-nav-home').textContent = t.home;
+      document.getElementById('mob-nav-store').textContent = t.store;
+      document.getElementById('mob-nav-news').textContent = t.news;
+      if (!window.loggedInUserName) document.getElementById('nav-account-label').textContent = t.account;
+      document.getElementById('btn-ru').classList.toggle('lang-active', lang === 'ru');
+      document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
+      document.getElementById('mob-btn-ru').classList.toggle('mob-lang-active', lang === 'ru');
+      document.getElementById('mob-btn-en').classList.toggle('mob-lang-active', lang === 'en');
+    }
+    function setLang(lang) { applyLang(lang); }
     applyLang(currentLang);
+
+    function openMobileMenu() {
+      document.getElementById('mobile-menu').classList.add('open');
+      document.body.classList.add('menu-open');
+    }
+    function closeMobileMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.body.classList.remove('menu-open');
+    }
+    function closeMobileMenuOutside(e) {
+      if (e.target === document.getElementById('mobile-menu')) closeMobileMenu();
+    }
   </script>
 
   <script type="module">
@@ -168,13 +205,12 @@
     const page = document.getElementById('page-content');
 
     onAuthStateChanged(auth, async (user) => {
-      // Update navbar
       if (user) {
         window.loggedInUserName = user.displayName || user.email.split('@')[0];
         document.getElementById('nav-account-label').textContent = window.loggedInUserName;
-        document.getElementById('nav-account').onclick = () => location.href = '/account.html';
+        document.getElementById('nav-account').href = '/account.html';
       } else {
-        document.getElementById('nav-account').onclick = () => location.href = '/?login=1';
+        document.getElementById('nav-account').href = '/?login=1';
       }
 
       if (!user) { renderDenied('not-logged-in'); return; }
@@ -195,8 +231,7 @@
           <div class="section-title">Урок 2</div>
           <div class="video-wrap"><iframe src="https://kinescope.io/embed/ВАША_ССЫЛКА_2" allowfullscreen></iframe></div>
           <div class="video-title">Урок 2 — название</div>
-        </div>
-      `;
+        </div>`;
     });
 
     function renderDenied(reason) {
