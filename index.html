@@ -314,6 +314,8 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
+      position: sticky;
+      top: 90px;
     }
 
     /* Profile Card */
@@ -1756,6 +1758,25 @@
     if (isFirstVisit) {
       document.getElementById('lang-picker').classList.add('open');
     }
+
+    /* Left col: scroll down to reveal shop block, then stop */
+    (function() {
+      const leftCol = document.querySelector('.left-col');
+      if (!leftCol) return;
+      function updateLeftCol() {
+        const vh    = window.innerHeight;
+        const colH  = leftCol.offsetHeight;
+        const navH  = 90;
+        const padB  = 20;
+        const overflow = Math.max(0, navH + colH + padB - vh);
+        if (overflow === 0) { leftCol.style.transform = ''; return; }
+        const t = Math.min(1, window.scrollY / 300);
+        leftCol.style.transform = 'translateY(' + (overflow * t) + 'px)';
+      }
+      window.addEventListener('scroll', updateLeftCol, { passive: true });
+      window.addEventListener('resize', updateLeftCol);
+      updateLeftCol();
+    })();
 
   </script>
 
