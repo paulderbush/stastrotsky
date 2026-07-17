@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="dark light" />
-  <title>Новости — Stas Trotsky</title>
+  <title>Видео — Stas Trotsky</title>
   <link rel="icon" href="../img/favicon-light.png" media="(prefers-color-scheme: dark)" />
   <link rel="icon" href="../img/favicon-dark.png" media="(prefers-color-scheme: light)" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -66,23 +66,18 @@
       #nav-account-label{display:none}.nav-login-btn{gap:0}
     }
     /* PAGE */
-    .page-wrapper{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:100px 20px 60px}
-    .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;gap:12px;flex-wrap:wrap}
-    .page-heading{font-size:28px;font-weight:800}
-    .add-post-btn{display:none;align-items:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));border:none;border-radius:50px;padding:10px 20px;font-family:var(--font);font-size:13px;font-weight:700;color:#fff;cursor:pointer;transition:opacity 0.2s}
-    .add-post-btn:hover{opacity:0.85}
-    .add-post-btn.visible{display:flex}
-    /* NEWS CARD */
-    .news-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-xl);overflow:hidden;margin-bottom:20px;transition:border-color 0.2s}
-    .news-card:hover{border-color:rgba(168,85,247,0.25)}
-    .news-body{padding:22px 22px 0}
-    .news-date{font-size:11px;color:var(--text-muted);font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px}
-    .news-title{font-size:18px;font-weight:800;margin-bottom:10px;line-height:1.3}
-    .news-text{font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:16px;white-space:pre-line}
-    .admin-del-btn{background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;padding:2px 6px;border-radius:6px;transition:color 0.2s;margin-left:8px;vertical-align:middle}
-    .admin-del-btn:hover{color:#ef4444}
+    .page-wrapper{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:100px 20px 60px}
+    .page-heading{font-size:28px;font-weight:800;margin-bottom:6px}
+    .page-subheading{font-size:14px;color:var(--text-muted);margin-bottom:32px;font-weight:500}
+    /* VIDEO CARD */
+    .video-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-xl);overflow:hidden;margin-bottom:24px;transition:border-color 0.2s}
+    .video-card:hover{border-color:rgba(168,85,247,0.3)}
+    .video-embed{width:100%;aspect-ratio:16/9;background:#000;display:block;border:none}
+    .video-body{padding:18px 20px 0}
+    .video-title{font-size:17px;font-weight:700;margin-bottom:6px;line-height:1.3}
+    .video-desc{font-size:13px;color:var(--text-secondary);line-height:1.65;margin-bottom:14px}
     /* REACTIONS */
-    .reactions-row{display:flex;align-items:center;gap:10px;padding:12px 22px;border-top:1px solid var(--glass-border)}
+    .reactions-row{display:flex;align-items:center;gap:10px;padding:12px 20px;border-top:1px solid var(--glass-border)}
     .react-btn{display:flex;align-items:center;gap:6px;background:none;border:1px solid var(--glass-border);border-radius:50px;padding:6px 14px;font-size:13px;font-weight:600;font-family:var(--font);color:var(--text-secondary);cursor:pointer;transition:background 0.2s,border-color 0.2s,color 0.2s}
     .react-btn:hover{background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.3);color:var(--text-primary)}
     .react-btn.active-like{background:rgba(168,85,247,0.18);border-color:rgba(168,85,247,0.5);color:var(--accent)}
@@ -91,7 +86,7 @@
     .toggle-comments-btn{margin-left:auto;background:none;border:none;font-family:var(--font);font-size:12px;font-weight:600;color:var(--text-muted);cursor:pointer;padding:6px 10px;border-radius:50px;transition:color 0.2s,background 0.2s}
     .toggle-comments-btn:hover{color:var(--accent);background:rgba(168,85,247,0.1)}
     /* COMMENTS */
-    .comments-section{border-top:1px solid var(--glass-border);padding:16px 22px 20px;display:none}
+    .comments-section{border-top:1px solid var(--glass-border);padding:16px 20px 20px;display:none}
     .comments-section.open{display:block}
     .comment-item{padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
     .comment-item:last-child{border-bottom:none}
@@ -103,30 +98,12 @@
     .comment-input:focus{border-color:var(--accent)}
     .comment-input::placeholder{color:var(--text-muted)}
     .comment-row{display:flex;gap:8px}
+    .comment-name{flex:1}
     .send-comment-btn{background:linear-gradient(135deg,var(--accent),var(--accent-2));border:none;border-radius:50px;padding:10px 20px;font-family:var(--font);font-size:12px;font-weight:700;color:#fff;cursor:pointer;transition:opacity 0.2s;white-space:nowrap}
     .send-comment-btn:hover{opacity:0.85}
     .no-comments{font-size:13px;color:var(--text-muted);padding:8px 0;font-style:italic}
-    /* ADD POST MODAL */
-    .modal-overlay{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);align-items:center;justify-content:center}
-    .modal-overlay.open{display:flex}
-    .modal-box{background:var(--nav-bg);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border:1px solid var(--glass-border);border-radius:var(--radius-xl);padding:36px 32px;width:100%;max-width:560px;box-shadow:0 24px 80px rgba(0,0,0,0.5);position:relative}
-    .modal-close{position:absolute;top:14px;right:18px;background:none;border:none;color:var(--text-muted);font-size:26px;cursor:pointer;line-height:1;padding:4px}
-    .modal-close:hover{color:var(--text-primary)}
-    .modal-title{font-size:20px;font-weight:800;margin-bottom:20px;color:var(--accent)}
-    .modal-field{margin-bottom:14px}
-    .modal-label{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;display:block}
-    .modal-input{width:100%;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-md);padding:11px 14px;font-family:var(--font);font-size:13px;color:var(--text-primary);outline:none;transition:border-color 0.2s}
-    .modal-input:focus{border-color:var(--accent)}
-    .modal-input::placeholder{color:var(--text-muted)}
-    textarea.modal-input{resize:vertical;min-height:100px}
-    .modal-submit{width:100%;margin-top:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));border:none;border-radius:50px;padding:14px;font-family:var(--font);font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:opacity 0.2s}
-    .modal-submit:hover{opacity:0.88}
-    .empty-state{text-align:center;padding:60px 20px;color:var(--text-muted)}
-    .empty-icon{font-size:48px;margin-bottom:14px}
-    .empty-text{font-size:15px;line-height:1.6}
-    .loading-text{text-align:center;padding:40px;color:var(--text-muted);font-size:14px}
     .site-footer{text-align:center;padding:32px 24px 24px;position:relative;z-index:1;font-size:13px;color:var(--text-muted);font-weight:500}
-    @media(max-width:600px){.page-wrapper{padding:90px 14px 40px}.comment-row{flex-direction:column}.modal-box{margin:16px;padding:24px 18px}}
+    @media(max-width:600px){.page-wrapper{padding:90px 14px 40px}.comment-row{flex-direction:column}}
   </style>
 </head>
 <body>
@@ -143,8 +120,8 @@
     <div class="nav-bubble nav-menu">
       <a href="/" id="nav-home"></a>
       <a href="/store" id="nav-store"></a>
-      <a href="/news" class="active" id="nav-news"></a>
-      <a href="/video" id="nav-video"></a>
+      <a href="/news" id="nav-news"></a>
+      <a href="/video" class="active" id="nav-video"></a>
     </div>
     <button class="nav-hamburger" onclick="openMobileMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -170,8 +147,8 @@
     <div class="mob-menu-nav">
       <a href="/" class="mobile-menu-link" id="mob-nav-home" onclick="closeMobileMenu()"></a>
       <a href="/store" class="mobile-menu-link" id="mob-nav-store" onclick="closeMobileMenu()"></a>
-      <a href="/news" class="mobile-menu-link active" id="mob-nav-news" onclick="closeMobileMenu()"></a>
-      <a href="/video" class="mobile-menu-link" id="mob-nav-video" onclick="closeMobileMenu()"></a>
+      <a href="/news" class="mobile-menu-link" id="mob-nav-news" onclick="closeMobileMenu()"></a>
+      <a href="/video" class="mobile-menu-link active" id="mob-nav-video" onclick="closeMobileMenu()"></a>
     </div>
     <div class="mob-menu-settings">
       <button class="mob-settings-btn" id="mob-theme-toggle" onclick="toggleTheme()">🌙</button>
@@ -182,44 +159,15 @@
   </div>
 
   <main class="page-wrapper">
-    <div class="page-header">
-      <div class="page-heading" id="page-heading">Новости</div>
-      <button class="add-post-btn" id="add-post-btn" onclick="openPostModal()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-        <span id="add-post-label">Добавить новость</span>
-      </button>
-    </div>
-    <div id="news-container"><div class="loading-text" id="loading-text">Загрузка…</div></div>
+    <div class="page-heading" id="page-heading">Видео</div>
+    <div class="page-subheading" id="page-subheading">Все видео Stas Trotsky</div>
+    <div id="videos-container"></div>
   </main>
 
   <footer class="site-footer">© 2018 – 2026 Stas Trotsky Media</footer>
 
-  <!-- ADD POST MODAL -->
-  <div class="modal-overlay" id="post-modal" onclick="closePostModalOnBg(event)">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closePostModal()">×</button>
-      <div class="modal-title" id="modal-title-label">Новая новость</div>
-      <div class="modal-field">
-        <label class="modal-label">Заголовок (RU)</label>
-        <input class="modal-input" id="p-title-ru" placeholder="Заголовок на русском" />
-      </div>
-      <div class="modal-field">
-        <label class="modal-label">Текст (RU)</label>
-        <textarea class="modal-input" id="p-body-ru" placeholder="Текст новости на русском"></textarea>
-      </div>
-      <div class="modal-field">
-        <label class="modal-label">Title (EN)</label>
-        <input class="modal-input" id="p-title-en" placeholder="Title in English" />
-      </div>
-      <div class="modal-field">
-        <label class="modal-label">Body (EN)</label>
-        <textarea class="modal-input" id="p-body-en" placeholder="News body in English"></textarea>
-      </div>
-      <button class="modal-submit" onclick="submitPost()" id="modal-submit-btn">Опубликовать</button>
-    </div>
-  </div>
-
   <script>
+    /* THEME */
     const html = document.documentElement;
     function setTheme(t) {
       html.dataset.theme = t;
@@ -232,6 +180,7 @@
     function toggleTheme() { setTheme(html.dataset.theme === 'dark' ? 'light' : 'dark'); }
     setTheme(localStorage.getItem('st-theme') || 'dark');
 
+    /* MOBILE MENU */
     function openMobileMenu() {
       document.getElementById('mobile-menu').classList.add('open');
       document.body.classList.add('menu-open');
@@ -244,24 +193,17 @@
       if (e.target === document.getElementById('mobile-menu')) closeMobileMenu();
     }
 
-    const strings = {
-      ru: { home:'Главная', store:'Магазин', news:'Новости', video:'Видео', account:'Кабинет',
-            heading:'Новости', addPost:'Добавить новость', modalTitle:'Новая новость', submitBtn:'Опубликовать',
-            loading:'Загрузка…', empty:'Новостей пока нет', namePlaceholder:'Ваше имя',
-            commentPlaceholder:'Написать комментарий…', sendBtn:'Отправить',
-            noComments:'Комментариев пока нет', showComments:'Комментарии', hideComments:'Скрыть' },
-      en: { home:'Home', store:'Store', news:'News', video:'Video', account:'Account',
-            heading:'News', addPost:'Add post', modalTitle:'New post', submitBtn:'Publish',
-            loading:'Loading…', empty:'No posts yet', namePlaceholder:'Your name',
-            commentPlaceholder:'Write a comment…', sendBtn:'Send',
-            noComments:'No comments yet', showComments:'Comments', hideComments:'Hide' }
+    /* LANGUAGE */
+    const navStrings = {
+      ru: { home:'Главная', store:'Магазин', news:'Новости', video:'Видео', account:'Кабинет', heading:'Видео', subheading:'Все видео Stas Trotsky', namePlaceholder:'Ваше имя', commentPlaceholder:'Написать комментарий…', sendBtn:'Отправить', noComments:'Комментариев пока нет', showComments:'Комментарии', hideComments:'Скрыть' },
+      en: { home:'Home', store:'Store', news:'News', video:'Video', account:'Account', heading:'Videos', subheading:'All videos by Stas Trotsky', namePlaceholder:'Your name', commentPlaceholder:'Write a comment…', sendBtn:'Send', noComments:'No comments yet', showComments:'Comments', hideComments:'Hide' }
     };
     let currentLang = localStorage.getItem('st-lang') || 'ru';
 
     function applyLang(lang) {
       currentLang = lang;
       localStorage.setItem('st-lang', lang);
-      const t = strings[lang];
+      const t = navStrings[lang];
       document.getElementById('nav-home').textContent = t.home;
       document.getElementById('nav-store').textContent = t.store;
       document.getElementById('nav-news').textContent = t.news;
@@ -276,33 +218,41 @@
       document.getElementById('mob-btn-ru').classList.toggle('mob-lang-active', lang === 'ru');
       document.getElementById('mob-btn-en').classList.toggle('mob-lang-active', lang === 'en');
       document.getElementById('page-heading').textContent = t.heading;
-      document.getElementById('add-post-label').textContent = t.addPost;
-      document.getElementById('modal-title-label').textContent = t.modalTitle;
-      document.getElementById('modal-submit-btn').textContent = t.submitBtn;
+      document.getElementById('page-subheading').textContent = t.subheading;
+      document.querySelectorAll('[data-comment-name-placeholder]').forEach(el => el.placeholder = t.namePlaceholder);
+      document.querySelectorAll('[data-comment-text-placeholder]').forEach(el => el.placeholder = t.commentPlaceholder);
+      document.querySelectorAll('[data-send-btn]').forEach(el => el.textContent = t.sendBtn);
     }
     function setLang(lang) { applyLang(lang); }
     applyLang(currentLang);
 
-    function openPostModal() {
-      document.getElementById('post-modal').classList.add('open');
-    }
-    function closePostModal() {
-      document.getElementById('post-modal').classList.remove('open');
-    }
-    function closePostModalOnBg(e) {
-      if (e.target === document.getElementById('post-modal')) closePostModal();
-    }
+    /* =============================================
+       VIDEOS DATA — редактируй этот массив чтобы
+       добавлять/удалять видео
+    ============================================= */
+    const VIDEOS = [
+      {
+        id: 'yt_1',
+        youtubeId: 'dQw4w9WgXcQ', // замени на реальный YouTube ID
+        title: { ru: 'Название видео 1', en: 'Video title 1' },
+        desc:  { ru: 'Описание первого видео. Расскажи здесь о чём оно.', en: 'Description of the first video.' }
+      },
+      {
+        id: 'yt_2',
+        youtubeId: 'dQw4w9WgXcQ', // замени на реальный YouTube ID
+        title: { ru: 'Название видео 2', en: 'Video title 2' },
+        desc:  { ru: 'Описание второго видео.', en: 'Description of the second video.' }
+      },
+    ];
   </script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
     import {
-      getFirestore, collection, doc, getDoc, setDoc, addDoc, deleteDoc,
-      getDocs, query, orderBy, serverTimestamp, increment
+      getFirestore, doc, getDoc, setDoc, collection,
+      addDoc, getDocs, query, orderBy, serverTimestamp, increment
     } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-
-    const ADMIN_EMAIL = 'paul.derbush@icloud.com';
 
     const app = initializeApp({
       apiKey: "AIzaSyCOkfOnGEm7D1Dic0hUnZBNkvMAKi_sGHM",
@@ -315,31 +265,52 @@
     const auth = getAuth(app);
     const db   = getFirestore(app);
 
-    let isAdmin = false;
-
     onAuthStateChanged(auth, (user) => {
       const label = document.getElementById('nav-account-label');
       const btn   = document.getElementById('nav-account');
       if (user) {
         label.textContent = user.displayName || user.email.split('@')[0];
         btn.href = '/account.html';
-        isAdmin = user.email === ADMIN_EMAIL;
-        if (isAdmin) document.getElementById('add-post-btn').classList.add('visible');
       }
     });
 
-    /* helpers */
-    function escHtml(s) {
-      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
-    function voteKey(id) { return 'st_nvote_' + id; }
+    /* ---- helpers ---- */
+    function voteKey(id) { return 'st_vote_' + id; }
 
-    function formatDate(ts) {
-      if (!ts) return '';
-      const d = ts.toDate ? ts.toDate() : new Date(ts);
-      return d.toLocaleDateString('ru-RU', { day:'numeric', month:'long', year:'numeric' });
+    async function loadReactions(id) {
+      const snap = await getDoc(doc(db, 'reactions', id));
+      return snap.exists() ? snap.data() : { likes: 0, dislikes: 0 };
     }
 
+    async function saveVote(id, type) {
+      const ref = doc(db, 'reactions', id);
+      const snap = await getDoc(ref);
+      if (!snap.exists()) {
+        await setDoc(ref, { likes: type === 'like' ? 1 : 0, dislikes: type === 'dislike' ? 1 : 0 });
+      } else {
+        await setDoc(ref, { [type === 'like' ? 'likes' : 'dislikes']: increment(1) }, { merge: true });
+      }
+    }
+
+    async function removeVote(id, type) {
+      const ref = doc(db, 'reactions', id);
+      await setDoc(ref, { [type === 'like' ? 'likes' : 'dislikes']: increment(-1) }, { merge: true });
+    }
+
+    async function loadComments(id) {
+      const q = query(collection(db, 'video_comments', id, 'items'), orderBy('createdAt', 'asc'));
+      const snap = await getDocs(q);
+      return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    }
+
+    async function postComment(id, author, text) {
+      await addDoc(collection(db, 'video_comments', id, 'items'), {
+        author, text,
+        createdAt: serverTimestamp()
+      });
+    }
+
+    /* ---- render ---- */
     function timeAgo(ts) {
       if (!ts) return '';
       const d = ts.toDate ? ts.toDate() : new Date(ts);
@@ -348,28 +319,6 @@
       if (diff < 3600) return Math.floor(diff/60) + ' мин. назад';
       if (diff < 86400) return Math.floor(diff/3600) + ' ч. назад';
       return d.toLocaleDateString('ru-RU');
-    }
-
-    async function loadReactions(id) {
-      const snap = await getDoc(doc(db, 'news_reactions', id));
-      return snap.exists() ? snap.data() : { likes: 0, dislikes: 0 };
-    }
-    async function saveVote(id, type) {
-      const ref = doc(db, 'news_reactions', id);
-      const snap = await getDoc(ref);
-      if (!snap.exists()) await setDoc(ref, { likes: type==='like'?1:0, dislikes: type==='dislike'?1:0 });
-      else await setDoc(ref, { [type==='like'?'likes':'dislikes']: increment(1) }, { merge:true });
-    }
-    async function removeVote(id, type) {
-      await setDoc(doc(db,'news_reactions',id), { [type==='like'?'likes':'dislikes']: increment(-1) }, { merge:true });
-    }
-    async function loadComments(id) {
-      const q = query(collection(db,'news_comments',id,'items'), orderBy('createdAt','asc'));
-      const snap = await getDocs(q);
-      return snap.docs.map(d => ({ id:d.id, ...d.data() }));
-    }
-    async function postComment(id, author, text) {
-      await addDoc(collection(db,'news_comments',id,'items'), { author, text, createdAt: serverTimestamp() });
     }
 
     function renderCommentItem(c) {
@@ -381,10 +330,144 @@
       return div;
     }
 
-    async function refreshComments(id, card) {
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    async function buildVideoCard(v) {
       const lang = localStorage.getItem('st-lang') || 'ru';
-      const t = strings[lang];
-      const listEl = card.querySelector(`#nc-list-${id}`);
+      const t    = navStrings[lang];
+      const reactions = await loadReactions(v.id);
+      const myVote    = localStorage.getItem(voteKey(v.id));
+
+      const card = document.createElement('div');
+      card.className = 'video-card';
+      card.innerHTML = `
+        <iframe class="video-embed"
+          src="https://www.youtube.com/embed/${v.youtubeId}"
+          title="${escHtml(v.title[lang] || v.title.ru)}"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+        <div class="video-body">
+          <div class="video-title">${escHtml(v.title[lang] || v.title.ru)}</div>
+          <div class="video-desc">${escHtml(v.desc[lang] || v.desc.ru)}</div>
+        </div>
+        <div class="reactions-row">
+          <button class="react-btn ${myVote==='like'?'active-like':''}" id="like-${v.id}">
+            👍 <span class="react-count" id="like-count-${v.id}">${reactions.likes}</span>
+          </button>
+          <button class="react-btn ${myVote==='dislike'?'active-dislike':''}" id="dislike-${v.id}">
+            👎 <span class="react-count" id="dislike-count-${v.id}">${reactions.dislikes}</span>
+          </button>
+          <button class="toggle-comments-btn" id="toggle-${v.id}" data-open="0">${t.showComments}</button>
+        </div>
+        <div class="comments-section" id="comments-${v.id}">
+          <div class="comments-list" id="comments-list-${v.id}"></div>
+          <div class="comment-form">
+            <div class="comment-row">
+              <input class="comment-input comment-name" id="cname-${v.id}" placeholder="${t.namePlaceholder}" data-comment-name-placeholder maxlength="40" />
+            </div>
+            <div class="comment-row">
+              <input class="comment-input" id="ctext-${v.id}" placeholder="${t.commentPlaceholder}" data-comment-text-placeholder />
+              <button class="send-comment-btn" id="csend-${v.id}" data-send-btn>${t.sendBtn}</button>
+            </div>
+          </div>
+        </div>`;
+
+      /* like / dislike */
+      card.querySelector(`#like-${v.id}`).addEventListener('click', async () => {
+        const cur = localStorage.getItem(voteKey(v.id));
+        const likeEl = card.querySelector(`#like-count-${v.id}`);
+        const likeBtn = card.querySelector(`#like-${v.id}`);
+        const dislikeBtn = card.querySelector(`#dislike-${v.id}`);
+        const dislikeEl = card.querySelector(`#dislike-count-${v.id}`);
+
+        if (cur === 'like') {
+          await removeVote(v.id, 'like');
+          localStorage.removeItem(voteKey(v.id));
+          likeBtn.classList.remove('active-like');
+          likeEl.textContent = parseInt(likeEl.textContent) - 1;
+        } else {
+          if (cur === 'dislike') {
+            await removeVote(v.id, 'dislike');
+            dislikeBtn.classList.remove('active-dislike');
+            dislikeEl.textContent = parseInt(dislikeEl.textContent) - 1;
+          }
+          await saveVote(v.id, 'like');
+          localStorage.setItem(voteKey(v.id), 'like');
+          likeBtn.classList.add('active-like');
+          likeEl.textContent = parseInt(likeEl.textContent) + 1;
+        }
+      });
+
+      card.querySelector(`#dislike-${v.id}`).addEventListener('click', async () => {
+        const cur = localStorage.getItem(voteKey(v.id));
+        const dislikeEl = card.querySelector(`#dislike-count-${v.id}`);
+        const dislikeBtn = card.querySelector(`#dislike-${v.id}`);
+        const likeBtn = card.querySelector(`#like-${v.id}`);
+        const likeEl = card.querySelector(`#like-count-${v.id}`);
+
+        if (cur === 'dislike') {
+          await removeVote(v.id, 'dislike');
+          localStorage.removeItem(voteKey(v.id));
+          dislikeBtn.classList.remove('active-dislike');
+          dislikeEl.textContent = parseInt(dislikeEl.textContent) - 1;
+        } else {
+          if (cur === 'like') {
+            await removeVote(v.id, 'like');
+            likeBtn.classList.remove('active-like');
+            likeEl.textContent = parseInt(likeEl.textContent) - 1;
+          }
+          await saveVote(v.id, 'dislike');
+          localStorage.setItem(voteKey(v.id), 'dislike');
+          dislikeBtn.classList.add('active-dislike');
+          dislikeEl.textContent = parseInt(dislikeEl.textContent) + 1;
+        }
+      });
+
+      /* toggle comments */
+      let commentsLoaded = false;
+      card.querySelector(`#toggle-${v.id}`).addEventListener('click', async () => {
+        const sec  = card.querySelector(`#comments-${v.id}`);
+        const btn  = card.querySelector(`#toggle-${v.id}`);
+        const lang2 = localStorage.getItem('st-lang') || 'ru';
+        const t2   = navStrings[lang2];
+        const isOpen = btn.dataset.open === '1';
+
+        if (isOpen) {
+          sec.classList.remove('open');
+          btn.dataset.open = '0';
+          btn.textContent = t2.showComments;
+        } else {
+          sec.classList.add('open');
+          btn.dataset.open = '1';
+          btn.textContent = t2.hideComments;
+          if (!commentsLoaded) {
+            commentsLoaded = true;
+            await refreshComments(v.id, card, t2);
+          }
+        }
+      });
+
+      /* send comment */
+      card.querySelector(`#csend-${v.id}`).addEventListener('click', async () => {
+        const nameEl = card.querySelector(`#cname-${v.id}`);
+        const textEl = card.querySelector(`#ctext-${v.id}`);
+        const author = nameEl.value.trim();
+        const text   = textEl.value.trim();
+        const lang2  = localStorage.getItem('st-lang') || 'ru';
+        const t2     = navStrings[lang2];
+        if (!author || !text) return;
+        await postComment(v.id, author, text);
+        textEl.value = '';
+        await refreshComments(v.id, card, t2);
+      });
+
+      return card;
+    }
+
+    async function refreshComments(id, card, t) {
+      const listEl = card.querySelector(`#comments-list-${id}`);
       listEl.innerHTML = '';
       const comments = await loadComments(id);
       if (comments.length === 0) {
@@ -397,175 +480,15 @@
       }
     }
 
-    async function buildNewsCard(post) {
-      const lang = localStorage.getItem('st-lang') || 'ru';
-      const t    = strings[lang];
-      const reactions = await loadReactions(post.id);
-      const myVote    = localStorage.getItem(voteKey(post.id));
-      const title = (post.ru?.title || post.en?.title || '');
-      const body  = (post[lang]?.body || post.ru?.body || post.en?.body || '');
-
-      const card = document.createElement('div');
-      card.className = 'news-card';
-      card.innerHTML = `
-        <div class="news-body">
-          <div class="news-date">${formatDate(post.createdAt)}
-            ${isAdmin ? `<button class="admin-del-btn" title="Удалить" data-delid="${post.id}">×</button>` : ''}
-          </div>
-          <div class="news-title">${escHtml(post[lang]?.title || title)}</div>
-          <div class="news-text">${escHtml(body)}</div>
-        </div>
-        <div class="reactions-row">
-          <button class="react-btn ${myVote==='like'?'active-like':''}" id="nl-${post.id}">
-            👍 <span class="react-count" id="nl-c-${post.id}">${reactions.likes}</span>
-          </button>
-          <button class="react-btn ${myVote==='dislike'?'active-dislike':''}" id="nd-${post.id}">
-            👎 <span class="react-count" id="nd-c-${post.id}">${reactions.dislikes}</span>
-          </button>
-          <button class="toggle-comments-btn" id="ntog-${post.id}" data-open="0">${t.showComments}</button>
-        </div>
-        <div class="comments-section" id="nc-${post.id}">
-          <div class="comments-list" id="nc-list-${post.id}"></div>
-          <div class="comment-form">
-            <div class="comment-row">
-              <input class="comment-input" id="nn-${post.id}" placeholder="${t.namePlaceholder}" maxlength="40" />
-            </div>
-            <div class="comment-row">
-              <input class="comment-input" id="nt-${post.id}" placeholder="${t.commentPlaceholder}" />
-              <button class="send-comment-btn" id="ns-${post.id}">${t.sendBtn}</button>
-            </div>
-          </div>
-        </div>`;
-
-      /* delete (admin only) */
-      const delBtn = card.querySelector(`[data-delid]`);
-      if (delBtn) {
-        delBtn.addEventListener('click', async (e) => {
-          e.stopPropagation();
-          if (!confirm('Удалить эту новость?')) return;
-          await deleteDoc(doc(db, 'news', post.id));
-          card.remove();
-        });
-      }
-
-      /* like */
-      card.querySelector(`#nl-${post.id}`).addEventListener('click', async () => {
-        const cur = localStorage.getItem(voteKey(post.id));
-        const likeBtn = card.querySelector(`#nl-${post.id}`);
-        const disBtn  = card.querySelector(`#nd-${post.id}`);
-        const likeEl  = card.querySelector(`#nl-c-${post.id}`);
-        const disEl   = card.querySelector(`#nd-c-${post.id}`);
-        if (cur === 'like') {
-          await removeVote(post.id,'like');
-          localStorage.removeItem(voteKey(post.id));
-          likeBtn.classList.remove('active-like');
-          likeEl.textContent = parseInt(likeEl.textContent)-1;
-        } else {
-          if (cur==='dislike') {
-            await removeVote(post.id,'dislike');
-            disBtn.classList.remove('active-dislike');
-            disEl.textContent = parseInt(disEl.textContent)-1;
-          }
-          await saveVote(post.id,'like');
-          localStorage.setItem(voteKey(post.id),'like');
-          likeBtn.classList.add('active-like');
-          likeEl.textContent = parseInt(likeEl.textContent)+1;
-        }
-      });
-
-      /* dislike */
-      card.querySelector(`#nd-${post.id}`).addEventListener('click', async () => {
-        const cur = localStorage.getItem(voteKey(post.id));
-        const disBtn  = card.querySelector(`#nd-${post.id}`);
-        const likeBtn = card.querySelector(`#nl-${post.id}`);
-        const disEl   = card.querySelector(`#nd-c-${post.id}`);
-        const likeEl  = card.querySelector(`#nl-c-${post.id}`);
-        if (cur === 'dislike') {
-          await removeVote(post.id,'dislike');
-          localStorage.removeItem(voteKey(post.id));
-          disBtn.classList.remove('active-dislike');
-          disEl.textContent = parseInt(disEl.textContent)-1;
-        } else {
-          if (cur==='like') {
-            await removeVote(post.id,'like');
-            likeBtn.classList.remove('active-like');
-            likeEl.textContent = parseInt(likeEl.textContent)-1;
-          }
-          await saveVote(post.id,'dislike');
-          localStorage.setItem(voteKey(post.id),'dislike');
-          disBtn.classList.add('active-dislike');
-          disEl.textContent = parseInt(disEl.textContent)+1;
-        }
-      });
-
-      /* toggle comments */
-      let commentsLoaded = false;
-      card.querySelector(`#ntog-${post.id}`).addEventListener('click', async () => {
-        const sec  = card.querySelector(`#nc-${post.id}`);
-        const btn  = card.querySelector(`#ntog-${post.id}`);
-        const t2   = strings[localStorage.getItem('st-lang')||'ru'];
-        const isOpen = btn.dataset.open === '1';
-        if (isOpen) {
-          sec.classList.remove('open'); btn.dataset.open='0'; btn.textContent = t2.showComments;
-        } else {
-          sec.classList.add('open'); btn.dataset.open='1'; btn.textContent = t2.hideComments;
-          if (!commentsLoaded) { commentsLoaded = true; await refreshComments(post.id, card); }
-        }
-      });
-
-      /* send comment */
-      card.querySelector(`#ns-${post.id}`).addEventListener('click', async () => {
-        const author = card.querySelector(`#nn-${post.id}`).value.trim();
-        const text   = card.querySelector(`#nt-${post.id}`).value.trim();
-        if (!author || !text) return;
-        await postComment(post.id, author, text);
-        card.querySelector(`#nt-${post.id}`).value = '';
-        await refreshComments(post.id, card);
-      });
-
-      return card;
-    }
-
-    /* publish new post */
-    window.submitPost = async function() {
-      if (!isAdmin) return;
-      const titleRu = document.getElementById('p-title-ru').value.trim();
-      const bodyRu  = document.getElementById('p-body-ru').value.trim();
-      const titleEn = document.getElementById('p-title-en').value.trim();
-      const bodyEn  = document.getElementById('p-body-en').value.trim();
-      if (!titleRu || !bodyRu) { alert('Заполните хотя бы RU заголовок и текст'); return; }
-      const btn = document.getElementById('modal-submit-btn');
-      btn.disabled = true;
-      btn.textContent = '…';
-      await addDoc(collection(db,'news'), {
-        ru: { title: titleRu, body: bodyRu },
-        en: { title: titleEn || titleRu, body: bodyEn || bodyRu },
-        createdAt: serverTimestamp()
-      });
-      btn.disabled = false;
-      btn.textContent = strings[currentLang].submitBtn;
-      ['p-title-ru','p-body-ru','p-title-en','p-body-en'].forEach(id => document.getElementById(id).value='');
-      document.getElementById('post-modal').classList.remove('open');
-      await loadNews();
-    };
-
-    async function loadNews() {
-      const container = document.getElementById('news-container');
-      container.innerHTML = '<div class="loading-text">' + strings[currentLang].loading + '</div>';
-      const q = query(collection(db,'news'), orderBy('createdAt','desc'));
-      const snap = await getDocs(q);
-      container.innerHTML = '';
-      if (snap.empty) {
-        container.innerHTML = `<div class="empty-state"><div class="empty-icon">📰</div><div class="empty-text">${strings[currentLang].empty}</div></div>`;
-        return;
-      }
-      for (const d of snap.docs) {
-        const card = await buildNewsCard({ id: d.id, ...d.data() });
+    /* ---- init ---- */
+    async function init() {
+      const container = document.getElementById('videos-container');
+      for (const v of VIDEOS) {
+        const card = await buildVideoCard(v);
         container.appendChild(card);
       }
     }
-
-    loadNews();
+    init();
   </script>
 </body>
 </html>
