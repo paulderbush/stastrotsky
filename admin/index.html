@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Stas Trotsky</title>
+  <link rel="icon" href="../img/favicon-light.png" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" href="../img/favicon-dark.png" media="(prefers-color-scheme: light)" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--radius-xl:28px;--radius-lg:18px;--radius-md:14px;--font:'Montserrat',sans-serif;--blur:24px;--transition:0.35s cubic-bezier(0.4,0,0.2,1)}
+    [data-theme="dark"]{--bg-1:#0a0e1a;--bg-orb-1:rgba(90,40,160,0.45);--bg-orb-2:rgba(20,80,180,0.35);--bg-orb-3:rgba(160,30,80,0.55);--glass-bg:rgba(255,255,255,0.06);--glass-border:rgba(255,255,255,0.12);--text-primary:#fff;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--accent:#a855f7;--accent-2:#ec4899;--shadow:0 8px 40px rgba(0,0,0,0.4);--shadow-sm:0 2px 16px rgba(0,0,0,0.3);--nav-bg:rgba(15,20,40,0.82);--nav-border:rgba(255,255,255,0.1);--input-bg:rgba(255,255,255,0.07)}
+    [data-theme="light"]{--bg-1:#e8eaf5;--bg-orb-1:rgba(168,85,247,0.2);--bg-orb-2:rgba(59,130,246,0.15);--bg-orb-3:rgba(236,72,153,0.35);--glass-bg:rgba(255,255,255,0.55);--glass-border:rgba(255,255,255,0.8);--text-primary:#111827;--text-secondary:rgba(17,24,39,0.7);--text-muted:rgba(17,24,39,0.45);--accent:#7c3aed;--accent-2:#db2777;--shadow:0 8px 40px rgba(0,0,0,0.12);--shadow-sm:0 2px 16px rgba(0,0,0,0.08);--nav-bg:rgba(230,230,245,0.88);--nav-border:rgba(255,255,255,0.9);--input-bg:rgba(255,255,255,0.7)}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{font-family:var(--font);background-color:var(--bg-1);color:var(--text-primary);min-height:100dvh;overflow-x:hidden}
+    .bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+    .orb{position:absolute;border-radius:50%;filter:blur(80px);animation:drift 18s ease-in-out infinite alternate}
+    .orb-1{width:500px;height:500px;background:var(--bg-orb-1);top:0;left:-100px;animation-duration:20s}
+    .orb-2{width:400px;height:400px;background:var(--bg-orb-2);top:40%;right:-80px;animation-duration:25s;animation-delay:-5s}
+    .orb-3{width:500px;height:500px;background:var(--bg-orb-3);bottom:-100px;left:20%;animation-duration:22s;animation-delay:-10s}
+    @keyframes drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-20px) scale(1.04)}100%{transform:translate(-15px,30px) scale(0.97)}}
+
+    /* AUTH SCREEN */
+    .auth-screen{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+    .auth-box{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:var(--radius-xl);padding:40px 36px;width:100%;max-width:400px;text-align:center}
+    .auth-logo{font-size:36px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+    .auth-title{font-size:20px;font-weight:700;margin-bottom:6px}
+    .auth-sub{font-size:13px;color:var(--text-muted);margin-bottom:28px}
+    .auth-field{margin-bottom:14px;text-align:left}
+    .auth-label{font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:6px;letter-spacing:0.04em;text-transform:uppercase}
+    .auth-input{width:100%;background:var(--input-bg);border:1px solid var(--glass-border);border-radius:var(--radius-md);padding:12px 14px;font-family:var(--font);font-size:14px;color:var(--text-primary);outline:none;transition:border-color 0.2s}
+    .auth-input:focus{border-color:var(--accent)}
+    .auth-btn{width:100%;margin-top:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));border:none;border-radius:50px;padding:14px;font-family:var(--font);font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:opacity 0.2s}
+    .auth-btn:hover{opacity:0.88}
+    .auth-error{font-size:13px;color:#f87171;margin-top:10px;min-height:18px}
+    .deny-screen{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:20px;text-align:center}
+    .deny-icon{font-size:52px}
+    .deny-title{font-size:22px;font-weight:800}
+    .deny-sub{font-size:14px;color:var(--text-muted)}
+
+    /* LAYOUT */
+    .page-wrapper{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:32px 20px 60px}
+    .page-heading{font-size:26px;font-weight:800;margin-bottom:4px}
+    .page-sub{font-size:13px;color:var(--text-muted);margin-bottom:32px}
+
+    /* TABS */
+    .tabs{display:flex;gap:8px;margin-bottom:28px}
+    .tab-btn{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:50px;padding:9px 22px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--text-secondary);cursor:pointer;transition:background 0.2s,color 0.2s,border-color 0.2s}
+    .tab-btn.active{background:linear-gradient(135deg,var(--accent),var(--accent-2));border-color:transparent;color:#fff}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+
+    /* FORM CARD */
+    .form-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-xl);padding:28px 26px;margin-bottom:24px}
+    .form-title{font-size:16px;font-weight:700;margin-bottom:20px}
+    .field{margin-bottom:16px}
+    .field-label{font-size:11px;font-weight:700;color:var(--text-muted);display:block;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase}
+    .field-input,.field-textarea{width:100%;background:var(--input-bg);border:1px solid var(--glass-border);border-radius:var(--radius-md);padding:11px 14px;font-family:var(--font);font-size:13px;color:var(--text-primary);outline:none;transition:border-color 0.2s;resize:vertical}
+    .field-input:focus,.field-textarea:focus{border-color:var(--accent)}
+    .field-textarea{min-height:100px;line-height:1.6}
+    .field-hint{font-size:11px;color:var(--text-muted);margin-top:5px}
+    .submit-btn{background:linear-gradient(135deg,var(--accent),var(--accent-2));border:none;border-radius:50px;padding:12px 28px;font-family:var(--font);font-size:13px;font-weight:700;color:#fff;cursor:pointer;transition:opacity 0.2s;display:flex;align-items:center;gap:8px}
+    .submit-btn:hover{opacity:0.87}
+    .submit-btn:disabled{opacity:0.5;cursor:not-allowed}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+    /* LIST */
+    .list-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-xl);padding:22px 24px;margin-bottom:16px}
+    .list-title{font-size:15px;font-weight:700;margin-bottom:20px;color:var(--text-secondary)}
+    .list-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .list-item:last-child{border-bottom:none;padding-bottom:0}
+    .list-item-body{flex:1;min-width:0}
+    .list-item-title{font-size:14px;font-weight:600;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .list-item-meta{font-size:12px;color:var(--text-muted)}
+    .list-item-thumb{width:72px;height:48px;object-fit:cover;border-radius:8px;flex-shrink:0}
+    .list-del-btn{background:none;border:none;color:var(--text-muted);font-size:20px;cursor:pointer;padding:2px 6px;border-radius:6px;transition:color 0.2s;flex-shrink:0;line-height:1}
+    .list-del-btn:hover{color:#ef4444}
+    .empty-list{font-size:13px;color:var(--text-muted);padding:8px 0;font-style:italic}
+    .success-msg{color:#4ade80;font-size:13px;font-weight:600;margin-top:12px;min-height:18px}
+
+    @media(max-width:600px){
+      .form-row{grid-template-columns:1fr}
+      .page-wrapper{padding:24px 14px 40px}
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-canvas">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- AUTH FORM -->
+  <div class="auth-screen" id="auth-screen">
+    <div class="auth-box">
+      <div class="auth-logo">ST</div>
+      <div class="auth-title">Admin Panel</div>
+      <div class="auth-sub">Вход только для администратора</div>
+      <div class="auth-field">
+        <label class="auth-label">Email</label>
+        <input class="auth-input" id="a-email" type="email" autocomplete="username" />
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">Пароль</label>
+        <input class="auth-input" id="a-pass" type="password" autocomplete="current-password" />
+      </div>
+      <button class="auth-btn" onclick="doLogin()">Войти</button>
+      <div class="auth-error" id="auth-error"></div>
+    </div>
+  </div>
+
+  <!-- ACCESS DENIED -->
+  <div class="deny-screen" id="deny-screen" style="display:none">
+    <div class="deny-icon">🚫</div>
+    <div class="deny-title">Нет доступа</div>
+    <div class="deny-sub">Этот аккаунт не является администратором</div>
+  </div>
+
+  <!-- MAIN PANEL -->
+  <main class="page-wrapper" id="admin-panel" style="display:none">
+    <div class="page-heading">Admin Panel</div>
+    <div class="page-sub" id="admin-email-sub"></div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('posts')">📰 Новости</button>
+      <button class="tab-btn" onclick="switchTab('videos')">🎬 Видео</button>
+    </div>
+
+    <!-- POSTS TAB -->
+    <div class="tab-panel active" id="tab-posts">
+      <div class="form-card">
+        <div class="form-title">Новый пост</div>
+        <div class="field">
+          <label class="field-label">Текст поста</label>
+          <textarea class="field-textarea" id="p-body" placeholder="Напиши пост…" style="min-height:140px"></textarea>
+        </div>
+        <div class="field">
+          <label class="field-label">URL картинки (необязательно)</label>
+          <input class="field-input" id="p-img" type="url" placeholder="https://…" />
+          <div class="field-hint">Ссылка на изображение, если нужно добавить фото к посту</div>
+        </div>
+        <button class="submit-btn" id="post-submit-btn" onclick="submitPost()">
+          <span>Опубликовать</span>
+        </button>
+        <div class="success-msg" id="post-success"></div>
+      </div>
+
+      <div class="list-card">
+        <div class="list-title">Последние посты</div>
+        <div id="posts-list"><div class="empty-list">Загрузка…</div></div>
+      </div>
+    </div>
+
+    <!-- VIDEOS TAB -->
+    <div class="tab-panel" id="tab-videos">
+      <div class="form-card">
+        <div class="form-title">Добавить видео</div>
+        <div class="field">
+          <label class="field-label">Название</label>
+          <input class="field-input" id="v-title" placeholder="Название видео" />
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label class="field-label">Kinescope ID</label>
+            <input class="field-input" id="v-kinescope" placeholder="6knwyGGW5bSQ…" />
+            <div class="field-hint">ID из ссылки kinescope.io/…</div>
+          </div>
+          <div class="field">
+            <label class="field-label">Длительность</label>
+            <input class="field-input" id="v-duration" placeholder="13:06" maxlength="8" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">URL обложки</label>
+          <input class="field-input" id="v-thumb" type="url" placeholder="https://…" />
+          <div class="field-hint">Превью-картинка видео</div>
+        </div>
+        <button class="submit-btn" id="video-submit-btn" onclick="submitVideo()">
+          <span>Добавить видео</span>
+        </button>
+        <div class="success-msg" id="video-success"></div>
+      </div>
+
+      <div class="list-card">
+        <div class="list-title">Опубликованные видео</div>
+        <div id="videos-list"><div class="empty-list">Загрузка…</div></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', ['posts','videos'][i] === tab));
+      document.getElementById('tab-posts').classList.toggle('active', tab === 'posts');
+      document.getElementById('tab-videos').classList.toggle('active', tab === 'videos');
+    }
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+    import {
+      getFirestore, collection, doc, addDoc, deleteDoc, updateDoc,
+      getDocs, query, orderBy, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+    const ADMIN_EMAIL = 'paul.derbush@icloud.com';
+
+    const app = initializeApp({
+      apiKey: "AIzaSyCOkfOnGEm7D1Dic0hUnZBNkvMAKi_sGHM",
+      authDomain: "stas-trotsky.firebaseapp.com",
+      projectId: "stas-trotsky",
+      storageBucket: "stas-trotsky.firebasestorage.app",
+      messagingSenderId: "299023334744",
+      appId: "1:299023334744:web:6e762caf8838d31d61792d"
+    });
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    function escHtml(s) {
+      return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    function formatDate(ts) {
+      if (!ts) return '';
+      const d = ts.toDate ? ts.toDate() : new Date(ts);
+      return d.toLocaleDateString('ru-RU', { day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      document.getElementById('auth-screen').style.display = 'none';
+      if (!user) {
+        document.getElementById('auth-screen').style.display = 'flex';
+        return;
+      }
+      if (user.email !== ADMIN_EMAIL) {
+        document.getElementById('deny-screen').style.display = 'flex';
+        return;
+      }
+      document.getElementById('admin-panel').style.display = 'block';
+      document.getElementById('admin-email-sub').textContent = 'Вошёл как ' + user.email;
+      await Promise.all([loadPosts(), loadVideos()]);
+    });
+
+    window.doLogin = async function() {
+      const email = document.getElementById('a-email').value.trim();
+      const pass  = document.getElementById('a-pass').value;
+      const errEl = document.getElementById('auth-error');
+      errEl.textContent = '';
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+      } catch(e) {
+        errEl.textContent = 'Неверный email или пароль';
+      }
+    };
+    document.getElementById('a-pass').addEventListener('keydown', e => { if(e.key==='Enter') window.doLogin(); });
+
+    /* ---- POSTS ---- */
+    window.submitPost = async function() {
+      const body = document.getElementById('p-body').value.trim();
+      if (!body) { alert('Введи текст поста'); return; }
+      const imgUrl = document.getElementById('p-img').value.trim();
+      const btn = document.getElementById('post-submit-btn');
+      btn.disabled = true;
+      const data = { body, createdAt: serverTimestamp(), likes: 0 };
+      if (imgUrl) data.imageURL = imgUrl;
+      await addDoc(collection(db,'posts'), data);
+      document.getElementById('p-body').value = '';
+      document.getElementById('p-img').value = '';
+      btn.disabled = false;
+      document.getElementById('post-success').textContent = 'Опубликовано!';
+      setTimeout(() => { document.getElementById('post-success').textContent = ''; }, 3000);
+      await loadPosts();
+    };
+
+    async function loadPosts() {
+      const container = document.getElementById('posts-list');
+      container.innerHTML = '<div class="empty-list">Загрузка…</div>';
+      const q = query(collection(db,'posts'), orderBy('createdAt','desc'));
+      const snap = await getDocs(q);
+      container.innerHTML = '';
+      if (snap.empty) { container.innerHTML = '<div class="empty-list">Постов пока нет</div>'; return; }
+      snap.docs.forEach(d => {
+        const post = d.data();
+        const item = document.createElement('div');
+        item.className = 'list-item';
+        const preview = (post.body || '').slice(0,80) + ((post.body||'').length > 80 ? '…' : '');
+        item.innerHTML = `
+          <div class="list-item-body">
+            <div class="list-item-title">${escHtml(preview)}</div>
+            <div class="list-item-meta">${formatDate(post.createdAt)} · 👍 ${post.likes||0}</div>
+          </div>
+          <button class="list-del-btn" title="Удалить">×</button>`;
+        item.querySelector('.list-del-btn').addEventListener('click', async () => {
+          if (!confirm('Удалить пост?')) return;
+          await deleteDoc(doc(db,'posts',d.id));
+          item.remove();
+        });
+        container.appendChild(item);
+      });
+    }
+
+    /* ---- VIDEOS ---- */
+    window.submitVideo = async function() {
+      const title     = document.getElementById('v-title').value.trim();
+      const kinescope = document.getElementById('v-kinescope').value.trim();
+      const duration  = document.getElementById('v-duration').value.trim();
+      const thumb     = document.getElementById('v-thumb').value.trim();
+      if (!title || !kinescope) { alert('Заполни название и Kinescope ID'); return; }
+      const btn = document.getElementById('video-submit-btn');
+      btn.disabled = true;
+      await addDoc(collection(db,'videos'), {
+        title, kinescopeID: kinescope, duration, thumbnailURL: thumb,
+        views: 0, likes: 0, createdAt: serverTimestamp()
+      });
+      ['v-title','v-kinescope','v-duration','v-thumb'].forEach(id => document.getElementById(id).value='');
+      btn.disabled = false;
+      document.getElementById('video-success').textContent = 'Добавлено!';
+      setTimeout(() => { document.getElementById('video-success').textContent = ''; }, 3000);
+      await loadVideos();
+    };
+
+    async function loadVideos() {
+      const container = document.getElementById('videos-list');
+      container.innerHTML = '<div class="empty-list">Загрузка…</div>';
+      const q = query(collection(db,'videos'), orderBy('createdAt','desc'));
+      const snap = await getDocs(q);
+      container.innerHTML = '';
+      if (snap.empty) { container.innerHTML = '<div class="empty-list">Видео пока нет</div>'; return; }
+      snap.docs.forEach(d => {
+        const v = d.data();
+        const item = document.createElement('div');
+        item.className = 'list-item';
+        item.innerHTML = `
+          ${v.thumbnailURL ? `<img class="list-item-thumb" src="${escHtml(v.thumbnailURL)}" alt="" loading="lazy" />` : ''}
+          <div class="list-item-body">
+            <div class="list-item-title">${escHtml(v.title||'Без названия')}</div>
+            <div class="list-item-meta">${v.duration||''} · 👁 ${v.views||0} просмотров · ${v.kinescopeID||''}</div>
+          </div>
+          <button class="list-del-btn" title="Удалить">×</button>`;
+        item.querySelector('.list-del-btn').addEventListener('click', async () => {
+          if (!confirm('Удалить видео?')) return;
+          await deleteDoc(doc(db,'videos',d.id));
+          item.remove();
+        });
+        container.appendChild(item);
+      });
+    }
+  </script>
+</body>
+</html>
