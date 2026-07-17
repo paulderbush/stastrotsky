@@ -83,6 +83,7 @@
     .react-btn{display:flex;align-items:center;gap:6px;background:none;border:1px solid var(--glass-border);border-radius:50px;padding:6px 14px;font-size:13px;font-weight:600;font-family:var(--font);color:var(--text-secondary);cursor:pointer;transition:background 0.2s,border-color 0.2s,color 0.2s}
     .react-btn:hover{background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.3);color:var(--text-primary)}
     .react-btn.active-like{background:rgba(168,85,247,0.18);border-color:rgba(168,85,247,0.5);color:var(--accent)}
+    .react-btn.active-dislike{background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.4);color:#f87171}
     .react-count{font-size:13px;font-weight:700}
     .toggle-comments-btn{margin-left:auto;background:none;border:none;font-family:var(--font);font-size:12px;font-weight:600;color:var(--text-muted);cursor:pointer;padding:6px 10px;border-radius:50px;transition:color 0.2s,background 0.2s}
     .toggle-comments-btn:hover{color:var(--accent);background:rgba(168,85,247,0.1)}
@@ -90,10 +91,19 @@
     .comments-section{border-top:1px solid var(--glass-border);padding:16px 22px 20px;display:none}
     .comments-section.open{display:block}
     .comment-item{padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
-    .comment-item:last-child{border-bottom:none}
-    .comment-author{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:3px}
+    .comment-item:last-child{border-bottom:none;padding-bottom:0}
     .comment-text{font-size:13px;color:var(--text-secondary);line-height:1.5}
-    .comment-time{font-size:11px;color:var(--text-muted);margin-top:3px}
+    .comment-time-row{display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap}
+    .comment-time{font-size:11px;color:var(--text-muted)}
+    .comment-like-btn{background:none;border:1px solid var(--glass-border);border-radius:50px;padding:2px 10px;font-size:11px;font-family:var(--font);color:var(--text-muted);cursor:pointer;transition:background 0.2s,color 0.2s}
+    .comment-like-btn:hover{background:rgba(168,85,247,0.12);color:var(--accent);border-color:rgba(168,85,247,0.3)}
+    .comment-reply-btn{background:none;border:none;font-size:11px;font-family:var(--font);color:var(--text-muted);cursor:pointer;padding:2px 4px;transition:color 0.2s}
+    .comment-reply-btn:hover{color:var(--accent)}
+    .replies-list{margin-top:8px;margin-left:12px;padding-left:12px;border-left:2px solid var(--glass-border)}
+    .reply-item{padding:7px 0}
+    .reply-item+.reply-item{border-top:1px solid rgba(255,255,255,0.04)}
+    .reply-form{display:none}
+    .reply-form.open{display:block}
     .comment-form{display:flex;flex-direction:column;gap:8px;margin-top:14px}
     .comment-input{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-md);padding:10px 14px;font-family:var(--font);font-size:13px;color:var(--text-primary);outline:none;transition:border-color 0.2s;width:100%}
     .comment-input:focus{border-color:var(--accent)}
@@ -236,11 +246,9 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
     import {
-      getFirestore, collection, doc, updateDoc, deleteDoc,
+      getFirestore, collection, doc, updateDoc,
       addDoc, getDocs, query, orderBy, serverTimestamp, increment
     } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-
-    const ADMIN_EMAIL = 'paul.derbush@icloud.com';
 
     const app = initializeApp({
       apiKey: "AIzaSyCOkfOnGEm7D1Dic0hUnZBNkvMAKi_sGHM",
@@ -253,21 +261,13 @@
     const auth = getAuth(app);
     const db   = getFirestore(app);
 
-    let isAdmin = false;
-
     onAuthStateChanged(auth, (user) => {
       const label = document.getElementById('nav-account-label');
-      const btn   = document.getElementById('nav-account');
-      if (user) {
-        label.textContent = user.displayName || user.email.split('@')[0];
-        btn.href = '/account.html';
-        isAdmin = user.email === ADMIN_EMAIL;
-      }
+      if (user) label.textContent = user.displayName || user.email.split('@')[0];
     });
 
-    /* helpers */
     function escHtml(s) {
-      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
     function voteKey(id) { return 'st_nvote_' + id; }
 
@@ -276,7 +276,6 @@
       const d = ts.toDate ? ts.toDate() : new Date(ts);
       return d.toLocaleDateString('ru-RU', { day:'numeric', month:'long', year:'numeric' });
     }
-
     function timeAgo(ts) {
       if (!ts) return '';
       const d = ts.toDate ? ts.toDate() : new Date(ts);
@@ -287,59 +286,113 @@
       return d.toLocaleDateString('ru-RU');
     }
 
-    async function loadComments(id) {
-      const q = query(collection(db,'posts',id,'comments'), orderBy('createdAt','asc'));
+    function parseBody(raw) {
+      const imgRegex = /!\[[^\]]*\]\((https?:\/\/[^)]+)\)/g;
+      const images = [];
+      const text = (raw||'').replace(imgRegex, (_, url) => { images.push(url); return ''; }).trim();
+      return { images, text };
+    }
+
+    async function loadComments(postId) {
+      const q = query(collection(db,'posts',postId,'comments'), orderBy('createdAt','asc'));
       const snap = await getDocs(q);
       return snap.docs.map(d => ({ id:d.id, ...d.data() }));
     }
-    async function postComment(id, author, text) {
-      await addDoc(collection(db,'posts',id,'comments'), { author, text, createdAt: serverTimestamp() });
-    }
 
-    function renderCommentItem(c) {
+    function buildCommentEl(c, replies, postId, isReply) {
       const div = document.createElement('div');
-      div.className = 'comment-item';
-      div.innerHTML = `<div class="comment-author">${escHtml(c.author)}</div>
+      div.className = isReply ? 'reply-item' : 'comment-item';
+      div.innerHTML = `
         <div class="comment-text">${escHtml(c.text)}</div>
-        <div class="comment-time">${timeAgo(c.createdAt)}</div>`;
+        <div class="comment-time-row">
+          <span class="comment-time">${timeAgo(c.createdAt)}</span>
+          <button class="comment-like-btn" id="cl-${c.id}">❤️ <span class="cl-count">${c.likes||0}</span></button>
+          ${!isReply ? `<button class="comment-reply-btn" id="rb-${c.id}">Ответить</button>` : ''}
+        </div>
+        ${!isReply ? `
+        <div class="reply-form" id="rf-${c.id}">
+          <div class="comment-row" style="margin-top:8px">
+            <input class="comment-input" id="rt-${c.id}" placeholder="Ваш ответ…" />
+            <button class="send-comment-btn" id="rs-${c.id}" style="padding:10px 16px">↩</button>
+          </div>
+        </div>
+        <div class="replies-list" id="rlist-${c.id}"></div>` : ''}`;
+
+      div.querySelector(`#cl-${c.id}`).addEventListener('click', async () => {
+        const span = div.querySelector(`#cl-${c.id} .cl-count`);
+        span.textContent = parseInt(span.textContent) + 1;
+        await updateDoc(doc(db,'posts',postId,'comments',c.id), { likes: increment(1) });
+      });
+
+      if (!isReply) {
+        const rlist = div.querySelector(`#rlist-${c.id}`);
+        replies.forEach(r => rlist.appendChild(buildCommentEl(r, [], postId, true)));
+
+        div.querySelector(`#rb-${c.id}`).addEventListener('click', () => {
+          const rf = div.querySelector(`#rf-${c.id}`);
+          rf.classList.toggle('open');
+          if (rf.classList.contains('open')) div.querySelector(`#rt-${c.id}`).focus();
+        });
+
+        div.querySelector(`#rs-${c.id}`).addEventListener('click', async () => {
+          const text = div.querySelector(`#rt-${c.id}`).value.trim();
+          if (!text) return;
+          const ref = await addDoc(collection(db,'posts',postId,'comments'), {
+            text, parentId: c.id, likes: 0, author: '', createdAt: serverTimestamp()
+          });
+          div.querySelector(`#rt-${c.id}`).value = '';
+          div.querySelector(`#rf-${c.id}`).classList.remove('open');
+          const rlist = div.querySelector(`#rlist-${c.id}`);
+          rlist.appendChild(buildCommentEl({ id: ref.id, text, likes:0, createdAt:null }, [], postId, true));
+        });
+      }
       return div;
     }
 
-    async function refreshComments(id, card) {
-      const lang = localStorage.getItem('st-lang') || 'ru';
-      const t = strings[lang];
-      const listEl = card.querySelector(`#nc-list-${id}`);
+    async function refreshComments(postId, card) {
+      const t = strings[localStorage.getItem('st-lang')||'ru'];
+      const listEl = card.querySelector(`#nc-list-${postId}`);
       listEl.innerHTML = '';
-      const comments = await loadComments(id);
-      if (comments.length === 0) {
+      const all = await loadComments(postId);
+      const topLevel = all.filter(c => !c.parentId);
+      const byParent = {};
+      all.filter(c => c.parentId).forEach(r => {
+        if (!byParent[r.parentId]) byParent[r.parentId] = [];
+        byParent[r.parentId].push(r);
+      });
+      if (topLevel.length === 0) {
         const p = document.createElement('p');
         p.className = 'no-comments';
         p.textContent = t.noComments;
         listEl.appendChild(p);
-      } else {
-        comments.forEach(c => listEl.appendChild(renderCommentItem(c)));
+        return;
       }
+      topLevel.forEach(c => listEl.appendChild(buildCommentEl(c, byParent[c.id]||[], postId, false)));
     }
 
-    async function buildNewsCard(post) {
+    function buildNewsCard(post) {
       const lang = localStorage.getItem('st-lang') || 'ru';
       const t    = strings[lang];
-      const myVote = localStorage.getItem(voteKey(post.id));
-      const likes  = post.likes || 0;
+      const myVote   = localStorage.getItem(voteKey(post.id));
+      const likes    = post.likes || 0;
+      const dislikes = post.dislikes || 0;
+      const { images, text } = parseBody(post.body);
+      const mainImage = post.imageURL || (images.length > 0 ? images[0] : null);
 
       const card = document.createElement('div');
       card.className = 'news-card';
       card.innerHTML = `
-        ${post.imageURL ? `<img class="news-image" src="${escHtml(post.imageURL)}" alt="" loading="lazy" />` : ''}
+        ${mainImage ? `<img class="news-image" src="${escHtml(mainImage)}" alt="" loading="lazy" />` : ''}
         <div class="news-body">
-          <div class="news-date">${formatDate(post.createdAt)}
-            ${isAdmin ? `<button class="admin-del-btn" title="Удалить" data-delid="${post.id}">×</button>` : ''}
-          </div>
-          <div class="news-text">${escHtml(post.body || '')}</div>
+          <div class="news-date">${formatDate(post.createdAt)}</div>
+          <div class="news-text">${escHtml(text)}</div>
         </div>
         <div class="reactions-row">
           <button class="react-btn ${myVote==='like'?'active-like':''}" id="nl-${post.id}">
             👍 <span class="react-count" id="nl-c-${post.id}">${likes}</span>
+          </button>
+          <button class="react-btn ${myVote==='dislike'?'active-dislike':''}" id="nd-${post.id}">
+            👎 <span class="react-count" id="nd-c-${post.id}">${dislikes}</span>
           </button>
           <button class="toggle-comments-btn" id="ntog-${post.id}" data-open="0">${t.showComments}</button>
         </div>
@@ -347,43 +400,60 @@
           <div class="comments-list" id="nc-list-${post.id}"></div>
           <div class="comment-form">
             <div class="comment-row">
-              <input class="comment-input" id="nn-${post.id}" placeholder="${t.namePlaceholder}" maxlength="40" />
-            </div>
-            <div class="comment-row">
               <input class="comment-input" id="nt-${post.id}" placeholder="${t.commentPlaceholder}" />
               <button class="send-comment-btn" id="ns-${post.id}">${t.sendBtn}</button>
             </div>
           </div>
         </div>`;
 
-      const delBtn = card.querySelector(`[data-delid]`);
-      if (delBtn) {
-        delBtn.addEventListener('click', async (e) => {
-          e.stopPropagation();
-          if (!confirm('Удалить этот пост?')) return;
-          await deleteDoc(doc(db, 'posts', post.id));
-          card.remove();
-        });
-      }
-
       card.querySelector(`#nl-${post.id}`).addEventListener('click', async () => {
         const cur = localStorage.getItem(voteKey(post.id));
         const likeBtn = card.querySelector(`#nl-${post.id}`);
+        const disBtn  = card.querySelector(`#nd-${post.id}`);
         const likeEl  = card.querySelector(`#nl-c-${post.id}`);
+        const disEl   = card.querySelector(`#nd-c-${post.id}`);
         if (cur === 'like') {
-          await updateDoc(doc(db, 'posts', post.id), { likes: increment(-1) });
+          await updateDoc(doc(db,'posts',post.id), { likes: increment(-1) });
           localStorage.removeItem(voteKey(post.id));
           likeBtn.classList.remove('active-like');
           likeEl.textContent = parseInt(likeEl.textContent) - 1;
         } else {
-          await updateDoc(doc(db, 'posts', post.id), { likes: increment(1) });
+          if (cur === 'dislike') {
+            await updateDoc(doc(db,'posts',post.id), { dislikes: increment(-1) });
+            disBtn.classList.remove('active-dislike');
+            disEl.textContent = parseInt(disEl.textContent) - 1;
+          }
+          await updateDoc(doc(db,'posts',post.id), { likes: increment(1) });
           localStorage.setItem(voteKey(post.id), 'like');
           likeBtn.classList.add('active-like');
           likeEl.textContent = parseInt(likeEl.textContent) + 1;
         }
       });
 
-      /* toggle comments */
+      card.querySelector(`#nd-${post.id}`).addEventListener('click', async () => {
+        const cur = localStorage.getItem(voteKey(post.id));
+        const disBtn  = card.querySelector(`#nd-${post.id}`);
+        const likeBtn = card.querySelector(`#nl-${post.id}`);
+        const disEl   = card.querySelector(`#nd-c-${post.id}`);
+        const likeEl  = card.querySelector(`#nl-c-${post.id}`);
+        if (cur === 'dislike') {
+          await updateDoc(doc(db,'posts',post.id), { dislikes: increment(-1) });
+          localStorage.removeItem(voteKey(post.id));
+          disBtn.classList.remove('active-dislike');
+          disEl.textContent = parseInt(disEl.textContent) - 1;
+        } else {
+          if (cur === 'like') {
+            await updateDoc(doc(db,'posts',post.id), { likes: increment(-1) });
+            likeBtn.classList.remove('active-like');
+            likeEl.textContent = parseInt(likeEl.textContent) - 1;
+          }
+          await updateDoc(doc(db,'posts',post.id), { dislikes: increment(1) });
+          localStorage.setItem(voteKey(post.id), 'dislike');
+          disBtn.classList.add('active-dislike');
+          disEl.textContent = parseInt(disEl.textContent) + 1;
+        }
+      });
+
       let commentsLoaded = false;
       card.querySelector(`#ntog-${post.id}`).addEventListener('click', async () => {
         const sec  = card.querySelector(`#nc-${post.id}`);
@@ -398,12 +468,12 @@
         }
       });
 
-      /* send comment */
       card.querySelector(`#ns-${post.id}`).addEventListener('click', async () => {
-        const author = card.querySelector(`#nn-${post.id}`).value.trim();
-        const text   = card.querySelector(`#nt-${post.id}`).value.trim();
-        if (!author || !text) return;
-        await postComment(post.id, author, text);
+        const text = card.querySelector(`#nt-${post.id}`).value.trim();
+        if (!text) return;
+        await addDoc(collection(db,'posts',post.id,'comments'), {
+          text, author: '', likes: 0, createdAt: serverTimestamp()
+        });
         card.querySelector(`#nt-${post.id}`).value = '';
         await refreshComments(post.id, card);
       });
@@ -421,10 +491,10 @@
         container.innerHTML = `<div class="empty-state"><div class="empty-icon">📰</div><div class="empty-text">${strings[currentLang].empty}</div></div>`;
         return;
       }
-      for (const d of snap.docs) {
-        const card = await buildNewsCard({ id: d.id, ...d.data() });
+      snap.docs.forEach(d => {
+        const card = buildNewsCard({ id: d.id, ...d.data() });
         container.appendChild(card);
-      }
+      });
     }
 
     loadNews();
