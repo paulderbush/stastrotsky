@@ -301,26 +301,28 @@
           <button class="comment-like-btn" data-cid="${c.id}" data-vid="${videoId}">❤️ ${likes}</button>
           ${!isReply ? `<button class="comment-reply-btn" data-cid="${c.id}" data-vid="${videoId}">Ответить</button>` : ''}
         </div>
-        ${!isReply && replies && replies.length ? `<div class="replies-list" id="vreplies-${c.id}"></div>` : ''}
-        ${!isReply ? `<div class="reply-form" id="vrf-${c.id}">
+        ${!isReply ? `<div class="replies-list" id="vreplies-${c.id}"></div>
+        <div class="reply-form" id="vrf-${c.id}">
           <div class="comment-row" style="margin-top:6px">
             <input class="comment-input" id="vri-${c.id}" placeholder="Ответить…" />
             <button class="send-comment-btn" data-rfor="${c.id}" data-vid="${videoId}">↩</button>
           </div>
         </div>` : ''}`;
 
-      if (!isReply && replies && replies.length) {
+      if (!isReply) {
         const repliesEl = wrap.querySelector(`#vreplies-${c.id}`);
-        if (repliesEl) replies.forEach(r => repliesEl.appendChild(buildCommentEl(r, [], videoId, true)));
+        if (repliesEl && replies && replies.length) {
+          replies.forEach(r => repliesEl.appendChild(buildCommentEl(r, [], videoId, true)));
+        }
       }
 
       wrap.querySelector('.comment-like-btn').addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         const cid = btn.dataset.cid;
         const vid = btn.dataset.vid;
-        await updateDoc(doc(db, 'videos', vid, 'comments', cid), { likes: increment(1) });
         const cur = parseInt(btn.textContent.replace('❤️','').trim()) || 0;
         btn.textContent = '❤️ ' + (cur + 1);
+        await updateDoc(doc(db, 'videos', vid, 'comments', cid), { likes: increment(1) });
       });
 
       const replyBtn = wrap.querySelector('.comment-reply-btn');
