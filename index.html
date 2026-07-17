@@ -1155,6 +1155,7 @@
       <a href="/" class="active" id="nav-home"></a>
       <a href="/store" id="nav-store"></a>
       <a href="/news" id="nav-news"></a>
+      <a href="/video" id="nav-video"></a>
     </div>
 
     <!-- Hamburger button (mobile) -->
@@ -1188,6 +1189,7 @@
       <a href="/" class="mobile-menu-link active" id="mob-nav-home" onclick="closeMobileMenu()"></a>
       <a href="/store" class="mobile-menu-link" id="mob-nav-store" onclick="closeMobileMenu()"></a>
       <a href="/news" class="mobile-menu-link" id="mob-nav-news" onclick="closeMobileMenu()"></a>
+      <a href="/video" class="mobile-menu-link" id="mob-nav-video" onclick="closeMobileMenu()"></a>
     </div>
     <div class="mob-menu-settings">
       <button class="mob-settings-btn" id="mob-theme-toggle" onclick="toggleTheme()">🌙</button>
@@ -1224,17 +1226,27 @@
             <a class="follower-row" href="https://www.youtube.com/@stastrotskymedia?si=hgcKdqImzOkYCMuT" target="_blank" rel="noopener">
               <img class="follower-icon" src="img/youtube.png" alt="YouTube" />
               <span class="follower-name">YouTube<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              <span class="follower-count">17,3K</span>
+              <span class="follower-count">17,4K</span>
             </a>
             <a class="follower-row" href="https://www.instagram.com/stastrotsky/" target="_blank" rel="noopener">
               <img class="follower-icon" src="img/instagram.png" alt="Instagram" />
               <span class="follower-name">Instagram<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              <span class="follower-count">72,4K</span>
+              <span class="follower-count">67,4K</span>
+            </a>
+            <a class="follower-row" href="https://x.com/stastrotsky" target="_blank" rel="noopener">
+              <img class="follower-icon" src="img/icon-x.png" alt="X" />
+              <span class="follower-name">X<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="follower-count">8K</span>
             </a>
             <a class="follower-row" href="https://t.me/stastrotskynews" target="_blank" rel="noopener">
               <img class="follower-icon" src="img/telegram.png" alt="Telegram" />
               <span class="follower-name">Telegram<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
               <span class="follower-count">3,6K</span>
+            </a>
+            <a class="follower-row" href="/jff" rel="noopener">
+              <img class="follower-icon" src="img/icon-fans.png" alt="JustForFans" />
+              <span class="follower-name">JustForFans</span>
+              <span class="follower-count exclusive">Exclusive</span>
             </a>
           </div>
         </div>
@@ -1438,6 +1450,7 @@
         navHome: 'Главная',
         navStore: 'Магазин',
         navNews: 'Новости',
+        navVideo: 'Видео',
         navAccount: 'Кабинет',
         followersTitle: 'Подписчики',
         labelAbout: 'Обо мне',
@@ -1456,6 +1469,7 @@
         navHome: 'Home',
         navStore: 'Store',
         navNews: 'News',
+        navVideo: 'Video',
         navAccount: 'Account',
         followersTitle: 'Followers',
         labelAbout: 'About Me',
@@ -1482,9 +1496,11 @@
       document.getElementById('nav-home').textContent = s.navHome;
       document.getElementById('nav-store').textContent = s.navStore;
       document.getElementById('nav-news').textContent = s.navNews;
+      document.getElementById('nav-video').textContent = s.navVideo;
       document.getElementById('mob-nav-home').textContent = s.navHome;
       document.getElementById('mob-nav-store').textContent = s.navStore;
       document.getElementById('mob-nav-news').textContent = s.navNews;
+      document.getElementById('mob-nav-video').textContent = s.navVideo;
       document.getElementById('nav-account-label').textContent = s.navAccount;
       document.getElementById('followers-title').textContent = s.followersTitle;
       document.getElementById('label-about').textContent = s.labelAbout;

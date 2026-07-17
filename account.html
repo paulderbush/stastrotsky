@@ -100,6 +100,7 @@
       <a href="/" id="nav-home"></a>
       <a href="/store" id="nav-store"></a>
       <a href="/news" id="nav-news"></a>
+      <a href="/video" id="nav-video"></a>
     </div>
     <button class="nav-hamburger" onclick="openMobileMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -126,6 +127,7 @@
       <a href="/" class="mobile-menu-link" id="mob-nav-home" onclick="closeMobileMenu()"></a>
       <a href="/store" class="mobile-menu-link" id="mob-nav-store" onclick="closeMobileMenu()"></a>
       <a href="/news" class="mobile-menu-link" id="mob-nav-news" onclick="closeMobileMenu()"></a>
+      <a href="/video" class="mobile-menu-link" id="mob-nav-video" onclick="closeMobileMenu()"></a>
     </div>
     <div class="mob-menu-settings">
       <button class="mob-settings-btn" id="mob-theme-toggle" onclick="toggleTheme()">🌙</button>
@@ -167,8 +169,8 @@
     window.loggedInUserName = null;
 
     const navStrings = {
-      ru: { home:'Главная', store:'Магазин', news:'Новости', account:'Кабинет' },
-      en: { home:'Home', store:'Store', news:'News', account:'Account' }
+      ru: { home:'Главная', store:'Магазин', news:'Новости', video:'Видео', account:'Кабинет' },
+      en: { home:'Home', store:'Store', news:'News', video:'Video', account:'Account' }
     };
     const pageStrings = {
       ru: { pageTitle:'Мои покупки', empty:'Здесь будут ваши покупки', fullAccess:'Полный доступ', btnGo:'Перейти →', btnLogout:'Выйти' },
@@ -217,6 +219,8 @@
       document.getElementById('nav-home').textContent = t.home;
       document.getElementById('nav-store').textContent = t.store;
       document.getElementById('nav-news').textContent = t.news;
+      document.getElementById('nav-video').textContent = t.video;
+      document.getElementById('mob-nav-video').textContent = t.video;
       document.getElementById('mob-nav-home').textContent = t.home;
       document.getElementById('mob-nav-store').textContent = t.store;
       document.getElementById('mob-nav-news').textContent = t.news;
