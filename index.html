@@ -1096,11 +1096,12 @@
     .lang-picker-logo { height: 44px; width: auto; margin-bottom: 28px; display: block; margin-left: auto; margin-right: auto; }
     [data-theme="light"] .lang-picker-logo { content: url('img/logo-black.png'); }
     .lang-picker-hint {
-      font-size: 14px;
-      color: var(--text-muted);
+      font-size: 15px;
+      color: var(--text-secondary);
       margin-bottom: 32px;
-      font-weight: 500;
-      letter-spacing: 0.03em;
+      font-weight: 600;
+      line-height: 1.6;
+      letter-spacing: 0.01em;
     }
     .lang-picker-btns { display: flex; gap: 14px; }
     .lang-pick-btn {
@@ -1343,7 +1344,7 @@
   <div class="lang-picker-overlay" id="lang-picker">
     <div class="lang-picker-box">
       <img src="img/logo.png" class="lang-picker-logo" alt="ST" />
-      <div class="lang-picker-hint">Выберите язык / Choose language</div>
+      <div class="lang-picker-hint">Выберите язык<br>Choose your language</div>
       <div class="lang-picker-btns">
         <button class="lang-pick-btn" onclick="pickLang('ru')">
           <span class="lp-flag">🇷🇺</span>
@@ -1487,6 +1488,7 @@
       }
     };
 
+    const isFirstVisit = !localStorage.getItem('st-lang');
     let currentLang = localStorage.getItem('st-lang') || 'ru';
 
     function applyLang(lang) {
@@ -1683,7 +1685,7 @@
       applyLang(lang);
     }
 
-    if (!localStorage.getItem('st-lang')) {
+    if (isFirstVisit) {
       document.getElementById('lang-picker').classList.add('open');
     }
 
