@@ -4,25 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="dark light" />
+  <meta name="apple-mobile-web-app-title" content="ST" />
+  <link rel="apple-touch-icon" href="../img/web-icon.png" />
   <title>Магазин — Stas Trotsky</title>
   <link rel="icon" href="../img/favicon-light.png" media="(prefers-color-scheme: dark)" />
   <link rel="icon" href="../img/favicon-dark.png" media="(prefers-color-scheme: light)" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
   <style>
-    :root{--radius-xl:28px;--font:'Montserrat',sans-serif;--blur:24px;--transition:0.35s cubic-bezier(0.4,0,0.2,1)}
-    [data-theme="dark"]{--bg-1:#0a0e1a;--bg-orb-1:rgba(90,40,160,0.45);--bg-orb-2:rgba(20,80,180,0.35);--bg-orb-3:rgba(160,30,80,0.55);--glass-bg:rgba(255,255,255,0.06);--glass-border:rgba(255,255,255,0.12);--text-primary:#fff;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--accent:#a855f7;--shadow:0 8px 40px rgba(0,0,0,0.4);--shadow-sm:0 2px 16px rgba(0,0,0,0.3);--nav-bg:rgba(15,20,40,0.82);--nav-border:rgba(255,255,255,0.1)}
-    [data-theme="light"]{--bg-1:#e8eaf5;--bg-orb-1:rgba(168,85,247,0.2);--bg-orb-2:rgba(59,130,246,0.15);--bg-orb-3:rgba(236,72,153,0.35);--glass-bg:rgba(255,255,255,0.55);--glass-border:rgba(255,255,255,0.8);--text-primary:#111827;--text-secondary:rgba(17,24,39,0.7);--text-muted:rgba(17,24,39,0.45);--accent:#7c3aed;--shadow:0 8px 40px rgba(0,0,0,0.12);--shadow-sm:0 2px 16px rgba(0,0,0,0.08);--nav-bg:rgba(230,230,245,0.88);--nav-border:rgba(255,255,255,0.9)}
+    :root{--radius-xl:28px;--radius-lg:22px;--radius-md:16px;--radius-sm:12px;--font:'Montserrat',sans-serif;--blur:24px;--transition:0.35s cubic-bezier(0.4,0,0.2,1)}
+    [data-theme="dark"]{--bg-1:#0a0e1a;--bg-orb-1:rgba(90,40,160,0.45);--bg-orb-2:rgba(20,80,180,0.35);--bg-orb-3:rgba(160,30,80,0.55);--glass-bg:rgba(255,255,255,0.06);--glass-border:rgba(255,255,255,0.12);--glass-hover:rgba(255,255,255,0.10);--text-primary:#fff;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--accent:#a855f7;--accent-2:#ec4899;--nav-bg:rgba(15,20,40,0.82);--nav-border:rgba(255,255,255,0.1);--shadow:0 8px 40px rgba(0,0,0,0.4);--shadow-sm:0 2px 16px rgba(0,0,0,0.3)}
+    [data-theme="light"]{--bg-1:#e8eaf5;--bg-orb-1:rgba(168,85,247,0.2);--bg-orb-2:rgba(59,130,246,0.15);--bg-orb-3:rgba(236,72,153,0.35);--glass-bg:rgba(255,255,255,0.55);--glass-border:rgba(255,255,255,0.8);--glass-hover:rgba(255,255,255,0.75);--text-primary:#111827;--text-secondary:rgba(17,24,39,0.7);--text-muted:rgba(17,24,39,0.45);--accent:#7c3aed;--accent-2:#db2777;--nav-bg:rgba(230,230,245,0.88);--nav-border:rgba(255,255,255,0.9);--shadow:0 8px 40px rgba(0,0,0,0.12);--shadow-sm:0 2px 16px rgba(0,0,0,0.08)}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;background-color:var(--bg-1);min-height:100dvh}
     body{font-family:var(--font);background-color:var(--bg-1);color:var(--text-primary);min-height:100dvh;overflow-x:hidden;transition:background-color var(--transition),color var(--transition);color-scheme:dark light}
+
+    /* BG ORBS */
     .bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;background-color:var(--bg-1)}
     .orb{position:absolute;border-radius:50%;filter:blur(80px);animation:drift 18s ease-in-out infinite alternate}
     .orb-1{width:600px;height:600px;background:var(--bg-orb-1);top:50px;left:-50px;animation-duration:20s}
     .orb-2{width:500px;height:500px;background:var(--bg-orb-2);top:30%;right:-80px;animation-duration:25s;animation-delay:-5s}
     .orb-3{width:600px;height:600px;background:var(--bg-orb-3);bottom:-50px;left:10%;animation-duration:22s;animation-delay:-10s}
+    .orb-4{width:500px;height:500px;background:var(--bg-orb-1);bottom:-30px;right:-80px;animation-duration:28s;animation-delay:-8s}
     @keyframes drift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.05)}66%{transform:translate(-20px,40px) scale(0.97)}100%{transform:translate(20px,10px) scale(1.02)}}
+
+    /* NAVBAR */
     .navbar{position:fixed;top:18px;left:0;right:0;z-index:1000;display:flex;justify-content:center;align-items:center;gap:10px;padding:0 20px;pointer-events:none}
     .nav-bubble{background:var(--nav-bg);backdrop-filter:blur(var(--blur)) saturate(1.8);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.8);border:1px solid var(--nav-border);border-radius:50px;display:flex;align-items:center;gap:4px;height:46px;padding:0 14px;pointer-events:all;box-shadow:var(--shadow-sm);transition:background var(--transition),border-color var(--transition)}
     .nav-logo-bubble{padding:8px 14px}
@@ -30,7 +38,7 @@
     .nav-logo-bubble img{height:32px;width:auto;display:block}
     [data-theme="light"] .nav-logo-bubble img{content:url('../img/logo-black.png')}
     .nav-menu{gap:4px}
-    .nav-menu a{font-size:14px;font-weight:500;color:var(--text-secondary);text-decoration:none;padding:6px 14px;border-radius:50px;transition:background 0.2s,color 0.2s}
+    .nav-menu a{font-size:14px;font-weight:500;color:var(--text-secondary);text-decoration:none;padding:6px 14px;border-radius:50px;transition:background 0.2s,color 0.2s;letter-spacing:0.01em}
     .nav-menu a:hover,.nav-menu a.active{background:rgba(168,85,247,0.18);color:var(--text-primary)}
     .nav-menu a.active{background:rgba(168,85,247,0.25);font-weight:600}
     .nav-controls{gap:6px}
@@ -39,11 +47,11 @@
     .nav-btn.lang-active{color:var(--text-primary)}
     .nav-divider{width:1px;height:18px;background:var(--nav-border);flex-shrink:0}
     .nav-login-bubble{padding:8px 16px}
-    .nav-login-btn{background:none;border:none;cursor:pointer;color:var(--text-secondary);font-size:13px;font-family:var(--font);font-weight:600;padding:0;letter-spacing:0.03em;transition:color 0.2s;display:flex;align-items:center;gap:6px;text-decoration:none}
+    .nav-login-btn{background:none;border:none;cursor:pointer;color:var(--text-secondary);font-size:13px;font-family:var(--font);font-weight:600;padding:0;letter-spacing:0.03em;transition:color 0.2s;display:flex;align-items:center;gap:6px}
     .nav-login-btn:hover{color:var(--accent)}
     .nav-login-btn svg{width:16px;height:16px}
     .nav-hamburger{display:none;pointer-events:all;background:var(--nav-bg);backdrop-filter:blur(var(--blur)) saturate(1.8);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.8);border:1px solid var(--nav-border);border-radius:50px;width:44px;height:44px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0}
-    .nav-hamburger span{display:block;width:18px;height:2px;background:var(--text-primary);border-radius:2px}
+    .nav-hamburger span{display:block;width:18px;height:2px;background:var(--text-primary);border-radius:2px;transition:transform 0.3s,opacity 0.3s}
     .mobile-menu-overlay{display:none;position:fixed;top:0;left:0;right:0;height:100dvh;z-index:2000;background:rgba(0,0,0,0.55);backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);flex-direction:column;align-items:center;justify-content:space-between;padding:70px 32px 24px}
     .mobile-menu-overlay.open{display:flex}
     body.menu-open .page-wrapper,body.menu-open .bg-canvas{filter:blur(4px)}
@@ -56,6 +64,84 @@
     .mob-settings-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.7);padding:6px 12px;border-radius:50px;font-size:15px;font-family:var(--font);font-weight:600;transition:background 0.2s,color 0.2s}
     .mob-settings-btn:hover,.mob-settings-btn.mob-lang-active{background:rgba(168,85,247,0.25);color:#fff}
     .mob-settings-divider{width:1px;height:18px;background:rgba(255,255,255,0.2);flex-shrink:0;margin:0 4px}
+
+    /* PAGE */
+    .page-wrapper{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:110px 24px 60px}
+    .store-header{margin-bottom:36px}
+    .store-title{font-size:32px;font-weight:800;letter-spacing:-0.03em;line-height:1.1}
+    .store-subtitle{font-size:15px;color:var(--text-muted);margin-top:8px;font-weight:500}
+
+    /* PRODUCT GRID */
+    .store-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+
+    /* PRODUCT CARD */
+    .product-card{background:var(--glass-bg);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));border:1px solid var(--glass-border);border-radius:var(--radius-xl);overflow:hidden;transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;display:flex;flex-direction:column}
+    .product-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(168,85,247,0.2);border-color:rgba(168,85,247,0.3)}
+    .product-card.coming-soon{opacity:0.82}
+    .product-card.coming-soon:hover{transform:none;box-shadow:none;border-color:var(--glass-border)}
+
+    .product-img-wrap{position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:#050810;flex-shrink:0}
+    .product-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease}
+    .product-card:not(.coming-soon):hover .product-img-wrap img{transform:scale(1.04)}
+
+    .product-badge{position:absolute;top:14px;right:14px;font-size:13px;font-weight:800;letter-spacing:0.02em;padding:6px 14px;border-radius:50px;line-height:1}
+    .product-badge.price{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;box-shadow:0 4px 16px rgba(168,85,247,0.4)}
+    .product-badge.soon{background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);color:var(--text-secondary)}
+
+    .product-content{padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .product-title{font-size:18px;font-weight:800;letter-spacing:-0.02em;line-height:1.2;color:var(--text-primary)}
+    .product-desc{font-size:13px;color:var(--text-muted);line-height:1.55;font-weight:500}
+    .product-actions{margin-top:auto;padding-top:8px}
+
+    .btn-buy{display:flex;align-items:center;justify-content:center;width:100%;padding:13px 20px;border-radius:50px;background:linear-gradient(135deg,var(--accent),var(--accent-2));border:none;color:#fff;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;letter-spacing:0.02em;transition:opacity 0.2s,transform 0.15s;box-shadow:0 6px 20px rgba(168,85,247,0.3)}
+    .btn-buy:hover{opacity:0.88;transform:scale(1.02)}
+    .btn-access{display:flex;align-items:center;justify-content:center;width:100%;padding:13px 20px;border-radius:50px;background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.35);color:var(--accent);font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;letter-spacing:0.02em;transition:background 0.2s,color 0.2s,transform 0.15s}
+    .btn-access:hover{background:rgba(168,85,247,0.28);color:var(--text-primary);transform:scale(1.02)}
+    .btn-purchased{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 20px;border-radius:50px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);color:#22c55e;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;letter-spacing:0.02em;text-decoration:none;transition:background 0.2s;text-align:center}
+    .btn-purchased:hover{background:rgba(34,197,94,0.2)}
+    .btn-soon{display:flex;align-items:center;justify-content:center;width:100%;padding:13px 20px;border-radius:50px;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--text-muted);font-family:var(--font);font-size:14px;font-weight:700;letter-spacing:0.02em;cursor:default}
+
+    /* MODALS */
+    .modal-overlay{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px}
+    .modal-overlay.open{display:flex}
+    .modal-box{background:var(--nav-bg);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border:1px solid var(--glass-border);border-radius:var(--radius-xl);padding:40px 36px;width:100%;max-width:420px;box-shadow:0 24px 80px rgba(0,0,0,0.5);position:relative}
+    .modal-close-btn{position:absolute;top:16px;right:16px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:50%;width:36px;height:36px;cursor:pointer;color:var(--text-secondary);font-size:18px;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+    .modal-close-btn:hover{background:var(--glass-hover)}
+    .modal-title{font-size:22px;font-weight:800;margin-bottom:6px;letter-spacing:-0.02em}
+    .modal-subtitle{font-size:13px;color:var(--text-muted);margin-bottom:24px;line-height:1.6}
+    .modal-info{font-size:14px;color:var(--text-secondary);line-height:1.65;margin-bottom:18px;font-weight:500}
+    .modal-divider{height:1px;background:var(--glass-border);margin:20px 0}
+    .modal-rf-label{font-size:13px;color:var(--text-muted);font-weight:600;margin-bottom:12px}
+
+    .modal-btn-primary{display:flex;align-items:center;justify-content:center;width:100%;padding:14px;border-radius:50px;background:linear-gradient(135deg,var(--accent),var(--accent-2));border:none;color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:opacity 0.2s,transform 0.2s;text-decoration:none;letter-spacing:0.02em}
+    .modal-btn-primary:hover{opacity:0.88;transform:scale(1.01)}
+    .modal-btn-tg{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border-radius:50px;background:rgba(39,162,222,0.12);border:1px solid rgba(39,162,222,0.3);color:#27a2de;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;transition:background 0.2s,color 0.2s;text-decoration:none;letter-spacing:0.02em}
+    .modal-btn-tg:hover{background:rgba(39,162,222,0.25);color:#fff}
+    .modal-btn-jff{display:flex;align-items:center;justify-content:center;width:100%;padding:14px;border-radius:50px;background:linear-gradient(135deg,#e91e8c,#f05a28);border:none;color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:opacity 0.2s,transform 0.2s;text-decoration:none;letter-spacing:0.02em;margin-bottom:10px}
+    .modal-btn-jff:hover{opacity:0.88;transform:scale(1.01)}
+
+    /* LOGIN MODAL */
+    .modal-input{width:100%;padding:13px 16px;border-radius:var(--radius-md);background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--text-primary);font-family:var(--font);font-size:14px;outline:none;margin-bottom:12px;transition:border-color 0.2s}
+    .modal-input:focus{border-color:var(--accent)}
+    .modal-input::placeholder{color:var(--text-muted)}
+    .modal-submit{width:100%;padding:14px;border-radius:50px;background:linear-gradient(135deg,var(--accent),var(--accent-2));border:none;color:white;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:opacity 0.2s,transform 0.2s;margin-top:4px}
+    .modal-submit:hover{opacity:0.9;transform:scale(1.01)}
+    .modal-tabs{display:flex;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:50px;padding:4px;margin-bottom:24px;gap:4px}
+    .modal-tab{flex:1;padding:8px;border:none;border-radius:50px;background:none;cursor:pointer;font-family:var(--font);font-size:13px;font-weight:600;color:var(--text-muted);transition:background 0.2s,color 0.2s}
+    .modal-tab.active{background:var(--accent);color:white}
+    .modal-forgot{background:none;border:none;color:var(--text-muted);font-family:var(--font);font-size:12px;cursor:pointer;margin-top:10px;width:100%;text-align:center;padding:4px;transition:color 0.2s}
+    .modal-forgot:hover{color:var(--accent)}
+
+    /* FOOTER */
+    .site-footer{text-align:center;padding:32px 24px 24px;position:relative;z-index:1;font-size:13px;color:var(--text-muted);font-weight:500}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--glass-border);border-radius:3px}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){.navbar{gap:6px}}
+    @media(max-width:700px){
+      .store-grid{grid-template-columns:1fr}
+      .product-img-wrap{aspect-ratio:16/9}
+    }
     @media(max-width:600px){
       .navbar{left:14px;right:14px;top:14px;gap:0;background:var(--nav-bg);backdrop-filter:blur(var(--blur)) saturate(1.8);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.8);border:1px solid var(--nav-border);border-radius:50px;padding:5px 8px;box-shadow:var(--shadow-sm);justify-content:flex-start}
       .nav-bubble{background:none!important;border:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;padding:4px 6px}
@@ -63,26 +149,25 @@
       .nav-menu{display:none}.nav-controls{display:none}
       .nav-logo-bubble{order:1}.nav-login-bubble{order:2;margin-left:auto}.nav-hamburger{display:flex;order:3;margin-left:4px}
       #nav-account-label{display:none}.nav-login-btn{gap:0}
+      .page-wrapper{padding:90px 16px 40px}
+      .store-title{font-size:26px}
+      .modal-box{padding:32px 22px}
     }
-    .page-wrapper{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:100px 20px 60px}
-    .placeholder-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-xl);backdrop-filter:blur(var(--blur)) saturate(1.6);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.6);padding:60px 32px;text-align:center;box-shadow:var(--shadow)}
-    .placeholder-icon{font-size:52px;margin-bottom:20px}
-    .placeholder-title{font-size:22px;font-weight:800;margin-bottom:12px}
-    .placeholder-desc{font-size:15px;color:var(--text-secondary);line-height:1.7}
-    .site-footer{text-align:center;padding:32px 24px 24px;position:relative;z-index:1;font-size:13px;color:var(--text-muted);font-weight:500}
-    @media(max-width:600px){.page-wrapper{padding:90px 14px 40px}}
   </style>
 </head>
 <body>
+
   <div class="bg-canvas">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
   </div>
 
+  <!-- NAVBAR -->
   <nav class="navbar">
     <div class="nav-bubble nav-logo-bubble">
-      <a href="/"><img src="../img/logo.png" alt="ST" /></a>
+      <a href="/"><img src="../img/logo.png" alt="ST" onerror="this.style.display='none';this.parentNode.innerHTML='<span style=\'font-weight:900;font-size:18px;color:var(--text-primary);letter-spacing:-0.05em\'>ST</span>'" /></a>
     </div>
     <div class="nav-bubble nav-menu">
       <a href="/" id="nav-home"></a>
@@ -94,21 +179,22 @@
       <span></span><span></span><span></span>
     </button>
     <div class="nav-bubble nav-controls">
-      <button class="nav-btn" id="theme-toggle" onclick="toggleTheme()">🌙</button>
+      <button class="nav-btn" id="theme-toggle" title="Toggle theme" onclick="toggleTheme()">🌙</button>
       <div class="nav-divider"></div>
       <button class="nav-btn lang-active" onclick="setLang('ru')" id="btn-ru">RU</button>
       <button class="nav-btn" onclick="setLang('en')" id="btn-en">EN</button>
     </div>
     <div class="nav-bubble nav-login-bubble">
-      <a class="nav-login-btn" href="/account.html" id="nav-account">
+      <button class="nav-login-btn" onclick="openLoginModal()" id="nav-account">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
         </svg>
         <span id="nav-account-label"></span>
-      </a>
+      </button>
     </div>
   </nav>
 
+  <!-- MOBILE MENU -->
   <div class="mobile-menu-overlay" id="mobile-menu" onclick="closeMobileMenuOutside(event)">
     <button class="mobile-menu-close" onclick="closeMobileMenu()" aria-label="Close">✕</button>
     <div class="mob-menu-nav">
@@ -125,69 +211,390 @@
     </div>
   </div>
 
+  <!-- MAIN -->
   <main class="page-wrapper">
-    <div class="placeholder-card">
-      <div class="placeholder-icon">🛍️</div>
-      <div class="placeholder-title" id="store-title">Магазин</div>
-      <div class="placeholder-desc" id="store-desc">Магазин находится на стадии разработки</div>
+    <div class="store-header">
+      <h1 class="store-title" id="store-title">Магазин</h1>
+      <p class="store-subtitle" id="store-subtitle">Авторские курсы и эксклюзивный контент от Стаса Троцкого</p>
+    </div>
+
+    <div class="store-grid">
+
+      <!-- 1: Оральное Искусство -->
+      <div class="product-card" id="card-course-oral-art">
+        <div class="product-img-wrap">
+          <img src="../img/oral.jpg" alt="Оральное Искусство" loading="lazy" />
+          <div class="product-badge price">25£</div>
+        </div>
+        <div class="product-content">
+          <div class="product-title" id="title-oral">Оральное Искусство</div>
+          <div class="product-desc" id="desc-oral">Авторский курс о технике и мастерстве. Практические уроки с детальными объяснениями.</div>
+          <div class="product-actions">
+            <button class="btn-buy" id="btn-oral" onclick="handleCourseBtnClick('course-oral-art')">Пройти курс</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2: Анальное Искусство -->
+      <div class="product-card" id="card-course-anal-art">
+        <div class="product-img-wrap">
+          <img src="../img/anal.jpg" alt="Анальное Искусство" loading="lazy" />
+          <div class="product-badge price">25£</div>
+        </div>
+        <div class="product-content">
+          <div class="product-title" id="title-anal">Анальное Искусство</div>
+          <div class="product-desc" id="desc-anal">Полный авторский курс с пошаговыми инструкциями и практическими советами.</div>
+          <div class="product-actions">
+            <button class="btn-buy" id="btn-anal" onclick="handleCourseBtnClick('course-anal-art')">Пройти курс</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3: Продай себя (coming soon) -->
+      <div class="product-card coming-soon" id="card-course-jff">
+        <div class="product-img-wrap">
+          <img src="../img/onlyfans.jpg" alt="Продай себя" loading="lazy" />
+          <div class="product-badge soon" id="badge-soon">Скоро</div>
+        </div>
+        <div class="product-content">
+          <div class="product-title" id="title-jff">Продай себя</div>
+          <div class="product-desc" id="desc-jff">Курс о том, как монетизировать свой контент и построить успешный бизнес на своей личности.</div>
+          <div class="product-actions">
+            <div class="btn-soon" id="btn-jff-soon">Скоро в продаже</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4: Доступ в закрытое сообщество -->
+      <div class="product-card" id="card-video-xxx">
+        <div class="product-img-wrap">
+          <img src="../img/private.jpg" alt="Закрытое сообщество" loading="lazy" />
+        </div>
+        <div class="product-content">
+          <div class="product-title" id="title-xxx">Доступ в закрытое сообщество</div>
+          <div class="product-desc" id="desc-xxx">Эксклюзивный контент, приватные видео и прямое общение со Стасом Троцким.</div>
+          <div class="product-actions">
+            <button class="btn-access" id="btn-xxx" onclick="openCommunityModal()">Получить доступ</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </main>
 
   <footer class="site-footer">© 2018 – 2026 Stas Trotsky Media</footer>
 
+  <!-- COURSE PURCHASE MODAL -->
+  <div class="modal-overlay" id="modal-course" onclick="closeModalOnBg(event,'modal-course')">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="closeModal('modal-course')">×</button>
+      <div class="modal-title" id="course-modal-title">Пройти курс</div>
+      <div class="modal-subtitle" id="course-modal-subtitle">Получите мгновенный доступ после оплаты</div>
+      <div class="modal-info" id="course-modal-info">
+        Зарегистрируйтесь на сайте и оплатите картой (не РФ) — курс сразу появится в вашем личном кабинете.
+      </div>
+      <!-- Replace href with your Stripe Checkout URL per product -->
+      <a href="#" class="modal-btn-primary" id="course-stripe-btn" target="_blank" rel="noopener">
+        Оплатить картой — 25£
+      </a>
+      <div class="modal-divider"></div>
+      <div class="modal-rf-label" id="rf-label">Карта РФ? Напишите нам в Телеграм:</div>
+      <a href="https://t.me/stastrotskynews" class="modal-btn-tg" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.93 6.77-1.68 7.93c-.12.56-.45.7-.91.43l-2.52-1.86-1.22 1.17c-.13.14-.25.25-.52.25l.18-2.6 4.73-4.27c.2-.18-.05-.28-.32-.1L8.37 14.6l-2.48-.76c-.55-.17-.56-.55.12-.81l10.83-4.18c.46-.17.86.11.09.92z"/></svg>
+        Написать в Телеграм
+      </a>
+    </div>
+  </div>
+
+  <!-- COMMUNITY ACCESS MODAL -->
+  <div class="modal-overlay" id="modal-community" onclick="closeModalOnBg(event,'modal-community')">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="closeModal('modal-community')">×</button>
+      <div class="modal-title" id="community-modal-title">Закрытое сообщество</div>
+      <div class="modal-subtitle" id="community-modal-subtitle">Выберите платформу для подписки</div>
+      <a href="https://justfor.fans/stastrotsky" class="modal-btn-jff" target="_blank" rel="noopener">
+        Подписаться в JustFor.Fans
+      </a>
+      <a href="https://t.me/stastrotsky" class="modal-btn-tg" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.93 6.77-1.68 7.93c-.12.56-.45.7-.91.43l-2.52-1.86-1.22 1.17c-.13.14-.25.25-.52.25l.18-2.6 4.73-4.27c.2-.18-.05-.28-.32-.1L8.37 14.6l-2.48-.76c-.55-.17-.56-.55.12-.81l10.83-4.18c.46-.17.86.11.09.92z"/></svg>
+        Подписаться в Телеграм
+      </a>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal-overlay" id="login-modal" onclick="closeModalOnBg(event,'login-modal')">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="closeModal('login-modal')">×</button>
+      <div class="modal-title" id="modal-title">Личный кабинет</div>
+      <div class="modal-subtitle" id="modal-subtitle">Войдите, чтобы получить доступ к купленным курсам</div>
+      <div class="modal-tabs">
+        <button class="modal-tab active" id="tab-login" onclick="switchTab('login')">Войти</button>
+        <button class="modal-tab" id="tab-register" onclick="switchTab('register')">Регистрация</button>
+      </div>
+      <div id="form-login">
+        <input class="modal-input" type="email" placeholder="Email" id="login-email" />
+        <input class="modal-input" type="password" placeholder="Пароль" id="login-password" />
+        <button class="modal-submit" onclick="handleLogin()" id="btn-login-submit">Войти</button>
+        <button class="modal-forgot" onclick="handleForgotPassword()">Забыли пароль?</button>
+      </div>
+      <div id="form-register" style="display:none">
+        <input class="modal-input" type="text" placeholder="Имя" id="reg-name" />
+        <input class="modal-input" type="email" placeholder="Email" id="reg-email" />
+        <input class="modal-input" type="password" placeholder="Пароль" id="reg-password" />
+        <button class="modal-submit" onclick="handleRegister()" id="btn-register-submit">Создать аккаунт</button>
+      </div>
+      <div id="modal-message" style="margin-top:12px;font-size:13px;text-align:center;color:var(--accent);display:none"></div>
+    </div>
+  </div>
+
   <script>
+    /* THEME */
     const html = document.documentElement;
     function setTheme(t) {
       html.dataset.theme = t;
-      const btn = document.getElementById('theme-toggle');
+      document.getElementById('theme-toggle').textContent = t === 'dark' ? '🌙' : '☀️';
       const mob = document.getElementById('mob-theme-toggle');
-      if (btn) btn.textContent = t === 'dark' ? '🌙' : '☀️';
       if (mob) mob.textContent = t === 'dark' ? '🌙' : '☀️';
       localStorage.setItem('st-theme', t);
     }
     function toggleTheme() { setTheme(html.dataset.theme === 'dark' ? 'light' : 'dark'); }
     setTheme(localStorage.getItem('st-theme') || 'dark');
 
+    /* MOBILE MENU */
+    function openMobileMenu() { document.getElementById('mobile-menu').classList.add('open'); document.body.classList.add('menu-open'); }
+    function closeMobileMenu() { document.getElementById('mobile-menu').classList.remove('open'); document.body.classList.remove('menu-open'); }
+    function closeMobileMenuOutside(e) { if (e.target === document.getElementById('mobile-menu')) closeMobileMenu(); }
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return;
+      closeMobileMenu();
+      ['modal-course','modal-community','login-modal'].forEach(closeModal);
+    });
+
+    /* LANGUAGE */
     const strings = {
-      ru: { home:'Главная', store:'Магазин', news:'Новости', video:'Видео', account:'Кабинет', title:'Магазин', desc:'Магазин находится на стадии разработки' },
-      en: { home:'Home', store:'Store', news:'News', video:'Video', account:'Account', title:'Store', desc:'Store is under development' }
+      ru: {
+        navHome:'Главная', navStore:'Магазин', navNews:'Новости', navVideo:'Видео', navAccount:'Кабинет',
+        storeTitle:'Магазин', storeSub:'Авторские курсы и эксклюзивный контент от Стаса Троцкого',
+        titleOral:'Оральное Искусство', descOral:'Авторский курс о технике и мастерстве. Практические уроки с детальными объяснениями.',
+        titleAnal:'Анальное Искусство', descAnal:'Полный авторский курс с пошаговыми инструкциями и практическими советами.',
+        titleJff:'Продай себя', descJff:'Курс о том, как монетизировать свой контент и построить успешный бизнес на своей личности.',
+        titleXxx:'Доступ в закрытое сообщество', descXxx:'Эксклюзивный контент, приватные видео и прямое общение со Стасом Троцким.',
+        btnCourse:'Пройти курс', btnAccess:'Получить доступ', btnSoon:'Скоро в продаже', badgeSoon:'Скоро',
+        btnPurchased:'Уже куплено', btnGoToCourse:'Перейти к курсу',
+        courseModalTitle:'Пройти курс', courseModalSub:'Получите мгновенный доступ после оплаты',
+        courseInfo:'Зарегистрируйтесь на сайте и оплатите картой (не РФ) — курс сразу появится в вашем личном кабинете.',
+        rfLabel:'Карта РФ? Напишите нам в Телеграм:',
+        communityTitle:'Закрытое сообщество', communitySub:'Выберите платформу для подписки',
+        modalTitle:'Личный кабинет', modalSub:'Войдите, чтобы получить доступ к купленным курсам',
+        tabLogin:'Войти', tabReg:'Регистрация', btnLogin:'Войти', btnReg:'Создать аккаунт',
+      },
+      en: {
+        navHome:'Home', navStore:'Store', navNews:'News', navVideo:'Video', navAccount:'Account',
+        storeTitle:'Store', storeSub:'Original courses and exclusive content from Stas Trotsky',
+        titleOral:'Oral Art', descOral:'An original course on technique and mastery. Practical lessons with detailed explanations.',
+        titleAnal:'Anal Art', descAnal:'A complete original course with step-by-step instructions and practical advice.',
+        titleJff:'Sell Yourself', descJff:'A course on monetizing your content and building a successful personal brand.',
+        titleXxx:'Private Community Access', descXxx:'Exclusive content, private videos and direct communication with Stas Trotsky.',
+        btnCourse:'Take the course', btnAccess:'Get access', btnSoon:'Coming soon', badgeSoon:'Soon',
+        btnPurchased:'Already purchased', btnGoToCourse:'Go to course',
+        courseModalTitle:'Get the course', courseModalSub:'Get instant access after payment',
+        courseInfo:'Register on the site and pay by card (non-Russian) — the course will appear in your account immediately.',
+        rfLabel:'Russian card? Write to us on Telegram:',
+        communityTitle:'Private Community', communitySub:'Choose your subscription platform',
+        modalTitle:'My Account', modalSub:'Sign in to access your purchased courses',
+        tabLogin:'Sign In', tabReg:'Register', btnLogin:'Sign In', btnReg:'Create Account',
+      }
     };
+
     let currentLang = localStorage.getItem('st-lang') || 'ru';
+    let _userPurchases = [];
 
     function applyLang(lang) {
-      currentLang = lang;
-      localStorage.setItem('st-lang', lang);
-      const t = strings[lang];
-      document.getElementById('nav-home').textContent = t.home;
-      document.getElementById('nav-store').textContent = t.store;
-      document.getElementById('nav-news').textContent = t.news;
-      document.getElementById('nav-video').textContent = t.video;
-      document.getElementById('mob-nav-video').textContent = t.video;
-      document.getElementById('mob-nav-home').textContent = t.home;
-      document.getElementById('mob-nav-store').textContent = t.store;
-      document.getElementById('mob-nav-news').textContent = t.news;
-      document.getElementById('nav-account-label').textContent = t.account;
+      const s = strings[lang];
+      const ids = {
+        'nav-home':s.navHome,'nav-store':s.navStore,'nav-news':s.navNews,'nav-video':s.navVideo,
+        'mob-nav-home':s.navHome,'mob-nav-store':s.navStore,'mob-nav-news':s.navNews,'mob-nav-video':s.navVideo,
+        'nav-account-label':s.navAccount,'store-title':s.storeTitle,'store-subtitle':s.storeSub,
+        'title-oral':s.titleOral,'desc-oral':s.descOral,
+        'title-anal':s.titleAnal,'desc-anal':s.descAnal,
+        'title-jff':s.titleJff,'desc-jff':s.descJff,
+        'title-xxx':s.titleXxx,'desc-xxx':s.descXxx,
+        'badge-soon':s.badgeSoon,'btn-jff-soon':s.btnSoon,
+        'course-modal-info':s.courseInfo,'rf-label':s.rfLabel,
+        'community-modal-title':s.communityTitle,'community-modal-subtitle':s.communitySub,
+        'modal-title':s.modalTitle,'modal-subtitle':s.modalSub,
+        'tab-login':s.tabLogin,'tab-register':s.tabReg,
+        'btn-login-submit':s.btnLogin,'btn-register-submit':s.btnReg,
+      };
+      Object.entries(ids).forEach(([id,txt]) => { const el = document.getElementById(id); if (el) el.textContent = txt; });
       document.getElementById('btn-ru').classList.toggle('lang-active', lang === 'ru');
       document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
       document.getElementById('mob-btn-ru').classList.toggle('mob-lang-active', lang === 'ru');
       document.getElementById('mob-btn-en').classList.toggle('mob-lang-active', lang === 'en');
-      document.getElementById('store-title').textContent = t.title;
-      document.getElementById('store-desc').textContent = t.desc;
+      document.documentElement.lang = lang;
+      localStorage.setItem('st-lang', lang);
+      currentLang = lang;
+      updatePurchaseButtons();
     }
     function setLang(lang) { applyLang(lang); }
     applyLang(currentLang);
 
-    function openMobileMenu() {
-      document.getElementById('mobile-menu').classList.add('open');
-      document.body.classList.add('menu-open');
+    /* MODAL HELPERS */
+    function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = ''; }
+    function closeModalOnBg(e, id) { if (e.target === document.getElementById(id)) closeModal(id); }
+
+    /* COURSE MODAL */
+    // Stripe Checkout URLs — replace '#' with actual links once Stripe is set up
+    const STRIPE_URLS = {
+      'course-oral-art': '#',
+      'course-anal-art': '#',
+    };
+
+    function openCourseModal(productId) {
+      const s = strings[currentLang];
+      const titleEl = productId === 'course-oral-art'
+        ? document.getElementById('title-oral')
+        : document.getElementById('title-anal');
+      document.getElementById('course-modal-title').textContent = titleEl ? titleEl.textContent : s.courseModalTitle;
+      document.getElementById('course-modal-subtitle').textContent = s.courseModalSub;
+      document.getElementById('course-stripe-btn').href = STRIPE_URLS[productId] || '#';
+      openModal('modal-course');
     }
-    function closeMobileMenu() {
-      document.getElementById('mobile-menu').classList.remove('open');
-      document.body.classList.remove('menu-open');
+
+    function handleCourseBtnClick(productId) {
+      if (_userPurchases.includes(productId)) {
+        location.href = '/account.html';
+      } else {
+        openCourseModal(productId);
+      }
     }
-    function closeMobileMenuOutside(e) {
-      if (e.target === document.getElementById('mobile-menu')) closeMobileMenu();
+
+    function openCommunityModal() { openModal('modal-community'); }
+    function openLoginModal() { openModal('login-modal'); }
+
+    /* LOGIN TABS */
+    function switchTab(tab) {
+      document.getElementById('form-login').style.display = tab === 'login' ? '' : 'none';
+      document.getElementById('form-register').style.display = tab === 'register' ? '' : 'none';
+      document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+      document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+      clearModalMessage();
+    }
+    function showModalMessage(msg, color) {
+      const el = document.getElementById('modal-message');
+      el.textContent = msg; el.style.color = color || 'var(--accent)'; el.style.display = '';
+    }
+    function clearModalMessage() { const el = document.getElementById('modal-message'); el.style.display = 'none'; el.textContent = ''; }
+    function handleLogin() {}
+    function handleRegister() {}
+    function handleForgotPassword() {}
+
+    /* PURCHASE BUTTON STATE */
+    function updatePurchaseButtons() {
+      const s = strings[currentLang];
+      [['course-oral-art','btn-oral'],['course-anal-art','btn-anal']].forEach(([pid, btnId]) => {
+        const btn = document.getElementById(btnId);
+        if (!btn) return;
+        if (_userPurchases.includes(pid)) {
+          btn.className = 'btn-purchased';
+          btn.textContent = '✓ ' + s.btnPurchased;
+        } else {
+          btn.className = 'btn-buy';
+          btn.textContent = s.btnCourse;
+        }
+        btn.onclick = () => handleCourseBtnClick(pid);
+      });
     }
   </script>
+
+  <!-- FIREBASE -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+    const app = initializeApp({
+      apiKey: "AIzaSyCOkfOnGEm7D1Dic0hUnZBNkvMAKi_sGHM",
+      authDomain: "stas-trotsky.firebaseapp.com",
+      projectId: "stas-trotsky",
+      storageBucket: "stas-trotsky.firebasestorage.app",
+      messagingSenderId: "299023334744",
+      appId: "1:299023334744:web:6e762caf8838d31d61792d"
+    });
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    onAuthStateChanged(auth, async (user) => {
+      const btn   = document.getElementById('nav-account');
+      const label = document.getElementById('nav-account-label');
+      if (user) {
+        label.textContent = user.displayName || user.email.split('@')[0];
+        btn.onclick = () => location.href = '/account.html';
+        try {
+          const snap = await getDoc(doc(db, 'users', user.uid));
+          if (snap.exists()) {
+            window._userPurchases = snap.data().purchases || [];
+            updatePurchaseButtons();
+          }
+        } catch(e) {}
+      } else {
+        btn.onclick = window.openLoginModal;
+        window._userPurchases = [];
+        updatePurchaseButtons();
+      }
+    });
+
+    function authError(code) {
+      return ({
+        'auth/email-already-in-use':'Email уже используется',
+        'auth/invalid-email':'Неверный формат email',
+        'auth/weak-password':'Пароль — минимум 6 символов',
+        'auth/user-not-found':'Аккаунт не найден',
+        'auth/wrong-password':'Неверный пароль',
+        'auth/invalid-credential':'Неверный email или пароль',
+        'auth/too-many-requests':'Слишком много попыток. Попробуйте позже',
+      })[code] || 'Ошибка. Попробуйте ещё раз.';
+    }
+
+    window.handleLogin = async function() {
+      const email = document.getElementById('login-email').value.trim();
+      const pass  = document.getElementById('login-password').value;
+      if (!email || !pass) { showModalMessage('Заполните все поля', '#ef4444'); return; }
+      showModalMessage('Выполняется вход…', 'var(--text-muted)');
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        closeModal('login-modal');
+      } catch (e) { showModalMessage(authError(e.code), '#ef4444'); }
+    };
+
+    window.handleRegister = async function() {
+      const name  = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const pass  = document.getElementById('reg-password').value;
+      if (!name || !email || !pass) { showModalMessage('Заполните все поля', '#ef4444'); return; }
+      showModalMessage('Создание аккаунта…', 'var(--text-muted)');
+      try {
+        const { user } = await createUserWithEmailAndPassword(auth, email, pass);
+        await setDoc(doc(db, 'users', user.uid), {
+          email: user.email, displayName: name,
+          createdAt: new Date().toISOString(), purchases: []
+        });
+        closeModal('login-modal');
+      } catch (e) { showModalMessage(authError(e.code), '#ef4444'); }
+    };
+
+    window.handleForgotPassword = async function() {
+      const email = document.getElementById('login-email').value.trim();
+      if (!email) { showModalMessage('Введите email в поле выше', '#ef4444'); return; }
+      showModalMessage('Отправляем письмо…', 'var(--text-muted)');
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showModalMessage('Письмо отправлено! Проверьте почту.', 'var(--accent)');
+      } catch (e) { showModalMessage(authError(e.code), '#ef4444'); }
+    };
+  </script>
+
 </body>
 </html>
